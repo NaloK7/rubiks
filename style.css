@@ -13,10 +13,11 @@
   width: 270px;
 	height: 270px;
 	position: absolute;
+  /* transform: translateZ(-100px); */
 	transform-style: preserve-3d;
 }
 
-#cube figure {
+#cube span {
   margin: 0;
 	width: 300px;
 	height: 300px;
@@ -28,7 +29,7 @@
 
 #cube .front {
   transform: rotateY( 0deg) translateZ(150px);
-  background-color: white;
+  /* background-color: white; */
   opacity: 1;
 }
 
@@ -62,7 +63,13 @@
   opacity: 1;
 }
 
-#cube.show-front {
+#cube .front .cubie {
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  
+}
+/* #cube.show-front {
 	transform: translateZ( -150px) rotateY( 0deg);
 }
 
@@ -84,4 +91,4 @@
 
 #cube.show-bottom {
 	transform: rotateX( 90deg) translateZ( -150px);
-}
+} */
