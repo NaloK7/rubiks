@@ -29,7 +29,7 @@
 
 #cube .front {
   transform: rotateY( 0deg) translateZ(150px);
-  /* background-color: white; */
+  background-color: white;
   opacity: 1;
 }
 

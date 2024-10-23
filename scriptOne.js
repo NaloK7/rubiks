@@ -1,34 +1,30 @@
-let lastMouseX = 0,
-	lastMouseY = 0;
-let rotX = 0,
-	rotY = 0;
+let lastMouseX;
+let lastMouseY;
+let rotX;
+let rotY;
 
-document.addEventListener("mousedown", function(ev) {
-	lastMouseX = ev.clientX;
-	lastMouseY = ev.clientY;
-	document.addEventListener("mousemove", mouseMoved);
+document.addEventListener("mousedown", (ev) => {
+  lastMouseX = ev.clientX;
+  lastMouseY = ev.clientY;
+  document.addEventListener("mousemove", mouseMove);
 });
 
-document.addEventListener("mouseup", function() {
-	document.removeEventListener("mousemove", mouseMoved);
+document.addEventListener("mouseup", () => {
+  document.removeEventListener("mousemove", mouseMove);
 });
 
-function mouseMoved(ev) {
-	let deltaX = ev.pageX - lastMouseX;
-	let deltaY = ev.pageY - lastMouseY;
-
-	lastMouseX = ev.pageX;
-	lastMouseY = ev.pageY;
-
-	rotY -= deltaX * -0.1;
-	rotX += deltaY * -0.1;
-
-    let face = document.querySelector(".face");
-	// Apply the rotation transformation
-	face.style.transform = `translateZ(-100px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+function mouseMove(ev) {
+  let mouseX = ev.pageX - lastMouseX;
+  let mouseY = ev.pageY - lastMouseY;
+  if (mouseX >= 50) {
+    L(90);
+    document.removeEventListener("mousemove", mouseMove);
+} else if (mouseX <= -50) {
+	L(-90);
+	document.removeEventListener("mousemove", mouseMove);
+  }
 }
-
-function F() {
-    let face = document.querySelector(".face");
-    face.style.transform += `rotateZ(90deg)`
+function L(deg) {
+  let cube = document.querySelector(".cube");
+  cube.style.transform += `rotateZ(${deg}deg)`;
 }

@@ -7,7 +7,7 @@
     transform-style: preserve-3d;
 }
 
-.face {
+.cube {
     width: 300px;
     height: 300px;
     position: absolute;
@@ -17,7 +17,7 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    transform: rotateY( -45deg) translateZ(0px);
+    transform: rotateY( 0deg) translateZ(0px);
 }
 
 .cubie {
