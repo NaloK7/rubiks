@@ -1,0 +1,32 @@
+.container {
+    padding: 50px;
+    width: 500px;
+    height: 500px;
+    perspective: 1000px;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.face {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    transform-style: preserve-3d;
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    transform: rotateY( -45deg) translateZ(0px);
+}
+
+.cubie {
+    width: 90px;
+    height: 90px;
+    border: 1px solid black;
+    padding: 2px;
+}
+
+.cubie:last-child {
+    background-color: blue;
+}
