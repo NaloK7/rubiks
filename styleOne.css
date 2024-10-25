@@ -1,32 +1,33 @@
 .container {
-    padding: 50px;
-    width: 500px;
-    height: 500px;
-    perspective: 1000px;
-    position: relative;
-    transform-style: preserve-3d;
+  padding: 50px;
+  width: 500px;
+  height: 500px;
+  perspective: 1000px;
+  position: relative;
+  transform-style: preserve-3d;
 }
 
+
 .cube {
-    width: 300px;
-    height: 300px;
-    position: absolute;
-    transform-style: preserve-3d;
-    border: 1px solid black;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    transform: rotateY( 0deg) translateZ(0px);
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  transform-style: preserve-3d;
+  transform: rotateY(60deg) ;
 }
 
 .cubie {
-    width: 90px;
-    height: 90px;
-    border: 1px solid black;
-    padding: 2px;
+  width: 90px;
+  height: 90px;
+  border: 1px solid black;
+  padding: 2px;
 }
 
 .cubie:last-child {
-    background-color: blue;
+  background-color: blue;
 }

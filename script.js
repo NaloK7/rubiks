@@ -1,7 +1,8 @@
 var lastMouseX = 0,
 	lastMouseY = 0;
 var rotX = 0,
-	rotY = 0;
+rotY = 0;
+console.log("🚀 ~ rotX:", rotX)
 
 // Gestion des événements pour la souris
 document.addEventListener("mousedown", function(ev) {

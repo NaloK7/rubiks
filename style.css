@@ -13,7 +13,7 @@
   width: 270px;
 	height: 270px;
 	position: absolute;
-  /* transform: translateZ(-100px); */
+  transform: rotateY(-60deg);
 	transform-style: preserve-3d;
 }
 

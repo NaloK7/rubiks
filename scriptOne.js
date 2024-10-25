@@ -19,12 +19,16 @@ function mouseMove(ev) {
   if (mouseX >= 50) {
     L(90);
     document.removeEventListener("mousemove", mouseMove);
-} else if (mouseX <= -50) {
-	L(-90);
-	document.removeEventListener("mousemove", mouseMove);
+  } else if (mouseX <= -50) {
+    L(-90);
+    document.removeEventListener("mousemove", mouseMove);
   }
 }
 function L(deg) {
+  // rotate front face
   let cube = document.querySelector(".cube");
   cube.style.transform += `rotateZ(${deg}deg)`;
+
+  //   let cubie = document.querySelector("#f1");
+  //   cubie.style.transform += `rotateX(${30}deg)`;
 }
