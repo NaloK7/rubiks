@@ -1,5 +1,5 @@
-let rotateY = 0;
-let rotateX = 0;
+let rotateY = 40;
+let rotateX = -20;
 let rotateZ = 0;
 let translateZ = 0;
 
