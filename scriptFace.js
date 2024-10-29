@@ -4,63 +4,55 @@ let rotateY = 45;
 let lastMouseX = 0;
 let lastMouseY = 0;
 
-// Mouse event
+// MOUSE EVENT
 document.addEventListener("mousedown", function(ev) {
-	lastMouseX = ev.clientX;
-	lastMouseY = ev.clientY;
-	document.addEventListener("mousemove", mouseMoved);
+    lastMouseX = ev.clientX;
+    lastMouseY = ev.clientY;
+    document.addEventListener("mousemove", pointerMoved);
 });
 
 document.addEventListener("mouseup", function() {
-	document.removeEventListener("mousemove", mouseMoved);
+	document.removeEventListener("mousemove", pointerMoved);
 });
 
-
-// Touch event
+// TOUCH EVENT
 document.addEventListener("touchstart", function(ev) {
-	// use first touch
-	lastMouseX = ev.touches[0].clientX;
+    lastMouseX = ev.touches[0].clientX;
 	lastMouseY = ev.touches[0].clientY;
-	// prevent scroll
-	document.addEventListener("touchmove", function(ev) {
-		ev.preventDefault();
-	}, { passive: false });
-	document.addEventListener("touchmove", touchMoved);
+	document.addEventListener("touchmove", (ev) => ev.preventDefault(), { passive: false });
+
+    document.addEventListener("touchmove", pointerMoved);
 });
 
 document.addEventListener("touchend", function() {
-	document.removeEventListener("touchmove", touchMoved);
+    document.removeEventListener("touchmove", pointerMoved);
 });
 
-// Mouse mouvement
-function mouseMoved(ev) {
-	var deltaX = ev.pageX - lastMouseX;
-	var deltaY = ev.pageY - lastMouseY;
+// POINTER MOVE
+function pointerMoved(ev) {
+    let clientX, clientY;
 
-	lastMouseX = ev.pageX;
-	lastMouseY = ev.pageY;
+    if (ev.type === "mousemove") {
+        clientX = ev.clientX;
+        clientY = ev.clientY;
+    } else if (ev.type === "touchmove") {
+        clientX = ev.touches[0].clientX;
+        clientY = ev.touches[0].clientY;
+    }
 
-	rotateX += deltaY * -0.5;
-	rotateY -= deltaX * -0.5;
+    let deltaX = clientX - lastMouseX;
+    let deltaY = clientY - lastMouseY;
 
-	rotateCube();
+    lastMouseX = clientX;
+    lastMouseY = clientY;
+
+    rotateX += deltaY * -0.5;
+    rotateY -= deltaX * -0.5;
+
+    rotateCube();
 }
 
-// Touch mouvement
-function touchMoved(ev) {
-	var deltaX = ev.touches[0].clientX - lastMouseX;
-	var deltaY = ev.touches[0].clientY - lastMouseY;
-
-	lastMouseX = ev.touches[0].clientX;
-	lastMouseY = ev.touches[0].clientY;
-
-	rotateX += deltaY * -0.5;
-	rotateY -= deltaX * -0.5;
-
-	rotateCube();
-}
-
-// Fonction pour mettre à jour la transformation du cube
+// ROTATE CUBE
 function rotateCube() {
 	var cube = document.querySelector(".cube");
 	// cube.style.transformOrigin = "50% 50%";
@@ -81,6 +73,7 @@ function rotY() {
   //   "Transform: " + newTransform;
 }
 
+// RESET ROTATION
 function resetRotation() {
   let cube = document.querySelector(".cube");
   cube.classList.add("reset-animation"); // Ajoute la classe pour l'animation
