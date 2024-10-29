@@ -4,7 +4,7 @@ let rotateY = 45;
 let lastMouseX = 0;
 let lastMouseY = 0;
 
-// Gestion des événements pour la souris
+// Mouse event
 document.addEventListener("mousedown", function(ev) {
 	lastMouseX = ev.clientX;
 	lastMouseY = ev.clientY;
@@ -15,13 +15,16 @@ document.addEventListener("mouseup", function() {
 	document.removeEventListener("mousemove", mouseMoved);
 });
 
-// Gestion des événements pour le toucher
+
+// Touch event
 document.addEventListener("touchstart", function(ev) {
-	// Empêche le comportement par défaut (ex: scroll)
-	ev.preventDefault();
-	// Utilise le premier doigt touché (ev.touches[0])
+	// use first touch
 	lastMouseX = ev.touches[0].clientX;
 	lastMouseY = ev.touches[0].clientY;
+	// prevent scroll
+	document.addEventListener("touchmove", function(ev) {
+		ev.preventDefault();
+	}, { passive: false });
 	document.addEventListener("touchmove", touchMoved);
 });
 
@@ -29,7 +32,7 @@ document.addEventListener("touchend", function() {
 	document.removeEventListener("touchmove", touchMoved);
 });
 
-// Fonction pour gérer les mouvements de la souris
+// Mouse mouvement
 function mouseMoved(ev) {
 	var deltaX = ev.pageX - lastMouseX;
 	var deltaY = ev.pageY - lastMouseY;
@@ -43,7 +46,7 @@ function mouseMoved(ev) {
 	rotateCube();
 }
 
-// Fonction pour gérer les mouvements tactiles
+// Touch mouvement
 function touchMoved(ev) {
 	var deltaX = ev.touches[0].clientX - lastMouseX;
 	var deltaY = ev.touches[0].clientY - lastMouseY;

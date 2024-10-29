@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-/* dev purpose */
+/* todo remove: dev purpose */
 .cube span div p {
   display: none;
 }
