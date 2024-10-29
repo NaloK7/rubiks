@@ -1,16 +1,21 @@
-let rotateY = 40;
-let rotateX = -20;
+let rotateX = -25;
+let rotateY = 45;
 let rotateZ = 0;
-let translateZ = 0;
+
+let translateX = 150;
+let translateY = 150;
+let translateZ = 150;
 
 function rotY() {
   rotateY += 90;
 
-  let newTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg) translateZ(${translateZ}px)`;
+  let newTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+
   let cube = document.querySelector("#cube");
 
-  cube.style.transformOrigin = "50% 50% 50%";
+  cube.style.transformOrigin = "50% 50%";
   cube.style.transform = newTransform;
+
   document.querySelector("#transformValue").textContent =
     "Transform: " + newTransform;
 }
