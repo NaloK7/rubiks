@@ -4,25 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styleFace.css">
-    <title>Face</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="../script.js"></script>
+    <link rel="stylesheet" href="cubeV1.css">
+    <title>V1</title>
 </head>
 
 <body>
-    <nav>
-        <a href="face.html">face</a>
-        <a href="index.html">home</a>
-        <a href="testOne.html">testOne</a>
-    </nav>
-    <button onclick="resetRotation()">reset</button>
-    <button onclick="rotY()">rotY</button>
-    <!-- <p id="transformValue"></p> -->
-    <p id="clickedId"></p>
+    <nav></nav>
+    <section id="btntest">
+        <button onclick="resetRotation()">reset</button>
+        <button onclick="rotY()">rotY</button>
+        <button onclick="Lrotation()">-  L  -</button>
+        <!-- <p id="transformValue"></p> -->
+        <p id="clickedId"></p>
+    </section>
+    <section class="displayValue">
+        <p id="v1"></p>
+        <p id="v2"></p>
+        <p id="v3"></p>
+    </section>
 
     <section class="container">
         <div class="cube">
             <!-- FRONT FACE -->
-            <span id="F1">
+            <span class="F1" id="F1">
                 <div class="white">
                     <p>F1</p>
                 </div>
@@ -69,47 +75,47 @@
             </span>
     
             <!-- LEFT FACE -->
-            <span id="L1">
+           <span class="face" id="L1">
                 <div class="red">
                     <p>L1</p>
                 </div>
             </span>
-            <span id="L2">
+            <span class="face" id="L2">
                 <div class="red">
                     <p>L2</p>
                 </div>
             </span>
-            <span id="L3">
+            <span class="face" id="L3">
                 <div class="red">
                     <p>L3</p>
                 </div>
             </span>
-            <span id="L4">
+            <span class="face" id="L4">
                 <div class="red">
                     <p>L4</p>
                 </div>
             </span>
-            <span id="L5">
+            <span class="face" id="L5">
                 <div class="red">
                     <p>L5</p>
                 </div>
             </span>
-            <span id="L6">
+            <span class="face" id="L6">
                 <div class="red">
                     <p>L6</p>
                 </div>
             </span>
-            <span id="L7">
+            <span class="face" id="L7">
                 <div class="red">
                     <p>L7</p>
                 </div>
             </span>
-            <span id="L8">
+            <span class="face" id="L8">
                 <div class="red">
                     <p>L8</p>
                 </div>
             </span>
-            <span id="L9">
+            <span class="face" id="L9">
                 <div class="red">
                     <p>L9</p>
                 </div>
@@ -210,7 +216,7 @@
             </span>
     
             <!-- UP FACE -->
-            <span id="U1">
+            <span class="U1" id="U1">
                 <div class="green">
                     <p>U1</p>
                 </div>
@@ -308,6 +314,6 @@
 
 </body>
 
-<script src="scriptFace.js"></script>
+<script src="cubeV1.js"></script>
 
 </html>
