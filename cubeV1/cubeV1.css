@@ -49,6 +49,7 @@
 }
 
 .cube span p {
+  display: none;
   font-size: xx-large;
   text-align: center;
 }
