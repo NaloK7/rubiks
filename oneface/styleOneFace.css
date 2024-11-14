@@ -2,99 +2,117 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
+  /* variable */
+  --square-size : 100px
 }
-
-
-.container {
-  padding: 50px;
-  width: 500px;
-  height: 500px;
+.container{
+  /* canvas to display the cube */
+  width: calc(var(--square-size) * 6);
+  height: calc(var(--square-size) * 6);
+  /* center horizontally */
+  margin: auto;
+  /* create perspective and preserve 3D  */
   perspective: 1000px;
-  position: relative;
   transform-style: preserve-3d;
 }
-
 .cube {
-  width: fit-content;
-  height: fit-content;
+  /* use to create a reference point in center of the cube */
+  width: var(--square-size);
+  height: var(--square-size);
+  /* center the cube in the canvas */
   position: absolute;
-  border: 1px solid black;
+  margin:auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
   transform-style: preserve-3d;
-  transform: rotate3d(1, 1, 0, -30deg) translate3d(300px, 70px, -300px);
+  /* start position of the cube */
+  transform: rotateX(-20deg) rotateY(-20deg) rotateZ(0deg);
 }
 
 .square {
-  width: 100px;
-  height: 100px;
+  width: var(--square-size);
+  height: var(--square-size);
   border: 1px solid black;
   text-align: center;
   line-height: 85px;
   text-decoration: underline;
-  /* transition: transform ease 1s; */
   position: absolute;
 }
 .F{
   background-color: rgb(72, 72, 253);
   
 }
-.F.t {
-  /* transform: rotateZ(90deg); */
-  /* transform: rotateY(-90deg) */
-}
-.F.t.l {
-  transform: translate3d(0px, 0px, 150px);
-  /* rotateZ */
-  /* transform-origin: 150% 150% 0px; */
 
-  /* rotateY */
-  /* transform-origin: 150% 150% -150px; */
+.F.t.l {
+  transform: translate3d(-100px, -100px, 150px);
 }
 .F.t.c {
-  transform: translate3d(100px, 0px, 150px);
-  /* rotateZ */
-  /* transform-origin: 50% 150% 0px; */
-
-  /* rotateY */
-  /* transform-origin: 50% 150% -150px; */
+  transform: translate3d(0px, -100px, 150px);
 }
 .F.t.r {
-  transform: translate3d(200px, 0px, 150px);
-  /* rotateZ */
-  /* transform-origin: -50% 150% 0px; */
-
-  /* rotateY */
-  /* transform-origin: -50% 150% -150px; */
+  transform: translate3d(100px, -100px, 150px);
 }
 
 .F.m.l {
-  transform: translate3d(0px, 100px, 150px);
-  transform-origin: 150% 50%;
+  transform: translate3d(-100px, 0px, 150px);
 }
 .F.m.c {
-  transform: translate3d(100px, 100px, 150px);
-  /* transform-origin: 150% 50%; */
+  transform: translate3d(0px, 0px, 150px);
 }
 .F.m.r {
-  transform: translate3d(200px, 100px, 150px);
-  transform-origin: -50% 50%;
+  transform: translate3d(100px, 0px, 150px);
 }
 
 .F.b.l {
-  transform: translate3d(0px, 200px, 150px);
-  transform-origin: 150% -50%;
+  transform: translate3d(-100px, 100px, 150px);
 }
 .F.b.c {
-  transform: translate3d(100px, 200px, 150px);
-  transform-origin: 50% -50%;
+  transform: translate3d(0px, 100px, 150px);
 }
 .F.b.r {
-  transform: translate3d(200px, 200px, 150px);
-  transform-origin: -50% -50%;
+  transform: translate3d(100px, 100px, 150px);
 }
+
 
 .R{
   background-color: orange;
 }
 .R.t.l{
-  transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, 0px, 250px);
+  transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, -100px, 150px);
+}
+.R.t.m{
+  transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, -100px, 150px);
+}
+.R.t.r{
+  transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, -100px, 150px);
+}
+
+.B{
+  background-color: red;
+}
+.B.t.l {
+	transform: rotate3d(0, 1, 0, 180deg) translate3d(-100px, -100px, 150px);
+}
+.B.t.m{
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0px, -100px, 150px);
+}
+.B.t.r{
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(100px, -100px, 150px);
+}
+
+.L{
+  background-color: green;
+}
+.L.t.l{
+  transform: rotate3d(0, -1, 0, 90deg) translate3d(-100px, -100px, 150px);
+}
+.L.t.m{
+  transform: rotate3d(0, -1, 0, 90deg) translate3d(0px, -100px, 150px);
+}
+.L.t.r{
+  transform: rotate3d(0, -1, 0, 90deg) translate3d(100px, -100px, 150px);
 }

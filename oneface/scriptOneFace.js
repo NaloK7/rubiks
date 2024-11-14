@@ -1,3 +1,12 @@
+
+window.addEventListener("DOMContentLoaded", function() {
+  let allCube = document.querySelectorAll(".square");
+  allCube.forEach(cube => {
+    cube.style.transition = "transform ease 1s";
+    
+  });
+}, false);
+
 let lastMouseX;
 let lastMouseY;
 let rotX;
@@ -30,53 +39,77 @@ function mouseMove(ev) {
 let initialRotation = 0;
 /**
  * rotate on Y axis
- * 
- * @param {int} deg 
+ *
+ * @param {int} deg
  */
 // todo remove initialRotation after switch class in place
 function U(deg) {
-  let toRotate = document.querySelectorAll(".F.t, .R.t");
-  
-  initialRotation += deg;
-  toRotate.forEach((element) => {
-    if (element.classList.contains("l")) {
-      console.log("🚀 ~ toRotate.forEach ~ element:", element)
+  // get list of all element that need to move
+  let front = document.querySelectorAll(".F.t");
+  let left = document.querySelectorAll(".L.t");
+  let back = document.querySelectorAll(".B.t");
+  let right = document.querySelectorAll(".R.t");
+  let faces = [];
+  faces.push(front);
+  faces.push(left);
+  faces.push(back);
+  faces.push(right);
+  console.log("🚀 ~ U ~ faces:", faces);
+
+  // for each face
+  for (let i = 0; i < faces.length; i++) {
+    // temporarely save the first face nodeList
+    let temp = faces[0];
+    const row = faces[i];
+
+    // for each row of that face
+    for (let j = 0; j < row.length; j++) {
+      const cube = row[j];
       
-      element.style.transformOrigin = "150% 150% -150px";
-    } else if (element.classList.contains("c")) {
-      element.style.transformOrigin = "50% 150% -150px";
-    } else if (element.classList.contains("r")) {
-      element.style.transformOrigin = "-50% 150% -150px";
+      // apply transform origin for specific movement
+      if (cube.classList.contains("l")) {
+        cube.style.transformOrigin = "150% 150% -150px";
+      } else if (cube.classList.contains("c")) {
+        cube.style.transformOrigin = "50% 150% -150px";
+      } else if (cube.classList.contains("r")) {
+        cube.style.transformOrigin = "-50% 150% -150px";
+      }
+      console.log("🚀 ~ U ~ faces[i+1][j]:", faces[i+1][j])
+      // const matrix = window.getComputedStyle(cube).transform;
+      if (i+1 > faces.length) {
+        cube.style.tranform = window.getComputedStyle(temp[j]).transform
+        
+      } else {
+        cube.style.tranform = window.getComputedStyle(faces[i+1][j]).transform
+
+      }
+      // const color = window.getComputedStyle(cube).backgroundColor;
     }
 
-    translateValues = getTranslate3dValues(element);
-    console.log(translateValues.color);
-    
-    element.style.transition = 'transform ease 1s'
-    element.style.transform = `translate3d(${translateValues.tx}px, ${translateValues.ty}px, ${translateValues.tz}px) rotateY(${initialRotation}deg)`;
-  });
+
+    // element.style.transform = ;
+  }
 }
 
 function test() {
   let ftl = document.querySelector(".F.t.l");
   let ftr = document.querySelector(".F.t.r");
   let fbr = document.querySelector(".F.b.r");
-
+  
   ftr.classList.remove("t");
   ftr.classList.add("b");
 }
 
 /**
  * Extracts the 3D translation values from the CSS transform property of a given element.
- *
- * @param {HTMLElement} element - The DOM element from which to retrieve the transform values.
- * @returns {Object} An object containing the translation values along the x, y, and z axes.
- *                   If no 3D transformation is detected, returns default values of zero.
- */
+*
+* @param {HTMLElement} element - The DOM element from which to retrieve the transform values.
+* @returns {Object} An object containing the translation values along the x, y, and z axes.
+*                   If no 3D transformation is detected, returns default values of zero.
+*/
 function getTranslate3dValues(element) {
   // Get the computed style of the element
   const transformList = window.getComputedStyle(element).transform;
-  console.log("🚀 ~ getTranslate3dValues ~ transformList:", transformList)
   const color = window.getComputedStyle(element).backgroundColor;
 
   if (transformList.startsWith("matrix3d")) {
@@ -91,12 +124,12 @@ function getTranslate3dValues(element) {
       tx: translateX,
       ty: translateY,
       tz: translateZ,
-      color: color
+      color: color,
     };
   } else {
     console.log("Pas de transformation 3D détectée.");
   }
 
   // Default to zero if no transform is applied
-  return { tx: 0, ty: 0, tz: 0};
+  return { tx: 0, ty: 0, tz: 0 };
 }
