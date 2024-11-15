@@ -1,20 +1,16 @@
 window.onload = function () {
+  
   const nav = document.querySelector("nav");
-
-  // Récupère le chemin de base (pour GitHub Pages, inclut le nom du dépôt)
-  const basePath = window.location.hostname.includes("github.io")
-    ? "/rubiks"
-    : ""; // Pas de préfixe en local
-
+  
   nav.innerHTML = `
-      <a href="${basePath}/index.html">home</a>
-      <a href="${basePath}/simplecube/simpleCube.html">simple cube</a>
-      <a href="${basePath}/oneface/oneFace.html">one face</a>
-      <a href="${basePath}/cubeV1/cubeV1.html">cube V1</a>
-      <a href="${basePath}/cubeV2/cubeV2.html">cube V2</a>
+      <a href="../index.html">home</a>
+      <a href="/simplecube/simpleCube.html">simple cube</a>
+      <a href="/oneface/oneFace.html">one face</a>
+      <a href="/cubeV1/cubeV1.html">cube V1</a>
+      <a href="/cubeV2/cubeV2.html">cube V2</a>
   `;
+  
 };
-
 let rotateX = -20;
 let rotateY = -20;
 
