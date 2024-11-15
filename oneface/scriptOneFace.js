@@ -1,10 +1,12 @@
 window.addEventListener("DOMContentLoaded", function() {
   let allCube = document.querySelectorAll(".square");
   allCube.forEach(cube => {
-    cube.style.transition = "rotate ease 1s";
+    cube.style.transition = "rotate ease 0.5s";
     
   });
 }, false);
+
+
 
 let initialRotation = 0;
 /**
@@ -96,13 +98,12 @@ function getTranslate3dValues(element) {
   // Default to zero if no transform is applied
   return { tx: 0, ty: 0, tz: 0 };
 }
+// prevent mess up animation 
+let isAnimate = false
 
-function test(reverse = false) {
-  let btn = document.querySelectorAll('button')
-  btn.forEach(button => {
-    button.disabled = true
-    setTimeout(function(){button.disabled = false;},1001);
-  });
+function m_up(reverse = false) {
+  if (!isAnimate) {
+    isAnimate = true
   let deg = -90
   if (reverse) {
     deg = 90
@@ -110,14 +111,19 @@ function test(reverse = false) {
   let row = document.querySelectorAll(".F, .L, .B, .R");
   
   row.forEach(square => {
-    let angle = window.getComputedStyle(square).rotate
-    // console.log("🚀 ~ test ~ angle:", angle)
-    if (angle != "none") {
-      angle = parseInt(angle.match(/[-]?\d+/g).join(""))
-    } else {
-      angle = 0
+    if (square.classList.contains('t')) {
+      let angle = window.getComputedStyle(square).rotate
+      if (angle != "none") {
+        angle = parseInt(angle.match(/[-]?\d+/g).join(""))
+      } else {
+        angle = 0
+      }
+      let newAngle = angle + deg
+      square.style.rotate = `y ${newAngle}deg`
     }
-    let newAngle = angle + deg
-    square.style.rotate = `y ${newAngle}deg`
   });
+  setTimeout(() => {
+    isAnimate = false;
+  }, 500);
+}
 }

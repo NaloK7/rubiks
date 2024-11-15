@@ -20,5 +20,8 @@ a:hover {
 aside {
     display: flex;
     flex-wrap: wrap;
-    margin: 25px;
+    margin: 20px;
+}
+button {
+    margin: 5px;
 }
