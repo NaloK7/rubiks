@@ -1,12 +1,27 @@
-window.onload = function() {
-    const nav = document.querySelector("nav");
+window.onload = function () {
+  
+  const nav = document.querySelector("nav");
+  console.log(window.location.href.includes("rubiks"));
+  
+  nav.innerHTML = `
+      <a href="../index.html">home</a>
+      <a href="/simplecube/simpleCube.html">simple cube</a>
+      <a href="/oneface/oneFace.html">one face</a>
+      <a href="/cubeV1/cubeV1.html">cube V1</a>
+      <a href="/cubeV2/cubeV2.html">cube V2</a>
+  `;
+  
+  if (window.location.href.includes("rubiks") === true) {
     nav.innerHTML = `
-        <a href="../index.html">home</a>
-        <a href="/simplecube/simpleCube.html">simple cube</a>
-        <a href="/oneface/oneFace.html">one face</a>
-        <a href="/cubeV1/cubeV1.html">cube V1</a>
-        <a href="/cubeV2/cubeV2.html">cube V2</a>
-    `;
+    <a href="rubiks/index.html">home</a>
+    <a href="rubiks/simplecube/simpleCube.html">simple cube</a>
+    <a href="rubiks/oneface/oneFace.html">one face</a>
+    <a href="rubiks/cubeV1/cubeV1.html">cube V1</a>
+    <a href="rubiks/cubeV2/cubeV2.html">cube V2</a>
+`;
+
+  } 
+  
 };
 let rotateX = -20;
 let rotateY = -20;
