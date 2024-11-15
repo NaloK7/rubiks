@@ -1,4 +1,6 @@
 nav {
+    display: flex;
+    flex-wrap: wrap;
     margin: 20px;
 }
 
@@ -14,4 +16,9 @@ a:hover {
     color: white;
     background-color: black;
     border: 1px solid white;
+}
+aside {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 25px;
 }
