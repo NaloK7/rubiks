@@ -6,6 +6,9 @@
   /* variable */
   --square-size : 100px
 }
+button{
+  padding: 5px 10px;
+}
 .container{
   /* canvas to display the cube */
   width: calc(var(--square-size) * 6);
@@ -42,13 +45,15 @@
   text-decoration: underline;
   position: absolute;
 }
+
 .F{
   background-color: rgb(72, 72, 253);
-  
+  rotate: y 0deg
 }
 
 .F.t.l {
   transform: translate3d(-100px, -100px, 150px);
+  
 }
 .F.t.c {
   transform: translate3d(0px, -100px, 150px);
@@ -80,39 +85,42 @@
 
 .R{
   background-color: orange;
+  rotate: y 90deg
 }
 .R.t.l{
-  transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, -100px, 150px);
+  transform: translate3d(-100px, -100px, 150px);
 }
 .R.t.m{
-  transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, -100px, 150px);
+  transform: translate3d(0px, -100px, 150px);
 }
 .R.t.r{
-  transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, -100px, 150px);
+  transform: translate3d(100px, -100px, 150px);
 }
 
 .B{
   background-color: red;
+  rotate: y 180deg
 }
 .B.t.l {
-	transform: rotate3d(0, 1, 0, 180deg) translate3d(-100px, -100px, 150px);
+	transform:  translate3d(-100px, -100px, 150px);
 }
 .B.t.m{
-  transform: rotate3d(0, 1, 0, 180deg) translate3d(0px, -100px, 150px);
+  transform:  translate3d(0px, -100px, 150px);
 }
 .B.t.r{
-  transform: rotate3d(0, 1, 0, 180deg) translate3d(100px, -100px, 150px);
+  transform:  translate3d(100px, -100px, 150px);
 }
 
 .L{
   background-color: green;
+  rotate: y 270deg
 }
 .L.t.l{
-  transform: rotate3d(0, -1, 0, 90deg) translate3d(-100px, -100px, 150px);
+  transform: translate3d(-100px, -100px, 150px);
 }
 .L.t.m{
-  transform: rotate3d(0, -1, 0, 90deg) translate3d(0px, -100px, 150px);
+  transform: translate3d(0px, -100px, 150px);
 }
 .L.t.r{
-  transform: rotate3d(0, -1, 0, 90deg) translate3d(100px, -100px, 150px);
+  transform: translate3d(100px, -100px, 150px);
 }

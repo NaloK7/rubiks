@@ -2,7 +2,7 @@
 window.addEventListener("DOMContentLoaded", function() {
   let allCube = document.querySelectorAll(".square");
   allCube.forEach(cube => {
-    cube.style.transition = "transform ease 1s";
+    cube.style.transition = "rotate ease 1s";
     
   });
 }, false);
@@ -65,6 +65,7 @@ function U(deg) {
     // for each row of that face
     for (let j = 0; j < row.length; j++) {
       const cube = row[j];
+      console.log("🚀 ~ U ~ cube:", cube)
       
       // apply transform origin for specific movement
       if (cube.classList.contains("l")) {
@@ -91,14 +92,6 @@ function U(deg) {
   }
 }
 
-function test() {
-  let ftl = document.querySelector(".F.t.l");
-  let ftr = document.querySelector(".F.t.r");
-  let fbr = document.querySelector(".F.b.r");
-  
-  ftr.classList.remove("t");
-  ftr.classList.add("b");
-}
 
 /**
  * Extracts the 3D translation values from the CSS transform property of a given element.
@@ -111,15 +104,15 @@ function getTranslate3dValues(element) {
   // Get the computed style of the element
   const transformList = window.getComputedStyle(element).transform;
   const color = window.getComputedStyle(element).backgroundColor;
-
+  
   if (transformList.startsWith("matrix3d")) {
     const values = transformList.slice(9, -1).split(", ").map(parseFloat);
-
+    
     const translateX = values[12];
     const translateY = values[13];
     const translateZ = values[14];
     // console.log("Translation:", translateX, translateY, translateZ);
-
+    
     return {
       tx: translateX,
       ty: translateY,
@@ -129,7 +122,32 @@ function getTranslate3dValues(element) {
   } else {
     console.log("Pas de transformation 3D détectée.");
   }
-
+  
   // Default to zero if no transform is applied
   return { tx: 0, ty: 0, tz: 0 };
+}
+
+function test(reverse = false) {
+  let btn = document.querySelectorAll('button')
+  btn.forEach(button => {
+    button.disabled = true
+    setTimeout(function(){button.disabled = false;},1001);
+  });
+  let deg = -90
+  if (reverse) {
+    deg = 90
+  }
+  let row = document.querySelectorAll(".F, .L, .B, .R");
+  
+  row.forEach(square => {
+    let angle = window.getComputedStyle(square).rotate
+    // console.log("🚀 ~ test ~ angle:", angle)
+    if (angle != "none") {
+      angle = parseInt(angle.match(/[-]?\d+/g).join(""))
+    } else {
+      angle = 0
+    }
+    let newAngle = angle + deg
+    square.style.rotate = `y ${newAngle}deg`
+  });
 }
