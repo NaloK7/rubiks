@@ -6,9 +6,11 @@
   /* variable */
   --square-size : 100px
 }
+
 button{
   padding: 5px 10px;
 }
+
 .container{
   /* canvas to display the cube */
   width: calc(var(--square-size) * 6);
@@ -19,6 +21,7 @@ button{
   perspective: 1000px;
   transform-style: preserve-3d;
 }
+
 .cube {
   /* use to create a reference point in center of the cube */
   width: var(--square-size);
