@@ -6,8 +6,8 @@ window.onload = function () {
       <a href="../index.html">home</a>
       <a href="./simplecube/index.html">simple cube</a>
       <a href="./oneface/index.html">one face</a>
-      <a href="./cubeV1/index.html">cube V1</a>
-      <a href="./cubeV2/index.html">cube V2</a>
+      <a href="../cubeV1/index.html">cube V1</a>
+      <a href="../cubeV2/index.html">cube V2</a>
   `;
   
 };
