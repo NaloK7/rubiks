@@ -4,10 +4,10 @@ window.onload = function () {
   
   nav.innerHTML = `
       <a href="../index.html">home</a>
-      <a href="/simplecube/simpleCube.html">simple cube</a>
-      <a href="/oneface/oneFace.html">one face</a>
-      <a href="/cubeV1/cubeV1.html">cube V1</a>
-      <a href="/cubeV2/cubeV2.html">cube V2</a>
+      <a href="./simplecube/index.html">simple cube</a>
+      <a href="./oneface/index.html">one face</a>
+      <a href="./cubeV1/index.html">cube V1</a>
+      <a href="./cubeV2/index.html">cube V2</a>
   `;
   
 };
