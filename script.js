@@ -17,6 +17,7 @@ let rotateY = -20;
 let lastMouseX = 0;
 let lastMouseY = 0;
 
+
 // MOUSE EVENT
 document.addEventListener("mousedown", function (ev) {
   lastMouseX = ev.clientX;
@@ -64,6 +65,7 @@ function pointerMoved(ev) {
   rotateX += deltaY * -0.5;
   rotateY -= deltaX * -0.5;
 
+  
   rotateCube();
 }
 
@@ -73,3 +75,4 @@ function rotateCube() {
   // cube.style.transformOrigin = "50% 50%";
   cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 }
+

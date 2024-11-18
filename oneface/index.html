@@ -15,12 +15,12 @@
 <body>
   <nav></nav>
   <aside>
-    <button onclick="m_up()" >U</button>
+    <button onclick="m_up()">U</button>
     <button onclick="m_up(true)">U'</button>
-    <!-- <button onclick="U(-90)">U</button>
-    <button onclick="U(90)">U'</button> -->
+    
   </aside>
-  <p id="rotation"></p>
+  <p><code>pageX</code>: <span id="x">n/a</span></p>
+  <p><code>pageY</code>: <span id="y">n/a</span></p>
   <section class="container">
     <div class="cube">
       <!-- FRONT TOP -->
@@ -32,23 +32,88 @@
       <div class="square F m l">F m l</div>
       <div class="square F m c">F m c</div>
       <div class="square F m r">F m r</div>
-      
+
       <!-- FRONT BOTTOM -->
       <div class="square F b l">F b l</div>
       <div class="square F b c">F b c</div>
       <div class="square F b r">F b r</div>
 
+      <!--  -->
+
+      <!-- RIGHT TOP -->
       <div class="square R t l">R t l</div>
-      <div class="square R t m">R t m</div>
+      <div class="square R t c">R t c</div>
       <div class="square R t r">R t r</div>
 
-      <div class="square B t l">B t l</div>
-      <div class="square B t m">B t m</div>
-      <div class="square B t r">B t r</div>
+      <!-- RIGHT MIDDLE -->
+      <div class="square R m l">R m l</div>
+      <div class="square R m c">R m c</div>
+      <div class="square R m r">R m r</div>
 
+      <!-- RIGHT BOTTOM -->
+      <div class="square R b l">R b l</div>
+      <div class="square R b c">R b c</div>
+      <div class="square R b r">R b r</div>
+
+      <!--  -->
+
+      <!-- BACK TOP -->
+      <div class="square B t l">B t l</div>
+      <div class="square B t c">B t c</div>
+      <div class="square B t r">B t r</div>
+      <!-- BACK MIDDLE -->
+      <div class="square B m l">B m l</div>
+      <div class="square B m c">B m c</div>
+      <div class="square B m r">B m r</div>
+      <!-- BACK BOTTOM -->
+      <div class="square B b l">B b l</div>
+      <div class="square B b c">B b c</div>
+      <div class="square B b r">B b r</div>
+      
+      <!--  -->
+
+      <!-- LEFT TOP -->
       <div class="square L t l">L t l</div>
-      <div class="square L t m">L t m</div>
+      <div class="square L t c">L t c</div>
       <div class="square L t r">L t r</div>
+      <!-- LEFT MIDDLE -->
+      <div class="square L m l">L m l</div>
+      <div class="square L m c">L m c</div>
+      <div class="square L m r">L m r</div>
+      <!-- LEFT BOTTOM -->
+      <div class="square L b l">L b l</div>
+      <div class="square L b c">L b c</div>
+      <div class="square L b r">L b r</div>
+
+      <!--  -->
+
+      <!-- UP TOP -->
+      <div class="square U t l">U t l</div>
+      <div class="square U t c">U t c</div>
+      <div class="square U t r">U t r</div>
+      <!-- UP MIDDLE -->
+      <div class="square U m l">U m l</div>
+      <div class="square U m c">U m c</div>
+      <div class="square U m r">U m r</div>
+      <!-- UP BOTTOM -->
+      <div class="square U b l">U b l</div>
+      <div class="square U b c">U b c</div>
+      <div class="square U b r">U b r</div>
+
+      <!--  -->
+
+      <!-- DOWN TOP -->
+      <div class="square D t l">D t l</div>
+      <div class="square D t c">D t c</div>
+      <div class="square D t r">D t r</div>
+      <!-- DOWN MIDDLE -->
+      <div class="square D m l">D m l</div>
+      <div class="square D m c">D m c</div>
+      <div class="square D m r">D m r</div>
+      <!-- DOWN BOTTOM -->
+      <div class="square D b l">D b l</div>
+      <div class="square D b c">D b c</div>
+      <div class="square D b r">D b r</div>
 
 
     </div>

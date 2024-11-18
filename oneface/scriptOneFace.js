@@ -1,11 +1,28 @@
-window.addEventListener("DOMContentLoaded", function() {
-  let allCube = document.querySelectorAll(".square");
-  allCube.forEach(cube => {
-    cube.style.transition = "rotate ease 0.5s";
+window.addEventListener(
+  "DOMContentLoaded",
+  function () {
     
-  });
-}, false);
+    const box = document.querySelector("html");
+    const pageX = document.getElementById("x");
+    const pageY = document.getElementById("y");
+    
+    function updateDisplay(event) {
+      pageX.innerText = event.pageX;
+      pageY.innerText = event.pageY;
+    }
+    
+    box.addEventListener("mousemove", updateDisplay, false);
+    box.addEventListener("mouseenter", updateDisplay, false);
+    box.addEventListener("mouseleave", updateDisplay, false);
+    
 
+    let allCube = document.querySelectorAll(".square");
+    allCube.forEach((cube) => {
+      cube.style.transition = "rotate ease 0.5s";
+    });
+  },
+  false
+);
 
 
 let initialRotation = 0;
@@ -37,8 +54,8 @@ function U(deg) {
     // for each row of that face
     for (let j = 0; j < row.length; j++) {
       const cube = row[j];
-      console.log("🚀 ~ U ~ cube:", cube)
-      
+      console.log("🚀 ~ U ~ cube:", cube);
+
       // apply transform origin for specific movement
       if (cube.classList.contains("l")) {
         cube.style.transformOrigin = "150% 150% -150px";
@@ -47,44 +64,42 @@ function U(deg) {
       } else if (cube.classList.contains("r")) {
         cube.style.transformOrigin = "-50% 150% -150px";
       }
-      console.log("🚀 ~ U ~ faces[i+1][j]:", faces[i+1][j])
+      console.log("🚀 ~ U ~ faces[i+1][j]:", faces[i + 1][j]);
       // const matrix = window.getComputedStyle(cube).transform;
-      if (i+1 > faces.length) {
-        cube.style.tranform = window.getComputedStyle(temp[j]).transform
-        
+      if (i + 1 > faces.length) {
+        cube.style.tranform = window.getComputedStyle(temp[j]).transform;
       } else {
-        cube.style.tranform = window.getComputedStyle(faces[i+1][j]).transform
-
+        cube.style.tranform = window.getComputedStyle(
+          faces[i + 1][j]
+        ).transform;
       }
       // const color = window.getComputedStyle(cube).backgroundColor;
     }
-
 
     // element.style.transform = ;
   }
 }
 
-
 /**
  * Extracts the 3D translation values from the CSS transform property of a given element.
-*
-* @param {HTMLElement} element - The DOM element from which to retrieve the transform values.
-* @returns {Object} An object containing the translation values along the x, y, and z axes.
-*                   If no 3D transformation is detected, returns default values of zero.
-*/
+ *
+ * @param {HTMLElement} element - The DOM element from which to retrieve the transform values.
+ * @returns {Object} An object containing the translation values along the x, y, and z axes.
+ *                   If no 3D transformation is detected, returns default values of zero.
+ */
 function getTranslate3dValues(element) {
   // Get the computed style of the element
   const transformList = window.getComputedStyle(element).transform;
   const color = window.getComputedStyle(element).backgroundColor;
-  
+
   if (transformList.startsWith("matrix3d")) {
     const values = transformList.slice(9, -1).split(", ").map(parseFloat);
-    
+
     const translateX = values[12];
     const translateY = values[13];
     const translateZ = values[14];
     // console.log("Translation:", translateX, translateY, translateZ);
-    
+
     return {
       tx: translateX,
       ty: translateY,
@@ -94,36 +109,36 @@ function getTranslate3dValues(element) {
   } else {
     console.log("Pas de transformation 3D détectée.");
   }
-  
+
   // Default to zero if no transform is applied
   return { tx: 0, ty: 0, tz: 0 };
 }
-// prevent mess up animation 
-let isAnimate = false
+// prevent mess up animation
+let isAnimate = false;
 
 function m_up(reverse = false) {
   if (!isAnimate) {
-    isAnimate = true
-  let deg = -90
-  if (reverse) {
-    deg = 90
-  }
-  let row = document.querySelectorAll(".F, .L, .B, .R");
-  
-  row.forEach(square => {
-    if (square.classList.contains('t')) {
-      let angle = window.getComputedStyle(square).rotate
-      if (angle != "none") {
-        angle = parseInt(angle.match(/[-]?\d+/g).join(""))
-      } else {
-        angle = 0
-      }
-      let newAngle = angle + deg
-      square.style.rotate = `y ${newAngle}deg`
+    isAnimate = true;
+    let deg = -90;
+    if (reverse) {
+      deg = 90;
     }
-  });
-  setTimeout(() => {
-    isAnimate = false;
-  }, 500);
-}
+    let row = document.querySelectorAll(".F, .L, .B, .R, .U");
+
+    row.forEach((square) => {
+      if (square.classList.contains("t") | square.classList.contains("U")) {
+        let angle = window.getComputedStyle(square).rotate;
+        if (angle != "none") {
+          angle = parseInt(angle.match(/[-]?\d+/g).join(""));
+        } else {
+          angle = 0;
+        }
+        let newAngle = angle + deg;
+        square.style.rotate = `y ${newAngle}deg`;
+      }
+    });
+    setTimeout(() => {
+      isAnimate = false;
+    }, 500);
+  }
 }
