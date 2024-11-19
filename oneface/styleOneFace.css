@@ -46,38 +46,39 @@
 }
 
 /* FRONT */
-.F{
+
+.blue{
   background-color: rgb(72, 72, 253);
   rotate: y 0deg
 }
 /* top */
-.F.t.l {
+.blue.t.l {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.F.t.c {
+.blue.t.c {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.F.t.r {
+.blue.t.r {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.F.m.l {
+.blue.m.l {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.F.m.c {
+.blue.m.c {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.F.m.r {
+.blue.m.r {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.F.b.l {
+.blue.b.l {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.F.b.c {
+.blue.b.c {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.F.b.r {
+.blue.b.r {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(100px, 100px, 150px);
 }
 

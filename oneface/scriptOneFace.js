@@ -2,20 +2,8 @@ window.addEventListener(
   "DOMContentLoaded",
   function () {
     
-    const box = document.querySelector("html");
-    const pageX = document.getElementById("x");
-    const pageY = document.getElementById("y");
-    
-    function updateDisplay(event) {
-      pageX.innerText = event.pageX;
-      pageY.innerText = event.pageY;
-    }
-    
-    box.addEventListener("mousemove", updateDisplay, false);
-    box.addEventListener("mouseenter", updateDisplay, false);
-    box.addEventListener("mouseleave", updateDisplay, false);
-    
-
+    displayMouseCoord()
+    setInterval(displayCubeTransform, 100)
     let allCube = document.querySelectorAll(".square");
     allCube.forEach((cube) => {
       cube.style.transition = "rotate ease 0.5s";
@@ -24,95 +12,41 @@ window.addEventListener(
   false
 );
 
-
-let initialRotation = 0;
-/**
- * rotate on Y axis
- *
- * @param {int} deg
- */
-// todo remove initialRotation after switch class in place
-function U(deg) {
-  // get list of all element that need to move
-  let front = document.querySelectorAll(".F.t");
-  let left = document.querySelectorAll(".L.t");
-  let back = document.querySelectorAll(".B.t");
-  let right = document.querySelectorAll(".R.t");
-  let faces = [];
-  faces.push(front);
-  faces.push(left);
-  faces.push(back);
-  faces.push(right);
-  console.log("🚀 ~ U ~ faces:", faces);
-
-  // for each face
-  for (let i = 0; i < faces.length; i++) {
-    // temporarely save the first face nodeList
-    let temp = faces[0];
-    const row = faces[i];
-
-    // for each row of that face
-    for (let j = 0; j < row.length; j++) {
-      const cube = row[j];
-      console.log("🚀 ~ U ~ cube:", cube);
-
-      // apply transform origin for specific movement
-      if (cube.classList.contains("l")) {
-        cube.style.transformOrigin = "150% 150% -150px";
-      } else if (cube.classList.contains("c")) {
-        cube.style.transformOrigin = "50% 150% -150px";
-      } else if (cube.classList.contains("r")) {
-        cube.style.transformOrigin = "-50% 150% -150px";
-      }
-      console.log("🚀 ~ U ~ faces[i+1][j]:", faces[i + 1][j]);
-      // const matrix = window.getComputedStyle(cube).transform;
-      if (i + 1 > faces.length) {
-        cube.style.tranform = window.getComputedStyle(temp[j]).transform;
-      } else {
-        cube.style.tranform = window.getComputedStyle(
-          faces[i + 1][j]
-        ).transform;
-      }
-      // const color = window.getComputedStyle(cube).backgroundColor;
-    }
-
-    // element.style.transform = ;
-  }
+function displayMouseCoord() {
+  const box = document.querySelector("html");
+  
+  box.addEventListener("mousemove", updateDisplay, false);
+  box.addEventListener("mouseenter", updateDisplay, false);
+  box.addEventListener("mouseleave", updateDisplay, false);
 }
 
-/**
- * Extracts the 3D translation values from the CSS transform property of a given element.
- *
- * @param {HTMLElement} element - The DOM element from which to retrieve the transform values.
- * @returns {Object} An object containing the translation values along the x, y, and z axes.
- *                   If no 3D transformation is detected, returns default values of zero.
- */
-function getTranslate3dValues(element) {
-  // Get the computed style of the element
-  const transformList = window.getComputedStyle(element).transform;
-  const color = window.getComputedStyle(element).backgroundColor;
-
-  if (transformList.startsWith("matrix3d")) {
-    const values = transformList.slice(9, -1).split(", ").map(parseFloat);
-
-    const translateX = values[12];
-    const translateY = values[13];
-    const translateZ = values[14];
-    // console.log("Translation:", translateX, translateY, translateZ);
-
-    return {
-      tx: translateX,
-      ty: translateY,
-      tz: translateZ,
-      color: color,
-    };
-  } else {
-    console.log("Pas de transformation 3D détectée.");
-  }
-
-  // Default to zero if no transform is applied
-  return { tx: 0, ty: 0, tz: 0 };
+function updateDisplay(event) {
+  const pageX = document.getElementById("x");
+  const pageY = document.getElementById("y");
+  pageX.innerText = event.pageX;
+  pageY.innerText = event.pageY;
 }
+
+// display cube rotation to set relative face
+function displayCubeTransform() {
+  let cube = document.querySelector(".cube");
+  let cubeTransform = document.querySelector('#cubeTransform')
+  let matrix = window.getComputedStyle(cube).transform
+  let values = matrix.split('(')[1].split(')')[0].split(','),
+  // pi = Math.PI,
+  // sinB = parseFloat(values[8]),
+  y = (Math.asin(parseFloat(values[8])) * 180 / Math.PI).toFixed(1),
+  x = (Math.asin(-parseFloat(values[9]) / Math.cos(y * Math.PI / 180)) * 180 / Math.PI).toFixed(1),
+  z = (Math.acos(parseFloat(values[0]) / Math.cos(y * Math.PI / 180)) * 180 / Math.PI).toFixed(1);
+
+rotX = x;
+rotY = y;
+rotZ = z;
+
+  cubeTransform.innerHTML = `X : ${rotX}</br>Y : ${rotY}`
+  
+}
+
 // prevent mess up animation
 let isAnimate = false;
 
@@ -127,6 +61,14 @@ function m_up(reverse = false) {
 
     row.forEach((square) => {
       if (square.classList.contains("t") | square.classList.contains("U")) {
+        let txt = square.innerHTML
+        if (txt.includes('R')) {
+          square.innerHTML = txt.replace('R', 'F')
+
+          square.classList.remove('right')
+          square.classList.add('front')
+          
+        }
         let angle = window.getComputedStyle(square).rotate;
         if (angle != "none") {
           angle = parseInt(angle.match(/[-]?\d+/g).join(""));

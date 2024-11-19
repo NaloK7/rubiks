@@ -74,5 +74,9 @@ function rotateCube() {
   var cube = document.querySelector(".cube");
   // cube.style.transformOrigin = "50% 50%";
   cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  // watch cube rotation to set relative face
+// let cubeTransform = document.querySelector('#cubeTransform')
+// cubeTransform.innerHTML = window.getComputedStyle(cube).transform
 }
 
