@@ -7,6 +7,11 @@
   --square-size : 100px
 }
 
+#displayValue {
+  height: 55px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
 .container{
   /* canvas to display the cube */
   width: calc(var(--square-size) * 6);
@@ -40,7 +45,7 @@
   height: var(--square-size);
   border: 1px solid black;
   text-align: center;
-  line-height: 85px;
+  line-height: 20px;
   text-decoration: underline;
   position: absolute;
 }
@@ -85,189 +90,189 @@
 /*  */
 
 /* RIGHT */
-.R{
+.orange{
   background-color: orange;
   rotate: y 0deg
 }
 /* top */
-.R.t.l{
+.orange.t.l{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.R.t.c{
+.orange.t.c{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.R.t.r{
+.orange.t.r{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.R.m.l{
+.orange.m.l{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.R.m.c{
+.orange.m.c{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.R.m.r{
+.orange.m.r{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.R.b.l{
+.orange.b.l{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.R.b.c{
+.orange.b.c{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.R.b.r{
+.orange.b.r{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, 100px, 150px);
 }
 
 /*  */
 
 /* BACK */
-.B{
+.green{
   background-color: green;
   rotate: y 0deg
 }
 /* top */
-.B.t.l {
+.green.t.l {
 	transform:  rotate3d(0, 1, 0, 180deg) translate3d(-100px, -100px, 150px);
 }
-.B.t.c{
+.green.t.c{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(0px, -100px, 150px);
 }
-.B.t.r{
+.green.t.r{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.B.m.l {
+.green.m.l {
 	transform:  rotate3d(0, 1, 0, 180deg) translate3d(-100px, 0px, 150px);
 }
-.B.m.c{
+.green.m.c{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(0px, 0px, 150px);
 }
-.B.m.r{
+.green.m.r{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.B.b.l {
+.green.b.l {
 	transform:  rotate3d(0, 1, 0, 180deg) translate3d(-100px, 100px, 150px);
 }
-.B.b.c{
+.green.b.c{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(0px, 100px, 150px);
 }
-.B.b.r{
+.green.b.r{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(100px, 100px, 150px);
 }
 
 /*  */
 
 /* LEFT */
-.L{
+.red{
   background-color: red;
   rotate: y 0deg
 }
 /* top */
-.L.t.l{
+.red.t.l{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(-100px, -100px, 150px);
 }
-.L.t.c{
+.red.t.c{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, -100px, 150px);
 }
-.L.t.r{
+.red.t.r{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.L.m.l{
+.red.m.l{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(-100px, 0px, 150px);
 }
-.L.m.c{
+.red.m.c{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, 0px, 150px);
 }
-.L.m.r{
+.red.m.r{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.L.b.l{
+.red.b.l{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(-100px, 100px, 150px);
 }
-.L.b.c{
+.red.b.c{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, 100px, 150px);
 }
-.L.b.r{
+.red.b.r{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(100px, 100px, 150px);
 }
 
 /*  */
 
 /* UP */
-.U{
+.white{
   background-color: white;
   rotate: y 0deg 
 }
 /* top */
-.U.t.l{
+.white.t.l{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.U.t.c{
+.white.t.c{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.U.t.r{
+.white.t.r{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.U.m.l{
+.white.m.l{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.U.m.c{
+.white.m.c{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.U.m.r{
+.white.m.r{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.U.b.l{
+.white.b.l{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.U.b.c{
+.white.b.c{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.U.b.r{
+.white.b.r{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(100px, 100px, 150px);
 }
 
 /*  */
 
 /* DOWN */
-.D{
+.yellow{
   background-color: yellow;
   rotate: y 0deg 
 }
 /* top */
-.D.t.l{
+.yellow.t.l{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.D.t.c{
+.yellow.t.c{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.D.t.r{
+.yellow.t.r{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.D.m.l{
+.yellow.m.l{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.D.m.c{
+.yellow.m.c{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.D.m.r{
+.yellow.m.r{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.D.b.l{
+.yellow.b.l{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.D.b.c{
+.yellow.b.c{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.D.b.r{
+.yellow.b.r{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(100px, 100px, 150px);
 }
