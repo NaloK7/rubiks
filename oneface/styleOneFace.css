@@ -12,7 +12,10 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
-
+aside {
+  display:flex;
+  flex-direction: column;
+}
 .container{
   /* canvas to display the cube */
   width: calc(var(--square-size) * 6);
@@ -54,6 +57,9 @@
 /* FRONT */
 
 .blue{
+  /* display: block;
+  width: 100%;
+  height: 100%; */
   background-color: rgb(72, 72, 253);
   rotate: y 0deg
 }
