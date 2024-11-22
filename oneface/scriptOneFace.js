@@ -7,11 +7,11 @@ window.addEventListener(
      let allCube = document.querySelectorAll(".square");
      let displayTag = document.querySelector('#tag')
      allCube.forEach((cube) => {
+      //  get the clicked square coordinate
+      //  (probable futur use to detect relative movement)
        cube.addEventListener('click', () => {
-        let rect = cube.getBoundingClientRect();
-        // console.log('Y:', rect.top.toFixed(2), '\nX:', rect.left.toFixed(2));
-         
-        let face = cube.classList[2]
+        let rect = cube.getBoundingClientRect();         
+        let face = [2, 3, 4].map(x=>cube.classList[x])
         displayTag.innerHTML = `${face}</br>squareX: ${rect.left.toFixed(2)}</br>squareY: ${rect.top.toFixed(2)}`
       })
       cube.style.transition = "rotate ease 0.5s";
@@ -88,25 +88,33 @@ function displayCubeTransform() {
 // prevent mess up animation
 let isAnimate = false;
 
-function m_up(reverse = false) {
+function m_up(move, reverse = false) {
   if (!isAnimate) {
     isAnimate = true;
     let deg = -90;
     if (reverse) {
       deg = 90;
     }
-    let row = document.querySelectorAll(".front, .left, .back, .right, .up");
+    let axe = ''
+    if (move == '.L' | move == '.M' | move == '.R') {
+      axe = 'x'
+    } else if (move == '.U' | move == '.E' | move == '.D') {
+      axe = 'y'
+    } else if (move == '.F') {
+      axe = 'z'
+    }
+    let row = document.querySelectorAll(move);
 
     row.forEach((square) => {
-      if (square.classList.contains("t") | square.classList.contains("up")) {
-        let txt = square.innerHTML;
-        if (square.classList.contains("right")) {
-          square.innerHTML = txt.replace("right", "front");
+      // if (square.classList.contains("t") | square.classList.contains("up")) {
+        // let txt = square.innerHTML;
+        // if (square.classList.contains("right")) {
+        //   square.innerHTML = txt.replace("right", "front");
 
-          console.log(square.classList);
-          square.classList.remove("right");
-          square.classList.add("front");
-        }
+        //   console.log(square.classList);
+        //   square.classList.remove("right");
+        //   square.classList.add("front");
+        // }
         let angle = window.getComputedStyle(square).rotate;
         if (angle != "none") {
           angle = parseInt(angle.match(/[-]?\d+/g).join(""));
@@ -114,11 +122,57 @@ function m_up(reverse = false) {
           angle = 0;
         }
         let newAngle = angle + deg;
-        square.style.rotate = `y ${newAngle}deg`;
+        square.style.rotate = `${axe} ${newAngle}deg`;
       }
-    });
+    // }
+  );
     setTimeout(() => {
       isAnimate = false;
     }, 500);
   }
+}
+
+function setMovePossible() {
+  let allCube = document.querySelectorAll(".square");
+  allCube.forEach(element => {
+    let face = element.classList[2][0]    // L M R U E D F
+    let row = element.classList[2][2]     // t m b
+    let column = element.classList[2][2]  // l c r
+    
+    // select movable squares for each moves
+    let Lmove = face == 'L' | ((face == 'F' | face == 'U' | face == 'D') & column == 'l') | (face == 'B' & column == 'r')
+    let Mmove = (face == 'F' | face == 'D' | face == 'B' | face == 'U') & column == 'c'
+    let Rmove = face == 'R' | ((face == 'F' | face == 'U' | face == 'D') & column == 'r') | (face == 'B' & column == 'l')
+    
+    let Umove = face == 'U' | ((face == 'F' | face == 'L' | face == 'B' | face == 'R') & row == 't')
+    let Emove = (face == 'F' | face == 'R' | face == 'B' | face == 'L') & row == 'm'
+    let Dmove = face == 'D' | ((face == 'F' | face == 'L' | face == 'B' | face == 'R') & row == 'b')
+
+    let Fmove = face == 'F' | (face == 'D' & row == 't') | (face == 'L' & column == 'r') | (face == 'U' & row == 'b') | (face == 'R' & column == 'l')
+    
+    // set doable movement
+    if (Lmove) {
+      element.classList.add('L')
+    }
+    if (Mmove) {
+      element.classList.add('M')
+    }
+    if (Rmove) {
+      element.classList.add('R')
+    }
+    if (Umove) {
+      element.classList.add('U')
+    }
+    if (Emove) {
+      element.classList.add('E')
+    }
+    if (Dmove) {
+      element.classList.add('D')
+    }
+    if (Fmove) {
+      element.classList.add('F')
+    }
+    
+  });
+  
 }

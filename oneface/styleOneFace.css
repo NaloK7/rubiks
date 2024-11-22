@@ -12,6 +12,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
+
 .container{
   /* canvas to display the cube */
   width: calc(var(--square-size) * 6);
@@ -57,33 +58,33 @@
   rotate: y 0deg
 }
 /* top */
-.blue.t.l {
+.Ftl {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.blue.t.c {
+.Ftc {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.blue.t.r {
+.Ftr {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.blue.m.l {
+.Fml {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.blue.m.c {
+.Fmc {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.blue.m.r {
+.Fmr {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.blue.b.l {
+.Fbl {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.blue.b.c {
+.Fbc {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.blue.b.r {
+.Fbr {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(100px, 100px, 150px);
 }
 
@@ -95,33 +96,33 @@
   rotate: y 0deg
 }
 /* top */
-.orange.t.l{
+.Rtl{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.orange.t.c{
+.Rtc{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.orange.t.r{
+.Rtr{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.orange.m.l{
+.Rml{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.orange.m.c{
+.Rmc{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.orange.m.r{
+.Rmr{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.orange.b.l{
+.Rbl{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.orange.b.c{
+.Rbc{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.orange.b.r{
+.Rbr{
   transform: rotate3d(0, 1, 0, 90deg) translate3d(100px, 100px, 150px);
 }
 
@@ -133,33 +134,33 @@
   rotate: y 0deg
 }
 /* top */
-.green.t.l {
+.Btl {
 	transform:  rotate3d(0, 1, 0, 180deg) translate3d(-100px, -100px, 150px);
 }
-.green.t.c{
+.Btc{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(0px, -100px, 150px);
 }
-.green.t.r{
+.Btr{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.green.m.l {
+.Bml {
 	transform:  rotate3d(0, 1, 0, 180deg) translate3d(-100px, 0px, 150px);
 }
-.green.m.c{
+.Bmc{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(0px, 0px, 150px);
 }
-.green.m.r{
+.Bmr{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.green.b.l {
+.Bbl {
 	transform:  rotate3d(0, 1, 0, 180deg) translate3d(-100px, 100px, 150px);
 }
-.green.b.c{
+.Bbc{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(0px, 100px, 150px);
 }
-.green.b.r{
+.Bbr{
   transform:  rotate3d(0, 1, 0, 180deg) translate3d(100px, 100px, 150px);
 }
 
@@ -171,33 +172,33 @@
   rotate: y 0deg
 }
 /* top */
-.red.t.l{
+.Ltl{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(-100px, -100px, 150px);
 }
-.red.t.c{
+.Ltc{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, -100px, 150px);
 }
-.red.t.r{
+.Ltr{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.red.m.l{
+.Lml{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(-100px, 0px, 150px);
 }
-.red.m.c{
+.Lmc{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, 0px, 150px);
 }
-.red.m.r{
+.Lmr{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.red.b.l{
+.Lbl{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(-100px, 100px, 150px);
 }
-.red.b.c{
+.Lbc{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, 100px, 150px);
 }
-.red.b.r{
+.Lbr{
   transform: rotate3d(0, 1, 0, 270deg) translate3d(100px, 100px, 150px);
 }
 
@@ -209,33 +210,33 @@
   rotate: y 0deg 
 }
 /* top */
-.white.t.l{
+.Utl{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.white.t.c{
+.Utc{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.white.t.r{
+.Utr{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.white.m.l{
+.Uml{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.white.m.c{
+.Umc{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.white.m.r{
+.Umr{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.white.b.l{
+.Ubl{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.white.b.c{
+.Ubc{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.white.b.r{
+.Ubr{
   transform: rotate3d(1, 0, 0, 90deg) translate3d(100px, 100px, 150px);
 }
 
@@ -247,32 +248,32 @@
   rotate: y 0deg 
 }
 /* top */
-.yellow.t.l{
+.Dtl{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
-.yellow.t.c{
+.Dtc{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, -100px, 150px);
 }
-.yellow.t.r{
+.Dtr{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(100px, -100px, 150px);
 }
 /* middle */
-.yellow.m.l{
+.Dml{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(-100px, 0px, 150px);
 }
-.yellow.m.c{
+.Dmc{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, 0px, 150px);
 }
-.yellow.m.r{
+.Dmr{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(100px, 0px, 150px);
 }
 /* bottom */
-.yellow.b.l{
+.Dbl{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(-100px, 100px, 150px);
 }
-.yellow.b.c{
+.Dbc{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, 100px, 150px);
 }
-.yellow.b.r{
+.Dbr{
   transform: rotate3d(-1, 0, 0, 90deg) translate3d(100px, 100px, 150px);
 }

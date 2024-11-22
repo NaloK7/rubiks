@@ -15,8 +15,11 @@
 <body>
   <nav></nav>
   <aside>
-    <button onclick="m_up()">U</button>
-    <button onclick="m_up(true)">U'</button>
+    <button onclick="m_up('.U')">U</button>
+    <button onclick="m_up('.U', true)">U'</button>
+    <button onclick="m_up('.L')">L</button>
+    <button onclick="m_up('.L', true)">L'</button>
+    <button onclick="setMovePossible()">square set</button>
 
   </aside>
   <div id="displayValue">
@@ -36,115 +39,111 @@
   
   <section class="container">
     <div class="cube">
+      <!-- 
+      class:
+       [0]: element type / selector
+       [1]: color
+       [2]: Ftl
+       -- [2][0] = face: front
+       -- [2][1] = row: top
+       -- [2][2] = column: left 
+
+       -- mouvement group (classic movement notation for rubik's cube)
+       [3]: F
+       [4]: U
+       ...
+        -->
       <!-- FRONT TOP -->
-      <div class="square blue front t l">
-        <span>F</span><br><span>blue t l</span>
-      </div>
-      <div class="square front blue t c">
-        <span>F</span><br><span>blue t c</span>
-      </div>
-      <div class="square front blue t r">
-        <span>F</span><br><span>blue t r</span>
-      </div>
+      <div class="square blue Ftl F U L">FTL</div>
+      <div class="square blue Ftc F U M">FTC</div>
+      <div class="square blue Ftr F U R">FTR</div>
 
       <!-- FRONT MIDDLE -->
-      <div class="square front blue m l">
-        <span>F</span><br><span>blue m l</span>
-      </div>
-      <div class="square front blue m c">
-        <span>F</span><br><span>blue m c</span>
-      </div>
-      <div class="square front blue m r">
-        <span>F</span><br><span>blue m r</span>
-      </div>
+      <div class="square blue Fml F L E">FML</div>
+      <div class="square blue Fmc F M E">FMC</div>
+      <div class="square blue Fmr F R E">FMR</div>
 
       <!-- FRONT BOTTOM -->
-      <div class="square front blue b l">
-        <span>F</span><br><span>blue b l</span>
-      </div>
-      <div class="square front blue b c">
-        <span>F</span><br><span>blue b c</span>
-      </div>
-      <div class="square front blue b r">
-        <span>F</span><br><span>blue b r</span>
-      </div>
+      <div class="square blue Fbl F L D">FBL</div>
+      <div class="square blue Fbc F M D">FBC</div>
+      <div class="square blue Fbr F R D">FBR</div>
 
       <!--  -->
 
       <!-- RIGHT TOP -->
-      <div class="square right orange t l">orange t l</div>
-      <div class="square right orange t c">orange t c</div>
-      <div class="square right orange t r">orange t r</div>
+      <div class="square orange Rtl F U R">orange t l</div>
+      <div class="square orange Rtc U R">orange t c</div>
+      <div class="square orange Rtr U R">orange t r</div>
 
       <!-- RIGHT MIDDLE -->
-      <div class="square right orange m l">orange m l</div>
-      <div class="square right orange m c">orange m c</div>
-      <div class="square right orange m r">orange m r</div>
+      <div class="square orange Rml F R E">orange m l</div>
+      <div class="square orange Rmc R E">orange m c</div>
+      <div class="square orange Rmr R E">orange m r</div>
 
       <!-- RIGHT BOTTOM -->
-      <div class="square right orange b l">orange b l</div>
-      <div class="square right orange b c">orange b c</div>
-      <div class="square right orange b r">orange b r</div>
+      <div class="square orange Rbl F R D">orange b l</div>
+      <div class="square orange Rbc R D">orange b c</div>
+      <div class="square orange Rbr R D">orange b r</div>
 
       <!--  -->
 
       <!-- BACK TOP -->
-      <div class="square back green t l">green t l</div>
-      <div class="square back green t c">green t c</div>
-      <div class="square back green t r">green t r</div>
+      <div class="square green Btl U R">green t l</div>
+      <div class="square green Btc U M">green t c</div>
+      <div class="square green Btr U L">green t r</div>
       <!-- BACK MIDDLE -->
-      <div class="square back green m l">green m l</div>
-      <div class="square back green m c">green m c</div>
-      <div class="square back green m r">green m r</div>
+      <div class="square green Bml R E">green m l</div>
+      <div class="square green Bmc M E">green m c</div>
+      <div class="square green Bmr L E">green m r</div>
       <!-- BACK BOTTOM -->
-      <div class="square back green b l">green b l</div>
-      <div class="square back green b c">green b c</div>
-      <div class="square back green b r">green b r</div>
+      <div class="square green Bbl R D">green b l</div>
+      <div class="square green Bbc M D">green b c</div>
+      <div class="square green Bbr L D">green b r</div>
 
       <!--  -->
 
       <!-- LEFT TOP -->
-      <div class="square left red t l">red t l</div>
-      <div class="square left red t c">red t c</div>
-      <div class="square left red t r">red t r</div>
+      <div class="square red Ltl U L">red t l</div>
+      <div class="square red Ltc U L">red t c</div>
+      <div class="square red Ltr F U L">red t r</div>
       <!-- LEFT MIDDLE -->
-      <div class="square left red m l">red m l</div>
-      <div class="square left red m c">red m c</div>
-      <div class="square left red m r">red m r</div>
+      <div class="square red Lml L E">red m l</div>
+      <div class="square red Lmc L E">red m c</div>
+      <div class="square red Lmr F L E">red m r</div>
       <!-- LEFT BOTTOM -->
-      <div class="square left red b l">red b l</div>
-      <div class="square left red b c">red b c</div>
-      <div class="square left red b r">red b r</div>
+      <div class="square red Lbl L D">red b l</div>
+      <div class="square red Lbc L D">red b c</div>
+      <div class="square red Lbr F L D">red b r</div>
 
       <!--  -->
 
       <!-- UP TOP -->
-      <div class="square up white t l">white t l</div>
-      <div class="square up white t c">white t c</div>
-      <div class="square up white t r">white t r</div>
+      <div class="square white Utl U L">white t l</div>
+      <div class="square white Utc U M">white t c</div>
+      <div class="square white Utr U R">white t r</div>
       <!-- UP MIDDLE -->
-      <div class="square up white m l">white m l</div>
-      <div class="square up white m c">white m c</div>
-      <div class="square up white m r">white m r</div>
+      <div class="square white Uml U L">white m l</div>
+      <div class="square white Umc U M">white m c</div>
+      <div class="square white Umr U R">white m r</div>
       <!-- UP BOTTOM -->
-      <div class="square up white b l">white b l</div>
-      <div class="square up white b c">white b c</div>
-      <div class="square up white b r">white b r</div>
+      <div class="square white Ubl F U L">white b l</div>
+      <div class="square white Ubc F U M">white b c</div>
+      <div class="square white Ubr F U R">white b r</div>
 
       <!--  -->
 
       <!-- DOWN TOP -->
-      <div class="square down yellow t l">yellow t l</div>
-      <div class="square down yellow t c">yellow t c</div>
-      <div class="square down yellow t r">yellow t r</div>
+      <div class="square yellow Dtl F L D">yellow t l</div>
+      <div class="square yellow Dtc F M D">yellow t c</div>
+      <div class="square yellow Dtr F R D">yellow t r</div>
       <!-- DOWN MIDDLE -->
-      <div class="square down yellow m l">yellow m l</div>
-      <div class="square down yellow m c">yellow m c</div>
-      <div class="square down yellow m r">yellow m r</div>
+      <div class="square yellow Dml L D">yellow m l</div>
+      <div class="square yellow Dmc M D">yellow m c</div>
+      <div class="square yellow Dmr R D">yellow m r</div>
       <!-- DOWN BOTTOM -->
-      <div class="square down yellow b l">yellow b l</div>
-      <div class="square down yellow b c">yellow b c</div>
-      <div class="square down yellow b r">yellow b r</div>
+      <div class="square yellow Dbl L D">yellow b l</div>
+      <div class="square yellow Dbc M D">yellow b c</div>
+      <div class="square yellow Dbr R D">yellow b r</div>
 
 
     </div>
