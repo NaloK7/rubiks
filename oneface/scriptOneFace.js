@@ -3,7 +3,8 @@ window.addEventListener(
    () => {
     displayMouseCoord();
     setInterval(displayCubeTransform, 100);
-
+     setMovePossible()
+     
      let allCube = document.querySelectorAll(".square");
      let displayTag = document.querySelector('#tag')
      allCube.forEach((cube) => {
@@ -132,11 +133,18 @@ function m_up(move, reverse = false) {
   }
 }
 
+
+/**
+ * Selects all "square" and assigns movement classes ('L', 'M', 'R', 'U', 'E', 'D', 'F')
+ * to each element based on its position, indicating the possible moves for that element.
+ * 
+ * Movements are relative to the FRONT face
+ */
 function setMovePossible() {
   let allCube = document.querySelectorAll(".square");
   allCube.forEach(element => {
     let face = element.classList[2][0]    // L M R U E D F
-    let row = element.classList[2][2]     // t m b
+    let row = element.classList[2][1]     // t m b
     let column = element.classList[2][2]  // l c r
     
     // select movable squares for each moves
