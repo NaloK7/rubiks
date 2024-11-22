@@ -38,7 +38,7 @@
 
   transform-style: preserve-3d;
   /* start position of the cube */
-  transform: rotateX(-20deg) rotateY(-20deg) rotateZ(0deg);
+  transform: rotateX(-20deg) rotateY(20deg) rotateZ(0deg);
 }
 
 .square {

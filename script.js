@@ -1,6 +1,8 @@
 window.onload = function () {
   const nav = document.querySelector("nav");
-  const basePath = window.location.pathname.includes('/rubiks') ? '/rubiks' : '';
+  const basePath = window.location.pathname.includes("/rubiks")
+    ? "/rubiks"
+    : "";
 
   nav.innerHTML = `
       <a href="${basePath}/index.html">home</a>
@@ -12,11 +14,10 @@ window.onload = function () {
 };
 
 let rotateX = -20;
-let rotateY = -20;
+let rotateY = 20;
 
 let lastMouseX = 0;
 let lastMouseY = 0;
-
 
 // MOUSE EVENT
 document.addEventListener("mousedown", function (ev) {
@@ -65,18 +66,17 @@ function pointerMoved(ev) {
   rotateX += deltaY * -0.5;
   rotateY -= deltaX * -0.5;
 
-  
   rotateCube();
+  
 }
 
 // ROTATE CUBE
 function rotateCube() {
-  var cube = document.querySelector(".cube");
+  cube = document.querySelector(".cube");
   // cube.style.transformOrigin = "50% 50%";
   cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
   // watch cube rotation to set relative face
-// let cubeTransform = document.querySelector('#cubeTransform')
-// cubeTransform.innerHTML = window.getComputedStyle(cube).transform
+  // let cubeTransform = document.querySelector('#cubeTransform')
+  // cubeTransform.innerHTML = window.getComputedStyle(cube).transform
 }
-
