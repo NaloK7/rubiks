@@ -150,7 +150,19 @@ function setMovePossible(square) {
       ((face == "L") & (column == "r")) |
       ((face == "U") & (row == "b")) |
       ((face == "R") & (column == "l"));
-
+      
+      let Smove = ((face == "D") & (row == "m")) |
+      ((face == "L") & (column == "c")) |
+      ((face == "U") & (row == "m")) |
+    ((face == "R") & (column == "c"));
+  
+      let Bmove =
+        (face == "B") |
+        ((face == "D") & (row == "b")) |
+        ((face == "L") & (column == "l")) |
+        ((face == "U") & (row == "t")) |
+    ((face == "R") & (column == "r"));
+  
     // set movements
     if (Lmove) {
       square.classList.add("L");
@@ -172,6 +184,12 @@ function setMovePossible(square) {
     }
     if (Fmove) {
       square.classList.add("F");
+    }
+    if (Smove) {
+      square.classList.add("S");
+    }
+    if (Bmove) {
+      square.classList.add("B");
     }
 }
 
