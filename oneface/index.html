@@ -40,10 +40,12 @@
       <button onclick="rotateGroupe('B', true)">B'</button>
     </section>
 
-    <!-- <button onclick="setMovePossible()">square set</button> -->
+    <!-- <button onclick="getSquare()">get square</button>
+    <button onclick="generateCubeHTML(cube)">generate</button> -->
+
 
   </aside>
-  <div id="displayValue">
+  <!-- <div id="displayValue">
     <span>
       <p>mousseX: <span id="x">n/a</span></p>
       <p>mousseY: <span id="y">n/a</span></p>
@@ -52,123 +54,18 @@
       <p id="cubeTransform"></p>
     </span>
     <span>
-      <p id="tag">n/a</p>
     </span>
+  </div> -->
+  <p id="tag">n/a</p>
+
+
+<section class="container">
+  <div class="cube">
+
   </div>
+</section>
 
-
-
-  <section class="container">
-    <div class="cube">
-      <!-- 
-      class:
-       [0]: element type / selector
-       [1]: color
-       [2]: Ftl
-       -- [2][0] = face: front
-       -- [2][1] = row: top
-       -- [2][2] = column: left 
-
-       -- mouvement group (classic movement notation for rubik's cube)
-       [3]: F
-       [4]: U
-       ...
-        -->
-      <!-- FRONT TOP -->
-      <div class="square blue Ftl">Ftl</div>
-      <div class="square blue Ftc">Ftc</div>
-      <div class="square blue Ftr">Ftr</div>
-
-      <!-- FRONT MIDDLE -->
-      <div class="square blue Fml">Fml</div>
-      <div class="square blue Fmc">Fmc</div>
-      <div class="square blue Fmr">Fmr</div>
-
-      <!-- FRONT BOTTOM -->
-      <div class="square blue Fbl">Fbl</div>
-      <div class="square blue Fbc">Fbc</div>
-      <div class="square blue Fbr">Fbr</div>
-
-      <!--  -->
-
-      <!-- RIGHT TOP -->
-      <div class="square orange Rtl">Rtl</div>
-      <div class="square orange Rtc">Rtc</div>
-      <div class="square orange Rtr">Rtr</div>
-
-      <!-- RIGHT MIDDLE -->
-      <div class="square orange Rml">Rml</div>
-      <div class="square orange Rmc">Rmc</div>
-      <div class="square orange Rmr">Rmr</div>
-
-      <!-- RIGHT BOTTOM -->
-      <div class="square orange Rbl">Rbl</div>
-      <div class="square orange Rbc">Rbc</div>
-      <div class="square orange Rbr">Rbr</div>
-
-      <!--  -->
-
-      <!-- BACK TOP -->
-      <div class="square green Btl">Btl</div>
-      <div class="square green Btc">Btc</div>
-      <div class="square green Btr">Btr</div>
-      <!-- BACK MIDDLE -->
-      <div class="square green Bml">Bml</div>
-      <div class="square green Bmc">Bmc</div>
-      <div class="square green Bmr">Bmr</div>
-      <!-- BACK BOTTOM -->
-      <div class="square green Bbl">Bbl</div>
-      <div class="square green Bbc">Bbc</div>
-      <div class="square green Bbr">Bbr</div>
-
-      <!--  -->
-
-      <!-- LEFT TOP -->
-      <div class="square red Ltl">Ltl</div>
-      <div class="square red Ltc">Ltc</div>
-      <div class="square red Ltr">Ltr</div>
-      <!-- LEFT MIDDLE -->
-      <div class="square red Lml">Lml</div>
-      <div class="square red Lmc">Lmc</div>
-      <div class="square red Lmr">Lmr</div>
-      <!-- LEFT BOTTOM -->
-      <div class="square red Lbl">Lbl</div>
-      <div class="square red Lbc">Lbc</div>
-      <div class="square red Lbr">Lbr</div>
-
-      <!--  -->
-
-      <!-- UP TOP -->
-      <div class="square white Utl">Utl</div>
-      <div class="square white Utc">Utc</div>
-      <div class="square white Utr">Utr</div>
-      <!-- UP MIDDLE -->
-      <div class="square white Uml">Uml</div>
-      <div class="square white Umc">Umc</div>
-      <div class="square white Umr">Umr</div>
-      <!-- UP BOTTOM -->
-      <div class="square white Ubl">Ubl</div>
-      <div class="square white Ubc">Ubc</div>
-      <div class="square white Ubr">Ubr</div>
-
-      <!--  -->
-
-      <!-- DOWN TOP -->
-      <div class="square yellow Dtl">Dtl</div>
-      <div class="square yellow Dtc">Dtc</div>
-      <div class="square yellow Dtr">Dtr</div>
-      <!-- DOWN MIDDLE -->
-      <div class="square yellow Dml">Dml</div>
-      <div class="square yellow Dmc">Dmc</div>
-      <div class="square yellow Dmr">Dmr</div>
-      <!-- DOWN BOTTOM -->
-      <div class="square yellow Dbl">Dbl</div>
-      <div class="square yellow Dbc">Dbc</div>
-      <div class="square yellow Dbr">Dbr</div>
-
-
-    </div>
-  </section>
+<p class="cubeMatrix" style="width: 50px"></p>
 </body>
 
 </html>
