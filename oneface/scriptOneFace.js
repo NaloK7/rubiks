@@ -33,7 +33,7 @@ const refCube = [
 
 // create a deep copy (modify cube doesn't modify refCube)
 // const cube = refCube.slice(); // DID NOT WORK
-const cube = JSON.parse(JSON.stringify(refCube));
+let cube = JSON.parse(JSON.stringify(refCube));
 
 window.addEventListener(
   "DOMContentLoaded",
@@ -98,7 +98,7 @@ function generateCubeHTML(cube) {
 
         const span = document.createElement("span");
         span.className = faceColors[face];
-        span.textContent = `${cube[faceIndex][rowIndex][columnIndex]}`;
+        // span.textContent = `${cube[faceIndex][rowIndex][columnIndex]}`;
 
         div.appendChild(span);
         cubeContainer.appendChild(div);
@@ -174,12 +174,12 @@ function setNewPos() {
         // select the corresponding html element
         let squareList = document.querySelectorAll(`.${movedSquare[0]}`);
         squareList.forEach((square) => {
-          if (square.classList[0] != "temp") {
+          if (square.classList[0] != "temp" ) {
             square.style.transition = "";
             // remove old movement classes
             let baseClass = `temp square `;
             square.classList = baseClass;
-            square.children[0].innerText = refCube[face][row][column];
+            // square.children[0].innerText = refCube[face][row][column];
             // add new movement classes
             for (let j = 0; j < refSquare.length; j++) {
               square.classList.add(refSquare[j]);
@@ -193,6 +193,8 @@ function setNewPos() {
   clean.forEach((element) => {
     element.classList.remove("temp");
   });
+  cube = JSON.parse(JSON.stringify(refCube))
+
 }
 
 function rotateFace(face) {

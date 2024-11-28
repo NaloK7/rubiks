@@ -72,7 +72,7 @@ function pointerMoved(ev) {
 
 // ROTATE CUBE
 function rotateCube() {
-  cube = document.querySelector(".cube");
+  let cube = document.querySelector(".cube");
   // cube.style.transformOrigin = "50% 50%";
   cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
