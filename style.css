@@ -18,11 +18,29 @@ a:hover {
     border: 1px solid white;
 }
 aside {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     margin: 20px;
 }
+#btn {
+    width: auto;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px 10px;
+    margin: 20px;
+}
 button {
-    padding: 5px 10px;
-    margin: 5px;
+    padding: 10px 10px;
+}
+
+.buttonSection {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+
+.buttonSection button {
+    font-size: large;
 }

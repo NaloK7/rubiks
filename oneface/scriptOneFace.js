@@ -34,6 +34,12 @@ const refCube = [
 // create a deep copy (modify cube doesn't modify refCube)
 // const cube = refCube.slice(); // DID NOT WORK
 let cube = JSON.parse(JSON.stringify(refCube));
+let frontFace = cube[0];
+let leftFace = cube[1];
+let backFace = cube[2];
+let rightFace = cube[3];
+let upFace = cube[4];
+let downFace = cube[5];
 
 window.addEventListener(
   "DOMContentLoaded",
@@ -112,7 +118,6 @@ let isAnimate = false;
 
 function rotateGroupe(move, reverse = false) {
   // 1. visual rotation
-  let axis = "";
   if (!isAnimate) {
     isAnimate = true;
     let deg = "-";
@@ -135,12 +140,40 @@ function rotateGroupe(move, reverse = false) {
 
     // 2. do the corresponding rotation in the cube matrice
     switch (move) {
-      case "F":
-        moveF(cube);
+      case "L":
+        moveL(reverse);
+        break;
+
+      case "M":
+        moveM(reverse);
+        break;
+
+      case "R":
+        moveR(reverse);
         break;
 
       case "U":
-        moveU(cube);
+        moveU(reverse);
+        break;
+
+      case "E":
+        moveE(reverse);
+        break;
+
+      case "D":
+        moveD(reverse);
+        break;
+
+      case "F":
+        moveF(reverse);
+        break;
+
+      case "S":
+        moveS(reverse);
+        break;
+
+      case "B":
+        moveB(reverse);
         break;
 
       default:
@@ -155,8 +188,6 @@ function rotateGroupe(move, reverse = false) {
     }, 500);
   }
 }
-
-
 
 function setNewPos() {
   // for each face
@@ -174,7 +205,7 @@ function setNewPos() {
         // select the corresponding html element
         let squareList = document.querySelectorAll(`.${movedSquare[0]}`);
         squareList.forEach((square) => {
-          if (square.classList[0] != "temp" ) {
+          if (square.classList[0] != "temp") {
             square.style.transition = "";
             // remove old movement classes
             let baseClass = `temp square `;
@@ -193,244 +224,245 @@ function setNewPos() {
   clean.forEach((element) => {
     element.classList.remove("temp");
   });
-  cube = JSON.parse(JSON.stringify(refCube))
-
+  cube = JSON.parse(JSON.stringify(refCube));
+  frontFace = cube[0];
+  leftFace = cube[1];
+  backFace = cube[2];
+  rightFace = cube[3];
+  upFace = cube[4];
+  downFace = cube[5];
 }
 
-function rotateFace(face) {
-  const temp = [
+function rotateFace(face, reverse) {
+  let temp = [
     [face[2][0], face[1][0], face[0][0]], // First column becomes first row (reversed)
     [face[2][1], face[1][1], face[0][1]], // Second column becomes second row (reversed)
     [face[2][2], face[1][2], face[0][2]], // Third column becomes third row (reversed)
   ];
+  if (reverse) {
+    temp = [
+      [face[0][2], face[1][2], face[2][2]], // last column becomes first row (reversed)
+      [face[0][1], face[1][1], face[2][1]], // Second column becomes second row (reversed)
+      [face[0][0], face[1][0], face[2][0]], // Third column becomes third row (reversed)
+    ];
+  }
   face[0] = temp[0];
   face[1] = temp[1];
   face[2] = temp[2];
 }
 
-function moveF(cube) {
-  // Rotate the front face
-  rotateFace(cube[0]);
-  // Save edges
-  const topEdge = cube[4][2].slice(); // UP last row
-  const rightEdge = cube[3].map((row) => row[0]);
-  const bottomEdge = cube[5][0].slice();
-  const leftEdge = cube[1].map((row) => row[2]);
+function moveL(reverse) {
+  // rotate left face
+  rotateFace(leftFace, reverse);
 
-  // Update edges
-  cube[4][2] = leftEdge.reverse();
-  for (let i = 0; i < 3; i++) cube[3][i][0] = topEdge[i];
-  cube[5][0] = rightEdge.reverse();
-  for (let i = 0; i < 3; i++) cube[1][i][2] = bottomEdge[i];
-}
+  // save edges
+  let upEdge = upFace.map((row) => row[0]);
+  let frontEdge = frontFace.map((row) => row[0]);
+  let downEdge = downFace.map((row) => row[0]);
+  let backEdge = backFace.map((row) => row[2]).reverse();
 
-function moveU(cube) {
-  // Rotate the top face
-  rotateFace(cube[4]);
-
-  // Save edges
-  const frontEdge = cube[0][0].slice();
-  const rightEdge = cube[3][0].slice();
-  const backEdge = cube[2][0].slice();
-  const leftEdge = cube[1][0].slice();
-
-  // Update edges
-  cube[0][0] = rightEdge;
-  cube[3][0] = backEdge;
-  cube[2][0] = leftEdge;
-  cube[1][0] = frontEdge;
-}
-
-//
-//
-// NOT USED FOR NOW
-//
-//
-
-// Update the classes of elements affected by the rotation
-function updateClasses(face, cube) {
-  // Loop through the rotated face
-  for (let row = 0; row < cube[face].length; row++) {
-    for (let col = 0; col < cube[face][row].length; col++) {
-      const element = cube[face][row][col]; // Get the element name
-      let square = document.querySelector(`.${element}`); // Select corresponding HTML element
-
-      if (square) {
-        // Update classes
-        let baseClass = `${square.classList[0]} ${square.classList[1]}`;
-        square.classList = baseClass;
-
-        // Add new movement classes
-        const movements = moveList[face][row][col];
-        for (let j = 0; j < moveList[face][row][col].length; j++) {
-          square.classList.add(moveList[face][row][col][j]);
-        }
-      }
-    }
+  // update edges
+  if (reverse) {
+    for (let i = 0; i < 3; i++) upFace[i][0] = frontEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][0] = downEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][0] = backEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][2] = upEdge[i];
+  } else {
+    for (let i = 0; i < 3; i++) upFace[i][0] = backEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][0] = upEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][0] = frontEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][2] = downEdge[i];
   }
 }
-const moveList = [
-  [
-    ["LFU", "MFU", "RFU"],
-    ["LFE", "MFE", "RFE"],
-    ["LFD", "MFD", "RFD"],
-  ], // FRONT
-  [
-    ["LUB", "LUS", "LFU"],
-    ["LEB", "LES", "LFE"],
-    ["LDB", "LDS", "LFD"],
-  ], // LEFT
-  [
-    ["RUB", "MUB", "LUB"],
-    ["REB", "MEB", "LEB"],
-    ["RDB", "MDB", "LDB"],
-  ], // BACK
-  [
-    ["RFU", "RUS", "RUB"],
-    ["RFE", "RES", "REB"],
-    ["RFD", "RDS", "RDB"],
-  ], // RIGHT
-  [
-    ["LUB", "MUB", "RUB"],
-    ["LUS", "MUS", "RUS"],
-    ["LUF", "FMU", "FRU"],
-  ], // UP
-  [
-    ["LFD", "MFD", "RFD"],
-    ["LDS", "MDS", "RDS"],
-    ["LDB", "MDB", "RDB"],
-  ], // DOWN
-];
 
-// display cube rotation to set relative face
-function displayCubeTransform() {
-  let cube = document.querySelector(".cube");
-  let cubeTransform = document.querySelector("#cubeTransform");
-  let matrix = window.getComputedStyle(cube).transform;
-  let values = matrix.split("(")[1].split(")")[0].split(","),
-    y = ((Math.asin(parseFloat(values[8])) * 180) / Math.PI).toFixed(1),
-    x = (
-      (Math.asin(-parseFloat(values[9]) / Math.cos((y * Math.PI) / 180)) *
-        180) /
-      Math.PI
-    ).toFixed(1),
-    z = (
-      (Math.acos(parseFloat(values[0]) / Math.cos((y * Math.PI) / 180)) * 180) /
-      Math.PI
-    ).toFixed(1);
+function moveM(reverse) {
+  // save edges
+  let upEdge = upFace.map((row) => row[1]);
+  let frontEdge = frontFace.map((row) => row[1]);
+  let downEdge = downFace.map((row) => row[1]);
+  let backEdge = backFace.map((row) => row[1]).reverse();
 
-  rotX = x;
-  rotY = y;
-  rotZ = z;
-
-  // cubeTransform.innerHTML = `cubeX : ${rotX}</br>cubeY : ${rotY}`;
+  // update edges
+  if (reverse) {
+    for (let i = 0; i < 3; i++) upFace[i][1] = frontEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][1] = downEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][1] = backEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][1] = upEdge[i];
+  } else {
+    for (let i = 0; i < 3; i++) upFace[i][1] = backEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][1] = upEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][1] = frontEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][1] = downEdge[i];
+  }
 }
 
-// display cube rotation to set relative face
-function getTransform(element) {
-  let matrix = window.getComputedStyle(element).transform;
-  let values = matrix.split("(")[1].split(")")[0].split(",");
+function moveR(reverse) {
+  // rotate left face
+  rotateFace(rightFace, !reverse);
 
-  let rY = ((Math.asin(parseFloat(values[8])) * 180) / Math.PI).toFixed(1);
+  // save edges
+  let upEdge = upFace.map((row) => row[2]);
+  let frontEdge = frontFace.map((row) => row[2]);
+  let downEdge = downFace.map((row) => row[2]);
+  let backEdge = backFace.map((row) => row[0]).reverse();
 
-  let rX = (
-    (Math.asin(-parseFloat(values[9]) / Math.cos((rY * Math.PI) / 180)) * 180) /
-    Math.PI
-  ).toFixed(1);
-
-  let rZ = (
-    (Math.acos(parseFloat(values[0]) / Math.cos((rY * Math.PI) / 180)) * 180) /
-    Math.PI
-  ).toFixed(1);
-
-  let tY = values[13];
-  let tX = values[12];
-  let tZ = values[14];
-
-  return { rX: rX, rY: rY, rZ: rZ, tX: tX, tY: tY, tZ: tZ };
+  // update edges
+  if (!reverse) {
+    for (let i = 0; i < 3; i++) upFace[i][2] = backEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][2] = upEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][2] = frontEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][0] = downEdge[i];
+  } else {
+    for (let i = 0; i < 3; i++) upFace[i][2] = frontEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][2] = downEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][2] = backEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][0] = upEdge[i];
+  }
 }
 
-// /**
-//  * Selects all "square" and assigns movement classes ('L', 'M', 'R', 'U', 'E', 'D', 'F')
-//  * to each element based on its position, indicating the possible moves for that element.
-//  *
-//  * Movements are relative to the FRONT face
-//  */
-// function setMovePossible(square) {
-//     let face = square.classList[1][0]; // L M R U E D F
-//     let row = square.classList[1][1]; // t m b
-//     let column = square.classList[1][2]; // l c r
+function moveU(reverse) {
+  // Rotate up face
+  rotateFace(upFace, reverse);
 
-//     // select movable squares for each moves
-//     let Lmove =
-//       (face == "L") |
-//       (((face == "F") | (face == "U") | (face == "D")) & (column == "l")) |
-//       ((face == "B") & (column == "r"));
-//     let Mmove =
-//       ((face == "F") | (face == "D") | (face == "B") | (face == "U")) &
-//       (column == "c");
-//     let Rmove =
-//       (face == "R") |
-//       (((face == "F") | (face == "U") | (face == "D")) & (column == "r")) |
-//       ((face == "B") & (column == "l"));
+  // Save edges
+  let frontEdge = frontFace[0].slice();
+  let rightEdge = rightFace[0].slice();
+  let backEdge = backFace[0].slice();
+  let leftEdge = leftFace[0].slice();
 
-//     let Umove =
-//       (face == "U") |
-//       (((face == "F") | (face == "L") | (face == "B") | (face == "R")) &
-//         (row == "t"));
-//     let Emove =
-//       ((face == "F") | (face == "R") | (face == "B") | (face == "L")) &
-//       (row == "m");
-//     let Dmove =
-//       (face == "D") |
-//       (((face == "F") | (face == "L") | (face == "B") | (face == "R")) &
-//         (row == "b"));
+  // Update edges
+  if (reverse) {
+    frontFace[0] = leftEdge;
+    rightFace[0] = frontEdge;
+    backFace[0] = rightEdge;
+    leftFace[0] = backEdge;
+  } else {
+    frontFace[0] = rightEdge;
+    rightFace[0] = backEdge;
+    backFace[0] = leftEdge;
+    leftFace[0] = frontEdge;
+  }
+}
 
-//     let Fmove =
-//       (face == "F") |
-//       ((face == "D") & (row == "t")) |
-//       ((face == "L") & (column == "r")) |
-//       ((face == "U") & (row == "b")) |
-//       ((face == "R") & (column == "l"));
+function moveE(reverse) {
+  // Save edges
+  let frontEdge = frontFace[1].slice();
+  let rightEdge = rightFace[1].slice();
+  let backEdge = backFace[1].slice();
+  let leftEdge = leftFace[1].slice();
 
-//       let Smove = ((face == "D") & (row == "m")) |
-//       ((face == "L") & (column == "c")) |
-//       ((face == "U") & (row == "m")) |
-//     ((face == "R") & (column == "c"));
+  // Update edges
+  if (reverse) {
+    frontFace[1] = leftEdge;
+    rightFace[1] = frontEdge;
+    backFace[1] = rightEdge;
+    leftFace[1] = backEdge;
+  } else {
+    frontFace[1] = rightEdge;
+    rightFace[1] = backEdge;
+    backFace[1] = leftEdge;
+    leftFace[1] = frontEdge;
+  }
+}
 
-//       let Bmove =
-//         (face == "B") |
-//         ((face == "D") & (row == "b")) |
-//         ((face == "L") & (column == "l")) |
-//         ((face == "U") & (row == "t")) |
-//     ((face == "R") & (column == "r"));
+function moveD(reverse) {
+  // Rotate up face
+  rotateFace(downFace, !reverse);
 
-//     // set movements
-//     if (Lmove) {
-//       square.classList.add("L");
-//     }
-//     if (Mmove) {
-//       square.classList.add("M");
-//     }
-//     if (Rmove) {
-//       square.classList.add("R");
-//     }
-//     if (Umove) {
-//       square.classList.add("U");
-//     }
-//     if (Emove) {
-//       square.classList.add("E");
-//     }
-//     if (Dmove) {
-//       square.classList.add("D");
-//     }
-//     if (Fmove) {
-//       square.classList.add("F");
-//     }
-//     if (Smove) {
-//       square.classList.add("S");
-//     }
-//     if (Bmove) {
-//       square.classList.add("B");
-//     }
-// }
+  // Save edges
+  let frontEdge = frontFace[2].slice();
+  let rightEdge = rightFace[2].slice();
+  let backEdge = backFace[2].slice();
+  let leftEdge = leftFace[2].slice();
+
+  // Update edges
+  if (!reverse) {
+    frontFace[2] = rightEdge;
+    rightFace[2] = backEdge;
+    backFace[2] = leftEdge;
+    leftFace[2] = frontEdge;
+  } else {
+    frontFace[2] = leftEdge;
+    rightFace[2] = frontEdge;
+    backFace[2] = rightEdge;
+    leftFace[2] = backEdge;
+  }
+}
+
+function moveF(reverse) {
+  // Rotate front face
+  rotateFace(frontFace, !reverse);
+
+  // Save edges
+  let upEdge = upFace[2].slice();
+  let rightEdge = rightFace.map((row) => row[0]);
+  let downEdge = downFace[0].slice();
+  let leftEdge = leftFace.map((row) => row[2]);
+
+  // Update edges
+  if (!reverse) {
+    downEdge = downEdge.reverse();
+    upEdge = upEdge.reverse();
+
+    upFace[2] = rightEdge;
+    for (let i = 0; i < 3; i++) rightFace[i][0] = downEdge[i];
+    downFace[0] = leftEdge;
+    for (let i = 0; i < 3; i++) leftFace[i][2] = upEdge[i];
+  } else {
+    upFace[2] = leftEdge.reverse();
+    for (let i = 0; i < 3; i++) rightFace[i][0] = upEdge[i];
+    downFace[0] = rightEdge.reverse();
+    for (let i = 0; i < 3; i++) leftFace[i][2] = downEdge[i];
+  }
+}
+
+function moveS(reverse) {
+  // Save edges
+  let upEdge = upFace[1].slice();
+  let rightEdge = rightFace.map((row) => row[1]);
+  let downEdge = downFace[1].slice();
+  let leftEdge = leftFace.map((row) => row[1]);
+
+  // Update edges
+  if (!reverse) {
+    upEdge = upEdge.reverse();
+    downEdge = downEdge.reverse();
+
+    upFace[1] = rightEdge;
+    for (let i = 0; i < 3; i++) rightFace[i][1] = downEdge[i];
+    downFace[1] = leftEdge;
+    for (let i = 0; i < 3; i++) leftFace[i][1] = upEdge[i];
+  } else {
+    upFace[1] = leftEdge.reverse();
+    for (let i = 0; i < 3; i++) rightFace[i][1] = upEdge[i];
+    downFace[1] = rightEdge.reverse();
+    for (let i = 0; i < 3; i++) leftFace[i][1] = downEdge[i];
+  }
+}
+
+function moveB(reverse) {
+  // Rotate front face
+  rotateFace(backFace, reverse);
+
+  // Save edges
+  let upEdge = upFace[0].slice();
+  let rightEdge = rightFace.map((row) => row[2]);
+  let downEdge = downFace[2].slice();
+  let leftEdge = leftFace.map((row) => row[0]);
+
+  // Update edges
+  if (reverse) {
+    upFace[0] = leftEdge.reverse();
+    for (let i = 0; i < 3; i++) rightFace[i][2] = upEdge[i];
+    downFace[2] = rightEdge.reverse();
+    for (let i = 0; i < 3; i++) leftFace[i][0] = downEdge[i];
+  } else {
+    upEdge = upEdge.reverse();
+    downEdge = downEdge.reverse();
+
+    upFace[0] = rightEdge;
+    for (let i = 0; i < 3; i++) rightFace[i][2] = downEdge[i];
+    downFace[2] = leftEdge;
+    for (let i = 0; i < 3; i++) leftFace[i][0] = upEdge[i];
+  }
+}
