@@ -64,6 +64,26 @@ aside {
   height: 95%;
 }
 
+.x{
+  rotate: x 90deg;
+}
+.y{
+  rotate: y 90deg;
+}
+.z{
+  rotate: z 90deg;
+}
+
+.-x{
+  rotate: x -90deg;
+}
+.-y{
+  rotate: y -90deg;
+}
+.-z{
+  rotate: z -90deg;
+}
+
 /* FRONT */
 
 .blue {
@@ -71,8 +91,7 @@ aside {
 }
 /* top */
 .Ftl {
-  /* transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, -100px, 150px); */
-  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) translate3d(-100px, -100px, 150px);
+  transform: rotate3d(0, 0, 0, 90deg) translate3d(-100px, -100px, 150px);
 }
 .Ftc {
   transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, -100px, 150px);
