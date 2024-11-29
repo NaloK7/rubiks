@@ -1,3 +1,119 @@
+let rotateX = -20;
+let rotateY = -20;
+
+let lastMouseX = 0;
+let lastMouseY = 0;
+
+// MOUSE EVENT
+document.addEventListener("mousedown", function (ev) {
+  lastMouseX = ev.clientX;
+  lastMouseY = ev.clientY;
+  let squareClicked =
+    (ev.target.tagName == "SPAN") &
+    (ev.target.parentNode.classList[0] == "square");
+    let square = undefined
+  // click on square
+  if (squareClicked) {
+    square = ev.target.parentNode;
+    document.addEventListener("mousemove", setMove(square))
+    // setMove(square)
+  } else {
+    // rotate the cube
+    document.addEventListener("mousemove", pointerMoved);
+  }
+});
+
+document.addEventListener("mouseup", function () {
+  document.removeEventListener("mousemove", pointerMoved);
+  document.removeEventListener("mousemove", setMove);
+});
+
+// TOUCH EVENT
+document.addEventListener("touchstart", function (ev) {
+  lastMouseX = ev.touches[0].clientX;
+  lastMouseY = ev.touches[0].clientY;
+
+  let squareClicked =
+    (ev.target.tagName == "SPAN") &
+    (ev.target.parentNode.classList[0] == "square");
+  // click on square
+  if (squareClicked) {
+    // todo
+  } else {
+    // rotate the cube
+    document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
+      passive: false,
+    });
+
+    document.addEventListener("touchmove", pointerMoved);
+  }
+});
+
+document.addEventListener("touchend", function () {
+  document.removeEventListener("touchmove", pointerMoved);
+});
+
+// POINTER MOVE
+function pointerMoved(ev) {
+
+  
+  let clientX, clientY;
+
+  if (ev.type === "mousemove") {
+    clientX = ev.clientX;
+    clientY = ev.clientY;
+  } else if (ev.type === "touchmove") {
+    clientX = ev.touches[0].clientX;
+    clientY = ev.touches[0].clientY;
+  }
+
+  let deltaX = clientX - lastMouseX;
+  let deltaY = clientY - lastMouseY;
+
+  lastMouseX = clientX;
+  lastMouseY = clientY;
+
+  rotateX += deltaY * -0.5;
+  rotateY -= deltaX * -0.5;
+
+  rotateCube();
+}
+
+// ROTATE CUBE
+function rotateCube() {
+  let cube = document.querySelector(".cube");
+  cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  // watch cube rotation to set relative face
+  // let cubeTransform = document.querySelector('#cubeTransform')
+  // cubeTransform.innerHTML = window.getComputedStyle(cube).transform
+}
+
+
+function setMove(squareClicked) {
+  
+  let clientX, clientY;
+  if (event.type === "mousemove") {
+    clientX = event.clientX;
+    clientY = event.clientY;
+  }
+  console.log(squareClicked);
+console.log(event.clientX);
+}
+
+function displayMouseCoord() {
+
+  document.addEventListener("mousemove", updateDisplay);
+  document.addEventListener("mouseenter", updateDisplay);
+  document.addEventListener("mouseleave", updateDisplay);
+}
+
+function updateDisplay(event) {
+  const pageX = document.getElementById("x");
+  const pageY = document.getElementById("y");
+  pageX.innerText = event.pageX;
+  pageY.innerText = event.pageY;
+}
 const refCube = [
   [
     ["Ftl L F U", "Ftc M F U", "Ftr R F U"],
@@ -44,44 +160,32 @@ let downFace = cube[5];
 window.addEventListener(
   "DOMContentLoaded",
   () => {
-    // displayMouseCoord();
+    displayMouseCoord();
     // setInterval(displayCubeTransform, 100);
 
     generateCubeHTML(cube);
-    // let allSquare = document.querySelectorAll(".square");
-    // let displayTag = document.querySelector("#tag");
-    // allSquare.forEach((square) => {
-    //   // setMovePossible(square);
+    let allSquare = document.querySelectorAll(".square");
+    let displayTag = document.querySelector("#tag");
 
-    //   //  add event to get and display coordinate of clicked square
-    //   //  (probable futur use to detect relative movement)
-    //   square.addEventListener("mousedown", () => {
-    //     let rect = square.getBoundingClientRect();
-    //     let face = square.classList[1];
-    //     displayTag.innerHTML = `${face}</br>squareX: ${rect.left.toFixed(
-    //       2
-    //     )}</br>squareY: ${rect.top.toFixed(2)}`;
-    //   });
-    //   square.style.transition = "rotate ease 0.5s";
-    // });
+    allSquare.forEach((square) => {
+      //   // setMovePossible(square);
+
+      //   //  add event to get and display coordinate of clicked square
+      //   //  (probable futur use to detect relative movement)
+      square.addEventListener("mousedown", () => {
+        let rect = square.getBoundingClientRect();
+        let face = square.classList[1];
+        displayTag.innerHTML = `${face}</br>squareX: ${rect.left.toFixed(
+          2
+        )}</br>squareY: ${rect.top.toFixed(2)}`;
+      });
+      //   square.style.transition = "rotate ease 0.5s";
+    });
   },
   false
 );
 
-function displayMouseCoord() {
-  const box = document.querySelector("html");
 
-  box.addEventListener("mousemove", updateDisplay, false);
-  box.addEventListener("mouseenter", updateDisplay, false);
-  box.addEventListener("mouseleave", updateDisplay, false);
-}
-
-function updateDisplay(event) {
-  const pageX = document.getElementById("x");
-  const pageY = document.getElementById("y");
-  pageX.innerText = event.pageX;
-  pageY.innerText = event.pageY;
-}
 
 function generateCubeHTML(cube) {
   const faceColors = {
@@ -112,6 +216,7 @@ function generateCubeHTML(cube) {
     });
   });
 }
+
 
 // prevent mess up animation
 let isAnimate = false;
@@ -207,7 +312,8 @@ function setNewPos() {
         squareList.forEach((square) => {
           if (square.classList[0] != "temp") {
             square.style.transition = "";
-            // remove old movement classes
+            // remove old movement classe
+            // + add a temp class to avoid duplicate and prevent reselection of an element already modified during the loop
             let baseClass = `temp square `;
             square.classList = baseClass;
             // square.children[0].innerText = refCube[face][row][column];
@@ -220,6 +326,7 @@ function setNewPos() {
       }
     }
   }
+  // remove the temp class
   let clean = document.querySelectorAll(".square");
   clean.forEach((element) => {
     element.classList.remove("temp");
