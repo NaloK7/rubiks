@@ -4,28 +4,29 @@ let rotateY = -20;
 let lastMouseX = 0;
 let lastMouseY = 0;
 
+// global variable used to move groupe or the whole cube
+// click on square ??
+let isSquare = null;
+
 // MOUSE EVENT
 document.addEventListener("mousedown", function (ev) {
   lastMouseX = ev.clientX;
   lastMouseY = ev.clientY;
+
   let squareClicked =
-    (ev.target.tagName == "SPAN") &
-    (ev.target.parentNode.classList[0] == "square");
-    let square = undefined
-  // click on square
-  if (squareClicked) {
-    square = ev.target.parentNode;
-    document.addEventListener("mousemove", setMove(square))
-    // setMove(square)
-  } else {
-    // rotate the cube
-    document.addEventListener("mousemove", pointerMoved);
-  }
+    ev.target.tagName === "SPAN" &&
+    ev.target.parentNode.classList.contains("square");
+
+  isSquare = squareClicked ? ev.target.parentNode : null;
+
+  // rotate the cube
+  document.addEventListener("mousemove", pointerMoved);
 });
 
 document.addEventListener("mouseup", function () {
+  isSquare = null;
   document.removeEventListener("mousemove", pointerMoved);
-  document.removeEventListener("mousemove", setMove);
+  // document.removeEventListener("mousemove", groupeMove);
 });
 
 // TOUCH EVENT
@@ -34,29 +35,25 @@ document.addEventListener("touchstart", function (ev) {
   lastMouseY = ev.touches[0].clientY;
 
   let squareClicked =
-    (ev.target.tagName == "SPAN") &
-    (ev.target.parentNode.classList[0] == "square");
-  // click on square
-  if (squareClicked) {
-    // todo
-  } else {
-    // rotate the cube
-    document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
-      passive: false,
-    });
+    ev.target.tagName === "SPAN" &&
+    ev.target.parentNode.classList.contains("square");
 
-    document.addEventListener("touchmove", pointerMoved);
-  }
+  isSquare = squareClicked ? ev.target.parentNode : null;
+
+  // rotate the cube
+  document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
+    passive: false,
+  });
+  document.addEventListener("touchmove", pointerMoved);
 });
 
 document.addEventListener("touchend", function () {
+  isSquare = null;
   document.removeEventListener("touchmove", pointerMoved);
 });
 
 // POINTER MOVE
 function pointerMoved(ev) {
-
-  
   let clientX, clientY;
 
   if (ev.type === "mousemove") {
@@ -70,13 +67,40 @@ function pointerMoved(ev) {
   let deltaX = clientX - lastMouseX;
   let deltaY = clientY - lastMouseY;
 
-  lastMouseX = clientX;
-  lastMouseY = clientY;
+  if (isSquare) {
+    let triggerDistance = 80
+    // F B 
+    // L R
+    // U D
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (Math.abs(deltaX) > triggerDistance) {
+        // 
+        if (deltaX > 0) {
+          // RIGHT
+          rotateGroupe(isSquare.classList[3], true)
+        } else {
+          // LEFT
+          rotateGroupe(isSquare.classList[3])
+        }
+      }
+      // 
+    } else {
+      if (Math.abs(deltaY) > minDistance) {
+        if (deltaY > 0) {
+          // DOWN
+        } else {
+          // LEFT
+        }
+      }
+    }
+  } else {
+    lastMouseX = clientX;
+    lastMouseY = clientY;
 
-  rotateX += deltaY * -0.5;
-  rotateY -= deltaX * -0.5;
-
-  rotateCube();
+    rotateX += deltaY * -0.5;
+    rotateY -= deltaX * -0.5;
+    rotateCube();
+  }
 }
 
 // ROTATE CUBE
@@ -90,19 +114,7 @@ function rotateCube() {
 }
 
 
-function setMove(squareClicked) {
-  
-  let clientX, clientY;
-  if (event.type === "mousemove") {
-    clientX = event.clientX;
-    clientY = event.clientY;
-  }
-  console.log(squareClicked);
-console.log(event.clientX);
-}
-
 function displayMouseCoord() {
-
   document.addEventListener("mousemove", updateDisplay);
   document.addEventListener("mouseenter", updateDisplay);
   document.addEventListener("mouseleave", updateDisplay);
@@ -116,14 +128,14 @@ function updateDisplay(event) {
 }
 const refCube = [
   [
-    ["Ftl L F U", "Ftc M F U", "Ftr R F U"],
-    ["Fml L F E", "Fmc M F E", "Fmr R F E"],
-    ["Fbl L F D", "Fbc M F D", "Fbr R F D"],
+    ["Ftl L U F", "Ftc M U F", "Ftr R U F"],
+    ["Fml L E F", "Fmc M E F", "Fmr R E F"],
+    ["Fbl L D F", "Fbc M D F", "Fbr R D F"],
   ],
   [
-    ["Ltl L U B", "Ltc L U S", "Ltr L F U"],
-    ["Lml L E B", "Lmc L E S", "Lmr L F E"],
-    ["Lbl L D B", "Lbc L D S", "Lbr L F D"],
+    ["Ltl L U B", "Ltc L U S", "Ltr L U F"],
+    ["Lml L E B", "Lmc L E S", "Lmr L E F"],
+    ["Lbl L D B", "Lbc L D S", "Lbr L D F"],
   ],
   [
     ["Btl R U B", "Btc M U B", "Btr L U B"],
@@ -131,21 +143,22 @@ const refCube = [
     ["Bbl R D B", "Bbc M D B", "Bbr L D B"],
   ],
   [
-    ["Rtl R F U", "Rtc R U S", "Rtr R U B"],
-    ["Rml R F E", "Rmc R E S", "Rmr R E B"],
-    ["Rbl R F D", "Rbc R D S", "Rbr R D B"],
+    ["Rtl R U F", "Rtc R U S", "Rtr R U B"],
+    ["Rml R E F", "Rmc R E S", "Rmr R E B"],
+    ["Rbl R D F", "Rbc R D S", "Rbr R D B"],
   ],
   [
     ["Utl L U B", "Utc M U B", "Utr R U B"],
     ["Uml L U S", "Umc M U S", "Umr R U S"],
-    ["Ubl L U F", "Ubc F M U", "Ubr F R U"],
+    ["Ubl L U F", "Ubc M U F", "Ubr R U F"],
   ],
   [
-    ["Dtl L F D", "Dtc M F D", "Dtr R F D"],
+    ["Dtl L F D", "Dtc M D F", "Dtr R D F"],
     ["Dml L D S", "Dmc M D S", "Dmr R D S"],
     ["Dbl L D B", "Dbc M D B", "Dbr R D B"],
   ],
 ];
+
 
 // create a deep copy (modify cube doesn't modify refCube)
 // const cube = refCube.slice(); // DID NOT WORK
@@ -164,28 +177,23 @@ window.addEventListener(
     // setInterval(displayCubeTransform, 100);
 
     generateCubeHTML(cube);
-    let allSquare = document.querySelectorAll(".square");
-    let displayTag = document.querySelector("#tag");
+    // let allSquare = document.querySelectorAll(".square");
+    // // let displayTag = document.querySelector("#tag");
 
-    allSquare.forEach((square) => {
-      //   // setMovePossible(square);
+    // allSquare.forEach((square) => {
+    //   //   // setMovePossible(square);
 
-      //   //  add event to get and display coordinate of clicked square
-      //   //  (probable futur use to detect relative movement)
-      square.addEventListener("mousedown", () => {
-        let rect = square.getBoundingClientRect();
-        let face = square.classList[1];
-        displayTag.innerHTML = `${face}</br>squareX: ${rect.left.toFixed(
-          2
-        )}</br>squareY: ${rect.top.toFixed(2)}`;
-      });
-      //   square.style.transition = "rotate ease 0.5s";
-    });
+    //   //   //  add event to get and display coordinate of clicked square
+    //   //   //  (probable futur use to detect relative movement)
+    //   // square.addEventListener("mousedown", () => {
+    //   //   let face = square.classList[1];
+    //   //   displayTag.innerHTML = `${face}</br>n/a</br>n/a</br>n/a`;
+    //   // });
+    //   //   square.style.transition = "rotate ease 0.5s";
+    // });
   },
   false
 );
-
-
 
 function generateCubeHTML(cube) {
   const faceColors = {
@@ -216,7 +224,6 @@ function generateCubeHTML(cube) {
     });
   });
 }
-
 
 // prevent mess up animation
 let isAnimate = false;

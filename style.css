@@ -58,6 +58,8 @@
     /* create perspective and preserve 3D  */
     perspective: 1000px;
     transform-style: preserve-3d;
+    -webkit-user-select: none;
+    user-select: none;
   }
   
   .cube {
