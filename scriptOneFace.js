@@ -3,10 +3,10 @@ let rotateY = -20;
 
 let lastMouseX = 0;
 let lastMouseY = 0;
+let refDeltaX, refDeltaY = 0
 
-// global variable used to move groupe or the whole cube
-// click on square ??
-let isSquare = null;
+// global variable used to move a groupe of square or the whole cube
+let oneSquare = null;
 
 // MOUSE EVENT
 document.addEventListener("mousedown", function (ev) {
@@ -17,16 +17,43 @@ document.addEventListener("mousedown", function (ev) {
     ev.target.tagName === "SPAN" &&
     ev.target.parentNode.classList.contains("square");
 
-  isSquare = squareClicked ? ev.target.parentNode : null;
+  oneSquare = squareClicked ? ev.target.parentNode : null;
+  if (oneSquare) {
+    // Determine the face index based on the first letter of the class
+    const faceLetter = oneSquare.classList[1][0];
+    const faceIndex = getFaceIndex(faceLetter);
+
+
+    if (faceIndex !== -1) {
+      // Get the central square of the identified face
+      const centralSquareClass = cube[faceIndex][1][1].split(" ")[0];
+      const centralSquare = document.querySelector(`.${centralSquareClass}`);
+
+      if (centralSquare) {
+        // const rect = centralSquare.getBoundingClientRect();
+        // lastMouseX = (rect.left + rect.width / 2).toFixed();
+        // lastMouseY = (rect.top + rect.height / 2).toFixed();
+        // refDeltaX = ev.clientX - lastMouseX
+        // refDeltaY = ev.clientY - lastMouseY
+
+        // // todo remove 
+        // const pageX = document.getElementById("dx");
+        // const pageY = document.getElementById("dy");
+        // pageX.innerText = refDeltaX;
+        // pageY.innerText = refDeltaY;
+
+        console.log(`Center of the central square: (${lastMouseX}, ${lastMouseY})`);
+      }
+    }
+  }
 
   // rotate the cube
   document.addEventListener("mousemove", pointerMoved);
 });
 
 document.addEventListener("mouseup", function () {
-  isSquare = null;
+  oneSquare = null;
   document.removeEventListener("mousemove", pointerMoved);
-  // document.removeEventListener("mousemove", groupeMove);
 });
 
 // TOUCH EVENT
@@ -38,7 +65,7 @@ document.addEventListener("touchstart", function (ev) {
     ev.target.tagName === "SPAN" &&
     ev.target.parentNode.classList.contains("square");
 
-  isSquare = squareClicked ? ev.target.parentNode : null;
+  oneSquare = squareClicked ? ev.target.parentNode : null;
 
   // rotate the cube
   document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
@@ -48,11 +75,73 @@ document.addEventListener("touchstart", function (ev) {
 });
 
 document.addEventListener("touchend", function () {
-  isSquare = null;
+  oneSquare = null;
   document.removeEventListener("touchmove", pointerMoved);
 });
 
-// POINTER MOVE
+function getFaceIndex(faceLetter) {
+  switch (faceLetter) {
+    case 'F':
+      return 0; // Front face
+    case 'L':
+      return 1; // Left face
+    case 'B':
+      return 2; // Back face
+    case 'R':
+      return 3; // Right face
+    case 'U':
+      return 4; // Up face
+    case 'D':
+      return 5; // Down face
+    default:
+      return -1; // Invalid face
+  }
+}
+
+function handleCubeMovement(deltaX, deltaY) {
+  lastMouseX += deltaX;
+  lastMouseY += deltaY;
+
+  rotateX += deltaY * -0.5;
+  rotateY -= deltaX * -0.5;
+  rotateCube(rotateX, rotateY);
+}
+
+function handleRotationGroup(deltaX, deltaY) {
+  let triggerDistance = 80;
+  let face = oneSquare.classList[1][0];
+  let reverse = true;
+
+  if (face === 'D' || face === 'L') {
+    reverse = !reverse;
+  }
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (Math.abs(deltaX) > triggerDistance) {
+      if (deltaX > 0) {
+        // RIGHT
+        rotateGroupe(oneSquare.classList[3], reverse);
+      } else {
+        // LEFT
+        rotateGroupe(oneSquare.classList[3], !reverse);
+      }
+    }
+  } else {
+    if (face === 'U' || face === 'F') {
+      reverse = !reverse;
+    }
+    if (Math.abs(deltaY) > triggerDistance) {
+      if (deltaY > 0) {
+        // DOWN
+        rotateGroupe(oneSquare.classList[2], reverse);
+      } else {
+        // UP
+        rotateGroupe(oneSquare.classList[2], !reverse);
+      }
+    }
+  }
+}
+
 function pointerMoved(ev) {
   let clientX, clientY;
 
@@ -67,50 +156,22 @@ function pointerMoved(ev) {
   let deltaX = clientX - lastMouseX;
   let deltaY = clientY - lastMouseY;
 
-  if (isSquare) {
-    let triggerDistance = 80
-    // F B 
-    // L R
-    // U D
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      if (Math.abs(deltaX) > triggerDistance) {
-        // 
-        if (deltaX > 0) {
-          // RIGHT
-          rotateGroupe(isSquare.classList[3], true)
-        } else {
-          // LEFT
-          rotateGroupe(isSquare.classList[3])
-        }
-      }
-      // 
-    } else {
-      if (Math.abs(deltaY) > minDistance) {
-        if (deltaY > 0) {
-          // DOWN
-        } else {
-          // LEFT
-        }
-      }
-    }
-  } else {
-    lastMouseX = clientX;
-    lastMouseY = clientY;
+  const pageX = document.getElementById("dx");
+  const pageY = document.getElementById("dy");
+  pageX.innerText = deltaX;
+  pageY.innerText = deltaY;
 
-    rotateX += deltaY * -0.5;
-    rotateY -= deltaX * -0.5;
-    rotateCube();
+  if (oneSquare) {
+    handleRotationGroup(deltaX, deltaY);
+  } else {
+    handleCubeMovement(deltaX, deltaY);
   }
 }
 
 // ROTATE CUBE
-function rotateCube() {
+function rotateCube(x, y) {
   let cube = document.querySelector(".cube");
-  cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-  // watch cube rotation to set relative face
-  // let cubeTransform = document.querySelector('#cubeTransform')
-  // cubeTransform.innerHTML = window.getComputedStyle(cube).transform
+  cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
 }
 
 
@@ -133,9 +194,9 @@ const refCube = [
     ["Fbl L D F", "Fbc M D F", "Fbr R D F"],
   ],
   [
-    ["Ltl L U B", "Ltc L U S", "Ltr L U F"],
-    ["Lml L E B", "Lmc L E S", "Lmr L E F"],
-    ["Lbl L D B", "Lbc L D S", "Lbr L D F"],
+    ["Ltl B U L", "Ltc S U L", "Ltr F U L"],
+    ["Lml B E L", "Lmc S E L", "Lmr F E L"],
+    ["Lbl B D L", "Lbc S D L", "Lbr F D L"],
   ],
   [
     ["Btl R U B", "Btc M U B", "Btr L U B"],
@@ -143,19 +204,19 @@ const refCube = [
     ["Bbl R D B", "Bbc M D B", "Bbr L D B"],
   ],
   [
-    ["Rtl R U F", "Rtc R U S", "Rtr R U B"],
-    ["Rml R E F", "Rmc R E S", "Rmr R E B"],
-    ["Rbl R D F", "Rbc R D S", "Rbr R D B"],
+    ["Rtl F U R", "Rtc S U R", "Rtr B U R"],
+    ["Rml F E R", "Rmc S E R", "Rmr B E R"],
+    ["Rbl F D R", "Rbc S D R", "Rbr B D R"],
   ],
   [
-    ["Utl L U B", "Utc M U B", "Utr R U B"],
-    ["Uml L U S", "Umc M U S", "Umr R U S"],
-    ["Ubl L U F", "Ubc M U F", "Ubr R U F"],
+    ["Utl L B U", "Utc M B U", "Utr R B U"],
+    ["Uml L S U", "Umc M S U", "Umr R S U"],
+    ["Ubl L F U", "Ubc M F U", "Ubr R F U"],
   ],
   [
-    ["Dtl L F D", "Dtc M D F", "Dtr R D F"],
-    ["Dml L D S", "Dmc M D S", "Dmr R D S"],
-    ["Dbl L D B", "Dbc M D B", "Dbr R D B"],
+    ["Dtl L F D", "Dtc M F D", "Dtr R F D"],
+    ["Dml L S D", "Dmc M S D", "Dmr R S D"],
+    ["Dbl L B D", "Dbc M B D", "Dbr R B D"],
   ],
 ];
 
@@ -296,6 +357,9 @@ function rotateGroupe(move, reverse = false) {
     // 3. wait the end of animation and reassign square position using refCube
     setTimeout(() => {
       setNewPos();
+      // todo uncomente
+      // prevent multiple rotation with one mouve
+      // document.removeEventListener("mousemove", pointerMoved)
       isAnimate = false;
     }, 500);
   }
