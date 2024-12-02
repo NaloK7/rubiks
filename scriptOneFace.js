@@ -421,16 +421,16 @@ function moveR(reverse) {
   let backEdge = backFace.map((row) => row[0]).reverse();
 
   // update edges
-  if (!reverse) {
-    for (let i = 0; i < 3; i++) upFace[i][2] = backEdge[i];
-    for (let i = 0; i < 3; i++) frontFace[i][2] = upEdge[i];
-    for (let i = 0; i < 3; i++) downFace[i][2] = frontEdge[i];
-    for (let i = 0; i < 3; i++) backFace[i][0] = downEdge[i];
-  } else {
+  if (reverse) {
     for (let i = 0; i < 3; i++) upFace[i][2] = frontEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][2] = downEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][2] = backEdge[i];
     for (let i = 0; i < 3; i++) backFace[i][0] = upEdge[i];
+  } else {
+    for (let i = 0; i < 3; i++) upFace[i][2] = backEdge[i];
+    for (let i = 0; i < 3; i++) frontFace[i][2] = upEdge[i];
+    for (let i = 0; i < 3; i++) downFace[i][2] = frontEdge[i];
+    for (let i = 0; i < 3; i++) backFace[i][0] = downEdge[i];
   }
 }
 
@@ -490,16 +490,16 @@ function moveD(reverse) {
   let leftEdge = leftFace[2].slice();
 
   // Update edges
-  if (!reverse) {
-    frontFace[2] = rightEdge;
-    rightFace[2] = backEdge;
-    backFace[2] = leftEdge;
-    leftFace[2] = frontEdge;
-  } else {
+  if (reverse) {
     frontFace[2] = leftEdge;
     rightFace[2] = frontEdge;
     backFace[2] = rightEdge;
     leftFace[2] = backEdge;
+  } else {
+    frontFace[2] = rightEdge;
+    rightFace[2] = backEdge;
+    backFace[2] = leftEdge;
+    leftFace[2] = frontEdge;
   }
 }
 
@@ -514,7 +514,12 @@ function moveF(reverse) {
   let leftEdge = leftFace.map((row) => row[2]);
 
   // Update edges
-  if (!reverse) {
+  if (reverse) {
+    upFace[2] = leftEdge.reverse();
+    for (let i = 0; i < 3; i++) rightFace[i][0] = upEdge[i];
+    downFace[0] = rightEdge.reverse();
+    for (let i = 0; i < 3; i++) leftFace[i][2] = downEdge[i];
+  } else {
     downEdge = downEdge.reverse();
     upEdge = upEdge.reverse();
 
@@ -522,11 +527,6 @@ function moveF(reverse) {
     for (let i = 0; i < 3; i++) rightFace[i][0] = downEdge[i];
     downFace[0] = leftEdge;
     for (let i = 0; i < 3; i++) leftFace[i][2] = upEdge[i];
-  } else {
-    upFace[2] = leftEdge.reverse();
-    for (let i = 0; i < 3; i++) rightFace[i][0] = upEdge[i];
-    downFace[0] = rightEdge.reverse();
-    for (let i = 0; i < 3; i++) leftFace[i][2] = downEdge[i];
   }
 }
 
@@ -538,7 +538,12 @@ function moveS(reverse) {
   let leftEdge = leftFace.map((row) => row[1]);
 
   // Update edges
-  if (!reverse) {
+  if (reverse) {
+    upFace[1] = leftEdge.reverse();
+    for (let i = 0; i < 3; i++) rightFace[i][1] = upEdge[i];
+    downFace[1] = rightEdge.reverse();
+    for (let i = 0; i < 3; i++) leftFace[i][1] = downEdge[i];
+  } else {
     upEdge = upEdge.reverse();
     downEdge = downEdge.reverse();
 
@@ -546,11 +551,6 @@ function moveS(reverse) {
     for (let i = 0; i < 3; i++) rightFace[i][1] = downEdge[i];
     downFace[1] = leftEdge;
     for (let i = 0; i < 3; i++) leftFace[i][1] = upEdge[i];
-  } else {
-    upFace[1] = leftEdge.reverse();
-    for (let i = 0; i < 3; i++) rightFace[i][1] = upEdge[i];
-    downFace[1] = rightEdge.reverse();
-    for (let i = 0; i < 3; i++) leftFace[i][1] = downEdge[i];
   }
 }
 
