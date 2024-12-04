@@ -2,182 +2,19 @@
 let rotateX = -25;
 let rotateY = -30;
 
-let lastMouseX = 0;
-let lastMouseY = 0;
+// pointer coordinates
+let startPointer = null;
+let currentPointer = null;
 
-// global variable used to move a groupe of square or the whole cube
-let oneSquare = null;
+// reference vector
+let faceHorizontalVector = null
+let faceVerticalVector = null
 
-// MOUSE EVENT
-document.addEventListener("mousedown", function (ev) {
-  lastMouseX = ev.clientX;
-  lastMouseY = ev.clientY;
+// global variable to track the selected square
+let selectedSquare = null;
+// global variable to track animation running
+let isAnimate = false;
 
-  let squareClicked =
-    ev.target.tagName === "SPAN" &&
-    ev.target.parentNode.classList.contains("square");
-
-  oneSquare = squareClicked ? ev.target.parentNode : null;
-  if (oneSquare) {
-    // 1. Determine the face index based on the first letter of the class
-    const faceLetter = oneSquare.classList[1][0];
-    const faceIndex = getFaceIndex(faceLetter);
-
-
-    if (faceIndex !== -1) {
-      // Get the central square of the identified face
-      const centralSquareClass = cube[faceIndex][1][1].split(" ")[0];
-      const centralSquare = document.querySelector(`.${centralSquareClass}`);
-
-      if (centralSquare) {
-        const rect = oneSquare.getBoundingClientRect();
-        lastMouseX = (rect.left + rect.width / 2).toFixed();
-        lastMouseY = (rect.top + rect.height / 2).toFixed();
-        console.log(`Center of the central square: (${lastMouseX}, ${lastMouseY})`);
-      }
-    }
-  }
-
-  // rotate the cube
-  document.addEventListener("mousemove", pointerMoved);
-});
-
-document.addEventListener("mouseup", function () {
-  oneSquare = null;
-  document.removeEventListener("mousemove", pointerMoved);
-});
-
-// TOUCH EVENT
-document.addEventListener("touchstart", function (ev) {
-  lastMouseX = ev.touches[0].clientX;
-  lastMouseY = ev.touches[0].clientY;
-
-  let squareClicked =
-    ev.target.tagName === "SPAN" &&
-    ev.target.parentNode.classList.contains("square");
-
-  oneSquare = squareClicked ? ev.target.parentNode : null;
-
-  // rotate the cube
-  document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
-    passive: false,
-  });
-  document.addEventListener("touchmove", pointerMoved);
-});
-
-document.addEventListener("touchend", function () {
-  oneSquare = null;
-  document.removeEventListener("touchmove", pointerMoved);
-});
-
-function getFaceIndex(faceLetter) {
-  switch (faceLetter) {
-    case 'F':
-      return 0; // Front face
-    case 'L':
-      return 1; // Left face
-    case 'B':
-      return 2; // Back face
-    case 'R':
-      return 3; // Right face
-    case 'U':
-      return 4; // Up face
-    case 'D':
-      return 5; // Down face
-    default:
-      return -1; // Invalid face
-  }
-}
-
-function handleCubeMovement(deltaX, deltaY) {
-  lastMouseX += deltaX;
-  lastMouseY += deltaY;
-
-  rotateX += deltaY * -0.5;
-  rotateY -= deltaX * -0.5;
-  rotateCube(rotateX, rotateY);
-}
-
-function handleRotationGroup(deltaX, deltaY) {
-  let triggerDistance = 80;
-  let face = oneSquare.classList[1][0];
-  let reverse = true;
-
-  if (face === 'D' || face === 'L') {
-    reverse = !reverse;
-  }
-
-  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    if (Math.abs(deltaX) > triggerDistance) {
-      if (deltaX > 0) {
-        // RIGHT
-        rotateGroupe(oneSquare.classList[3], reverse);
-      } else {
-        // LEFT
-        rotateGroupe(oneSquare.classList[3], !reverse);
-      }
-    }
-  } else {
-    if (face === 'U' || face === 'F') {
-      reverse = !reverse;
-    }
-    if (Math.abs(deltaY) > triggerDistance) {
-      if (deltaY > 0) {
-        // DOWN
-        rotateGroupe(oneSquare.classList[2], reverse);
-      } else {
-        // UP
-        rotateGroupe(oneSquare.classList[2], !reverse);
-      }
-    }
-  }
-}
-
-function pointerMoved(ev) {
-  let clientX, clientY;
-
-  if (ev.type === "mousemove") {
-    clientX = ev.clientX;
-    clientY = ev.clientY;
-  } else if (ev.type === "touchmove") {
-    clientX = ev.touches[0].clientX;
-    clientY = ev.touches[0].clientY;
-  }
-
-  let deltaX = clientX - lastMouseX;
-  let deltaY = clientY - lastMouseY;
-
-  const pageX = document.getElementById("dx");
-  const pageY = document.getElementById("dy");
-  pageX.innerText = deltaX;
-  pageY.innerText = deltaY;
-
-  if (oneSquare) {
-    handleRotationGroup(deltaX, deltaY);
-  } else {
-    handleCubeMovement(deltaX, deltaY);
-  }
-}
-
-// ROTATE CUBE
-function rotateCube(x, y) {
-  let cube = document.querySelector(".cube");
-  cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
-}
-
-
-function displayMouseCoord() {
-  document.addEventListener("mousemove", updateDisplay);
-  document.addEventListener("mouseenter", updateDisplay);
-  document.addEventListener("mouseleave", updateDisplay);
-}
-
-function updateDisplay(event) {
-  const pageX = document.getElementById("x");
-  const pageY = document.getElementById("y");
-  pageX.innerText = event.pageX;
-  pageY.innerText = event.pageY;
-}
 const refCube = [
   [
     ["Ftl L U F", "Ftc M U F", "Ftr R U F"],
@@ -211,10 +48,11 @@ const refCube = [
   ],
 ];
 
-
 // create a deep copy (modify cube doesn't modify refCube)
 // const cube = refCube.slice(); // DID NOT WORK
 let cube = JSON.parse(JSON.stringify(refCube));
+
+// face references
 let frontFace = cube[0];
 let leftFace = cube[1];
 let backFace = cube[2];
@@ -222,16 +60,171 @@ let rightFace = cube[3];
 let upFace = cube[4];
 let downFace = cube[5];
 
-window.addEventListener(
-  "DOMContentLoaded",
-  () => {
-    // todo remove
-    displayMouseCoord();
-    generateCubeHTML(cube);
-  },
-  false
-);
+// MOUSE & TOUCH HANDLER
 
+// Event listeners for mouse and touch events
+function initializeEventListeners() {
+  document.addEventListener("mousedown", onMouseDown);
+  document.addEventListener("mouseup", onMouseUp);
+  // document.addEventListener("touchstart", onTouchStart);
+  // document.addEventListener("touchend", onTouchEnd);
+}
+
+function onMouseDown(ev) {
+  startPointer = { x: ev.clientX, y: ev.clientY };
+  currentPointer = { x: ev.clientX, y: ev.clientY };
+  selectedSquare = getSelectedSquare(ev);
+
+  if (selectedSquare) {
+    // set reference vector
+    setFaceRefVector(selectedSquare);
+  }
+
+  document.addEventListener("mousemove", onPointerMove);
+}
+
+function onMouseUp() {
+  selectedSquare = null;
+  startPointer = null;
+  currentPointer = null;
+  faceHorizontalVector = null
+  faceVerticalVector = null
+  document.removeEventListener("mousemove", onPointerMove);
+}
+
+// function onTouchStart(ev) {
+//   lastMouseX = ev.touches[0].clientX;
+//   lastMouseY = ev.touches[0].clientY;
+//   selectedSquare = getSelectedSquare(ev);
+
+//   if (selectedSquare) {
+//     // set pointer vector point A
+//     setReferencePoint(selectedSquare);
+//   }
+//   // todo prevent scroll
+//   document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
+//     passive: false,
+//   });
+//   document.addEventListener("touchmove", onPointerMove);
+// }
+
+// function onTouchEnd() {
+//   selectedSquare = null;
+//   document.removeEventListener("touchmove", onPointerMove);
+// }
+
+function getSelectedSquare(ev) {
+  const squareClicked =
+    ev.target.tagName === "SPAN" &&
+    ev.target.parentNode.classList.contains("square");
+  return squareClicked ? ev.target.parentNode : null;
+}
+
+
+
+function setFaceRefVector(square) {
+  const faceLetter = square.classList[1][0];
+  const faceIndex = getFaceIndex(faceLetter);
+
+  if (faceIndex !== -1) {
+    faceHorizontalVector = {
+      start: { x: getPoint(faceIndex, 1, 0).x, y: getPoint(faceIndex, 1, 0).y},
+      end: { x: getPoint(faceIndex, 1, 2).x, y: getPoint(faceIndex, 1, 2).y},
+    };
+    faceVerticalVector = {
+      start: { x: getPoint(faceIndex, 0, 1).x, y: getPoint(faceIndex, 0, 1).y},
+      end: { x: getPoint(faceIndex, 2, 1).x, y: getPoint(faceIndex, 2, 1).y},
+    };
+  }
+}
+
+function getPoint(faceIndex, row, col) {
+  const select = cube[faceIndex][row][col].split(" ")[0]; // ex: Ftl
+  const square = document.querySelector(`.${select}`);
+  const squareRect = square.getBoundingClientRect();
+  let x = squareRect.left + squareRect.width / 2
+  let y = squareRect.top + squareRect.height / 2
+  return {x, y};
+}
+
+
+function getFaceIndex(faceLetter) {
+  const faceMap = {
+    F: 0, // Front face
+    L: 1, // Left face
+    B: 2, // Back face
+    R: 3, // Right face
+    U: 4, // Up face
+    D: 5, // Down face
+  };
+  return faceMap[faceLetter] ?? -1;
+}
+
+// POINTER MOVE
+
+function onPointerMove(ev) {
+  if (ev.type === "mousemove") {
+    currentPointer.x = ev.clientX;
+    currentPointer.y = ev.clientY;
+  } else if (ev.type === "touchmove") {
+    currentPointer.x = ev.touches[0].clientX;
+    currentPointer.y = ev.touches[0].clientY;
+  }
+
+  if (selectedSquare) {
+    // todo compare vector
+    handleRotationGroup();
+  } else {
+    handleCubeMovement();
+  }
+}
+
+function handleCubeMovement() {
+  const deltaX = currentPointer.x - startPointer.x;
+  const deltaY = currentPointer.y - startPointer.y;
+
+  rotateX += deltaY * -0.5;
+  rotateY -= deltaX * -0.5;
+
+  startPointer.x += deltaX;
+  startPointer.y += deltaY;
+  applyCubeRotation(rotateX, rotateY);
+}
+
+function handleRotationGroup() {
+  const deltaX = currentPointer.x - startPointer.x;
+  const deltaY = currentPointer.y - startPointer.y;
+  // todo check vector
+  // switch on 4 possibilities
+  const triggerDistance = 80;
+  const face = selectedSquare.classList[1][0];
+  let reverse = face === "D" || face === "L";
+
+  if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    if (Math.abs(deltaX) > triggerDistance) {
+      rotateGroupe(
+        selectedSquare.classList[3],
+        deltaX > 0 ? !reverse : reverse
+      );
+    }
+  } else {
+    reverse = face === "U" || face === "F" ? !reverse : reverse;
+    if (Math.abs(deltaY) > triggerDistance) {
+      rotateGroupe(
+        selectedSquare.classList[2],
+        deltaY > 0 ? !reverse : reverse
+      );
+    }
+  }
+}
+
+// CUBE ROTATION
+function applyCubeRotation(x, y) {
+  const cubeElement = document.querySelector(".cube");
+  cubeElement.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+}
+
+// GENERATE CUBE
 function generateCubeHTML(cube) {
   const faceColors = {
     front: "blue",
@@ -241,145 +234,108 @@ function generateCubeHTML(cube) {
     back: "green",
     bottom: "yellow",
   };
-  // same order than cube
   const faceNames = ["front", "left", "back", "right", "up", "bottom"];
   const cubeContainer = document.querySelector(".cube");
-  
+
   faceNames.forEach((face, faceIndex) => {
     cube[faceIndex].forEach((row, rowIndex) => {
       row.forEach((element, columnIndex) => {
         const div = document.createElement("div");
         div.className = `square ${cube[faceIndex][rowIndex][columnIndex]}`;
-        
+
         const span = document.createElement("span");
         span.className = faceColors[face];
-        // span.textContent = `${cube[faceIndex][rowIndex][columnIndex]}`;
-        
+
         div.appendChild(span);
         cubeContainer.appendChild(div);
       });
     });
   });
-  let cubeTransform = document.querySelector(".cube");
-  cubeTransform.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+  applyCubeRotation(rotateX, rotateY);
 }
 
-// prevent mess up animation
-let isAnimate = false;
-
+// ROTATE GROUPE
 function rotateGroupe(move, reverse = false) {
-  // 1. visual rotation
   if (!isAnimate) {
     isAnimate = true;
-    let deg = "-";
-    if (reverse) {
-      deg = "";
-    }
-    if ((move == "L") | (move == "M") | (move == "R")) {
-      deg += "x";
-    } else if ((move == "U") | (move == "E") | (move == "D")) {
-      deg += "y";
-    } else if ((move == "F") | (move == "S") | (move == "B")) {
-      deg += "z";
-    }
+    let deg = reverse ? "" : "-";
+    deg +=
+      move === "L" || move === "M" || move === "R"
+        ? "x"
+        : move === "U" || move === "E" || move === "D"
+        ? "y"
+        : "z";
 
-    let group = document.querySelectorAll(`.${move}`);
+    const group = document.querySelectorAll(`.${move}`);
     group.forEach((square) => {
       square.style.transition = "rotate ease 0.5s";
       square.classList.add(deg);
     });
 
-    // 2. do the corresponding rotation in the cube matrice
     switch (move) {
       case "L":
         moveL(reverse);
         break;
-
       case "M":
         moveM(reverse);
         break;
-
       case "R":
         moveR(reverse);
         break;
-
       case "U":
         moveU(reverse);
         break;
-
       case "E":
         moveE(reverse);
         break;
-
       case "D":
         moveD(reverse);
         break;
-
       case "F":
         moveF(reverse);
         break;
-
       case "S":
         moveS(reverse);
         break;
-
       case "B":
         moveB(reverse);
         break;
-
       default:
         console.log("function not ready");
         break;
     }
 
-    // 3. wait the end of animation and reassign square position using refCube
     setTimeout(() => {
       setNewPos();
-      // todo uncomment
-      // prevent multiple rotation with one mouve
-      // document.removeEventListener("mousemove", pointerMoved)
       isAnimate = false;
     }, 500);
   }
 }
 
 function setNewPos() {
-  // for each face
-  for (let face = 0; face < cube.length; face++) {
-    // for each row
-    for (let row = 0; row < cube[face].length; row++) {
-      // for each column
-      for (let column = 0; column < cube[face][row].length; column++) {
-        // get reference
-        let refSquare = refCube[face][row][column].split(" ");
+  cube.forEach((face, faceIndex) => {
+    face.forEach((row, rowIndex) => {
+      row.forEach((column, columnIndex) => {
+        const refSquare = refCube[faceIndex][rowIndex][columnIndex].split(" ");
+        const movedSquare = cube[faceIndex][rowIndex][columnIndex].split(" ");
+        const squareList = document.querySelectorAll(`.${movedSquare[0]}`);
 
-        // get the element name
-        let movedSquare = cube[face][row][column].split(" ");
-
-        // select the corresponding html element
-        let squareList = document.querySelectorAll(`.${movedSquare[0]}`);
         squareList.forEach((square) => {
-          if (square.classList[0] != "temp") {
+          if (square.classList[0] !== "temp") {
             square.style.transition = "";
-            // remove old movement classe
-            // + add a temp class to avoid duplicate and prevent reselection of an element already modified during the loop
-            let baseClass = `temp square `;
-            square.classList = baseClass;
-            // square.children[0].innerText = refCube[face][row][column];
-            // add new movement classes
-            for (let j = 0; j < refSquare.length; j++) {
-              square.classList.add(refSquare[j]);
-            }
+            square.classList = `temp square `;
+            refSquare.forEach((cls) => square.classList.add(cls));
           }
         });
-      }
-    }
-  }
-  // remove the temp class
-  let clean = document.querySelectorAll(".square");
-  clean.forEach((element) => {
+      });
+    });
+  });
+
+  document.querySelectorAll(".square").forEach((element) => {
     element.classList.remove("temp");
   });
+
   cube = JSON.parse(JSON.stringify(refCube));
   frontFace = cube[0];
   leftFace = cube[1];
@@ -390,18 +346,17 @@ function setNewPos() {
 }
 
 function rotateFace(face, reverse) {
-  let temp = [
-    [face[2][0], face[1][0], face[0][0]], // First column becomes first row (reversed)
-    [face[2][1], face[1][1], face[0][1]], // Second column becomes second row (reversed)
-    [face[2][2], face[1][2], face[0][2]], // Third column becomes third row (reversed)
-  ];
-  if (reverse) {
-    temp = [
-      [face[0][2], face[1][2], face[2][2]], // last column becomes first row (reversed)
-      [face[0][1], face[1][1], face[2][1]], // Second column becomes second row (reversed)
-      [face[0][0], face[1][0], face[2][0]], // Third column becomes third row (reversed)
-    ];
-  }
+  const temp = reverse
+    ? [
+        [face[0][2], face[1][2], face[2][2]],
+        [face[0][1], face[1][1], face[2][1]],
+        [face[0][0], face[1][0], face[2][0]],
+      ]
+    : [
+        [face[2][0], face[1][0], face[0][0]],
+        [face[2][1], face[1][1], face[0][1]],
+        [face[2][2], face[1][2], face[0][2]],
+      ];
   face[0] = temp[0];
   face[1] = temp[1];
   face[2] = temp[2];
@@ -453,7 +408,7 @@ function moveM(reverse) {
 }
 
 function moveR(reverse) {
-  // rotate left face
+  // rotate right face
   rotateFace(rightFace, !reverse);
 
   // save edges
@@ -522,7 +477,7 @@ function moveE(reverse) {
 }
 
 function moveD(reverse) {
-  // Rotate up face
+  // Rotate down face
   rotateFace(downFace, !reverse);
 
   // Save edges
@@ -597,7 +552,7 @@ function moveS(reverse) {
 }
 
 function moveB(reverse) {
-  // Rotate front face
+  // Rotate back face
   rotateFace(backFace, reverse);
 
   // Save edges
@@ -622,3 +577,25 @@ function moveB(reverse) {
     for (let i = 0; i < 3; i++) leftFace[i][0] = upEdge[i];
   }
 }
+
+function displayMouseCoord() {
+  document.addEventListener("mousemove", updateDisplay);
+  document.addEventListener("mouseenter", updateDisplay);
+  document.addEventListener("mouseleave", updateDisplay);
+}
+function updateDisplay(event) {
+  const pageX = document.getElementById("x");
+  const pageY = document.getElementById("y");
+  pageX.innerText = event.pageX;
+  pageY.innerText = event.pageY;
+}
+// Initialize the cube and event listeners
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    initializeEventListeners();
+    displayMouseCoord()
+    generateCubeHTML(cube);
+  },
+  false
+);
