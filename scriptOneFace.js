@@ -1,5 +1,5 @@
-let rotateX = -20;
-let rotateY = -20;
+let rotateX = -25;
+let rotateY = -30;
 
 let lastMouseX = 0;
 let lastMouseY = 0;
@@ -30,9 +30,9 @@ document.addEventListener("mousedown", function (ev) {
       const centralSquare = document.querySelector(`.${centralSquareClass}`);
 
       if (centralSquare) {
-        // const rect = centralSquare.getBoundingClientRect();
-        // lastMouseX = (rect.left + rect.width / 2).toFixed();
-        // lastMouseY = (rect.top + rect.height / 2).toFixed();
+        const rect = oneSquare.getBoundingClientRect();
+        lastMouseX = (rect.left + rect.width / 2).toFixed();
+        lastMouseY = (rect.top + rect.height / 2).toFixed();
         // refDeltaX = ev.clientX - lastMouseX
         // refDeltaY = ev.clientY - lastMouseY
 
@@ -357,7 +357,7 @@ function rotateGroupe(move, reverse = false) {
     // 3. wait the end of animation and reassign square position using refCube
     setTimeout(() => {
       setNewPos();
-      // todo uncomente
+      // todo uncomment
       // prevent multiple rotation with one mouve
       // document.removeEventListener("mousemove", pointerMoved)
       isAnimate = false;

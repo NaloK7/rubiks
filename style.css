@@ -76,7 +76,7 @@
   
     transform-style: preserve-3d;
     /* start position of the cube */
-    transform: rotateX(-20deg) rotateY(-20deg) rotateZ(0deg);
+    transform: rotateX(-25deg) rotateY(-30deg) rotateZ(0deg);
   }
   
   .square {
@@ -84,6 +84,7 @@
     height: var(--square-size);
     position: absolute;
     background-color: black;
+    z-index: 999;
   }
   .square span {
     border-radius: 10%;
