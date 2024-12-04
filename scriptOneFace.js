@@ -1,9 +1,9 @@
+// initial cube rotation
 let rotateX = -25;
 let rotateY = -30;
 
 let lastMouseX = 0;
 let lastMouseY = 0;
-let refDeltaX, refDeltaY = 0
 
 // global variable used to move a groupe of square or the whole cube
 let oneSquare = null;
@@ -19,7 +19,7 @@ document.addEventListener("mousedown", function (ev) {
 
   oneSquare = squareClicked ? ev.target.parentNode : null;
   if (oneSquare) {
-    // Determine the face index based on the first letter of the class
+    // 1. Determine the face index based on the first letter of the class
     const faceLetter = oneSquare.classList[1][0];
     const faceIndex = getFaceIndex(faceLetter);
 
@@ -33,15 +33,6 @@ document.addEventListener("mousedown", function (ev) {
         const rect = oneSquare.getBoundingClientRect();
         lastMouseX = (rect.left + rect.width / 2).toFixed();
         lastMouseY = (rect.top + rect.height / 2).toFixed();
-        // refDeltaX = ev.clientX - lastMouseX
-        // refDeltaY = ev.clientY - lastMouseY
-
-        // // todo remove 
-        // const pageX = document.getElementById("dx");
-        // const pageY = document.getElementById("dy");
-        // pageX.innerText = refDeltaX;
-        // pageY.innerText = refDeltaY;
-
         console.log(`Center of the central square: (${lastMouseX}, ${lastMouseY})`);
       }
     }
@@ -234,24 +225,9 @@ let downFace = cube[5];
 window.addEventListener(
   "DOMContentLoaded",
   () => {
+    // todo remove
     displayMouseCoord();
-    // setInterval(displayCubeTransform, 100);
-
     generateCubeHTML(cube);
-    // let allSquare = document.querySelectorAll(".square");
-    // // let displayTag = document.querySelector("#tag");
-
-    // allSquare.forEach((square) => {
-    //   //   // setMovePossible(square);
-
-    //   //   //  add event to get and display coordinate of clicked square
-    //   //   //  (probable futur use to detect relative movement)
-    //   // square.addEventListener("mousedown", () => {
-    //   //   let face = square.classList[1];
-    //   //   displayTag.innerHTML = `${face}</br>n/a</br>n/a</br>n/a`;
-    //   // });
-    //   //   square.style.transition = "rotate ease 0.5s";
-    // });
   },
   false
 );
@@ -268,22 +244,24 @@ function generateCubeHTML(cube) {
   // same order than cube
   const faceNames = ["front", "left", "back", "right", "up", "bottom"];
   const cubeContainer = document.querySelector(".cube");
-
+  
   faceNames.forEach((face, faceIndex) => {
     cube[faceIndex].forEach((row, rowIndex) => {
       row.forEach((element, columnIndex) => {
         const div = document.createElement("div");
         div.className = `square ${cube[faceIndex][rowIndex][columnIndex]}`;
-
+        
         const span = document.createElement("span");
         span.className = faceColors[face];
         // span.textContent = `${cube[faceIndex][rowIndex][columnIndex]}`;
-
+        
         div.appendChild(span);
         cubeContainer.appendChild(div);
       });
     });
   });
+  let cubeTransform = document.querySelector(".cube");
+  cubeTransform.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 }
 
 // prevent mess up animation
