@@ -7,8 +7,11 @@ let startPointer = null;
 let currentPointer = null;
 
 // reference vector
-let faceHorizontalVector = null
-let faceVerticalVector = null
+let faceVector = null;
+let faceHorizontalVector = null;
+let faceVerticalVector = null;
+
+const THRESHOLD = 100;
 
 // global variable to track the selected square
 let selectedSquare = null;
@@ -77,7 +80,7 @@ function onMouseDown(ev) {
 
   if (selectedSquare) {
     // set reference vector
-    setFaceRefVector(selectedSquare);
+    getFaceVectors(selectedSquare);
   }
 
   document.addEventListener("mousemove", onPointerMove);
@@ -87,8 +90,9 @@ function onMouseUp() {
   selectedSquare = null;
   startPointer = null;
   currentPointer = null;
-  faceHorizontalVector = null
-  faceVerticalVector = null
+  faceVector = null;
+  faceHorizontalVector = null;
+  faceVerticalVector = null;
   document.removeEventListener("mousemove", onPointerMove);
 }
 
@@ -120,21 +124,153 @@ function getSelectedSquare(ev) {
   return squareClicked ? ev.target.parentNode : null;
 }
 
+// VECTOR
 
+function getVectorDirection(vector) {
+  return {
+    x: vector.end.x - vector.start.x,
+    y: vector.end.y - vector.start.y,
+  };
+}
 
-function setFaceRefVector(square) {
+function vectorMagnitude(vector) {
+  return Math.sqrt(vector.x ** 2 + vector.y ** 2);
+}
+
+function getCosineAngle(vector1, vector2) {
+  const dotProduct = vector1.x * vector2.x + vector1.y * vector2.y;
+  const magnitudeProduct = vectorMagnitude(vector1) * vectorMagnitude(vector2);
+  return dotProduct / magnitudeProduct;
+}
+
+function getCrossProduct(vector1, vector2) {
+  return vector1.x * vector2.y - vector1.y * vector2.x;
+}
+function closerToZeroOrOne(num) {
+  return Math.abs(num - 0) < Math.abs(num - 1) ? 0 : 1;
+}
+function analyzeVectors(mouseVector, faceVector) {
+  const mouseDir = getVectorDirection(mouseVector);
+  const faceDir = getVectorDirection(faceVector);
+
+  const cosineAngle = getCosineAngle(mouseDir, faceDir);
+  const crossProduct = getCrossProduct(mouseDir, faceDir);
+
+  // Ajuster le seuil pour détecter parallèle ou perpendiculaire
+  const absCosine = Math.abs(cosineAngle);
+  direction = closerToZeroOrOne(absCosine);
+  console.log("🚀 ~ analyzeVectors ~ direction:", direction)
+  if (direction == 1) {
+    // Plus proche de parallèle
+    return cosineAngle > 0
+      ? "1"
+      : "-1";
+  } else {
+    // Plus proche de perpendiculaire
+    return crossProduct > 0
+      ? "-0"
+      : "0";
+  }
+}
+
+// old vector manipulation
+
+function vectorLength(vector) {
+  let dx = vector.end.x - vector.start.x;
+  let dy = vector.end.y - vector.start.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+// function dotProduct(v1, v2) {
+//   let dx1 = v1.x - v1.x;
+//   let dy1 = v1.y - v1.y;
+
+//   let dx2 = v2.x - v2.x;
+//   let dy2 = v2.y - v2.y;
+
+//   return dx1 * dx2 + dy1 * dy2;
+// }
+
+// function compareVectors(mouseVector, faceVectors) {
+//   let normalizedMouse = normalizeVector(mouseVector);
+
+//   let closestVector = null;
+//   let highestDot = -Infinity;
+
+//   for (let key in faceVectors) {
+//     let faceVector = normalizeVector(faceVectors[key]);
+//     let dot = dotProduct(normalizedMouse, faceVector);
+
+//     if (dot > highestDot) {
+//       highestDot = dot;
+//       closestVector = key; // 'x' ou 'y'
+//     }
+//   }
+
+//   return closestVector;
+// }
+
+// function compareVectors(mouseVector, faceVectors) {
+//   const normalizedMouse = normalizeVector(mouseVector);
+
+//   let closestVector = null;
+//   let highestDot = -Infinity;
+
+//   for (let key in faceVectors) {
+//     const faceVector = normalizeVector(faceVectors[key]);
+//     const negativeFaceVector = { x: -faceVector.x, y: -faceVector.y };
+
+//     const dotPositive = dotProduct(normalizedMouse, faceVector);
+//     const dotNegative = dotProduct(normalizedMouse, negativeFaceVector);
+
+//     if (dotPositive > highestDot) {
+//       highestDot = dotPositive;
+//       closestVector = key; // 'x' or 'y'
+//     }
+
+//     if (dotNegative > highestDot) {
+//       highestDot = dotNegative;
+//       closestVector = `-${key}`; // '-x' or '-y'
+//     }
+//   }
+
+//   return closestVector;
+// }
+
+// function normalizeVector(vector) {
+//   // Calculate the vector components
+//   let vx = vector.end.x - vector.start.x;
+//   let vy = vector.end.y - vector.start.y;
+
+//   // Calculate the magnitude (norm) of the vector
+//   let magnitude = Math.sqrt(vx * vx + vy * vy);
+
+//   // If magnitude is not zero, normalize the vector
+//   if (magnitude !== 0) {
+//     return { x: vx / magnitude, y: vy / magnitude };
+//   }
+
+//   // If the vector has zero magnitude, return { x: 0, y: 0 }
+//   return { x: 0, y: 0 };
+// };
+
+function getFaceVectors(square) {
   const faceLetter = square.classList[1][0];
   const faceIndex = getFaceIndex(faceLetter);
 
   if (faceIndex !== -1) {
-    faceHorizontalVector = {
-      start: { x: getPoint(faceIndex, 1, 0).x, y: getPoint(faceIndex, 1, 0).y},
-      end: { x: getPoint(faceIndex, 1, 2).x, y: getPoint(faceIndex, 1, 2).y},
+    faceVector = {
+      start: { x: getPoint(faceIndex, 1, 0).x, y: getPoint(faceIndex, 1, 0).y },
+      end: { x: getPoint(faceIndex, 1, 2).x, y: getPoint(faceIndex, 1, 2).y },
     };
-    faceVerticalVector = {
-      start: { x: getPoint(faceIndex, 0, 1).x, y: getPoint(faceIndex, 0, 1).y},
-      end: { x: getPoint(faceIndex, 2, 1).x, y: getPoint(faceIndex, 2, 1).y},
-    };
+    // faceHorizontalVector = {
+    //   start: { x: getPoint(faceIndex, 1, 0).x, y: getPoint(faceIndex, 1, 0).y },
+    //   end: { x: getPoint(faceIndex, 1, 2).x, y: getPoint(faceIndex, 1, 2).y },
+    // };
+    // faceVerticalVector = {
+    //   start: { x: getPoint(faceIndex, 0, 1).x, y: getPoint(faceIndex, 0, 1).y },
+    //   end: { x: getPoint(faceIndex, 2, 1).x, y: getPoint(faceIndex, 2, 1).y },
+    // };
   }
 }
 
@@ -142,11 +278,10 @@ function getPoint(faceIndex, row, col) {
   const select = cube[faceIndex][row][col].split(" ")[0]; // ex: Ftl
   const square = document.querySelector(`.${select}`);
   const squareRect = square.getBoundingClientRect();
-  let x = squareRect.left + squareRect.width / 2
-  let y = squareRect.top + squareRect.height / 2
-  return {x, y};
+  let x = squareRect.left + squareRect.width / 2;
+  let y = squareRect.top + squareRect.height / 2;
+  return { x, y };
 }
-
 
 function getFaceIndex(faceLetter) {
   const faceMap = {
@@ -172,7 +307,6 @@ function onPointerMove(ev) {
   }
 
   if (selectedSquare) {
-    // todo compare vector
     handleRotationGroup();
   } else {
     handleCubeMovement();
@@ -192,28 +326,36 @@ function handleCubeMovement() {
 }
 
 function handleRotationGroup() {
-  const deltaX = currentPointer.x - startPointer.x;
-  const deltaY = currentPointer.y - startPointer.y;
-  // todo check vector
-  // switch on 4 possibilities
-  const triggerDistance = 80;
-  const face = selectedSquare.classList[1][0];
-  let reverse = face === "D" || face === "L";
 
-  if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    if (Math.abs(deltaX) > triggerDistance) {
-      rotateGroupe(
-        selectedSquare.classList[3],
-        deltaX > 0 ? !reverse : reverse
-      );
-    }
-  } else {
-    reverse = face === "U" || face === "F" ? !reverse : reverse;
-    if (Math.abs(deltaY) > triggerDistance) {
-      rotateGroupe(
-        selectedSquare.classList[2],
-        deltaY > 0 ? !reverse : reverse
-      );
+  const mouseVector = {
+    start: { x: startPointer.x, y: startPointer.y },
+    end: { x: currentPointer.x, y: currentPointer.y },
+  };
+
+  if (vectorLength(mouseVector) > THRESHOLD) {
+    let moveDirection = analyzeVectors(mouseVector, faceVector);
+    console.log("🚀 ~ handleRotationGroup ~ moveDirection:", moveDirection)
+
+    const face = selectedSquare.classList[1][0];
+    let reverse = face === "D" || face === "L";
+    switch (moveDirection) {
+      case "1":
+        rotateGroupe(selectedSquare.classList[3], !reverse);
+        break;
+      case "-1":
+        rotateGroupe(selectedSquare.classList[3], reverse);
+        break;
+      case "0":
+        reverse = face === "U" || face === "F" ? !reverse : reverse;
+        rotateGroupe(selectedSquare.classList[2], !reverse);
+        break;
+      case "-0":
+        reverse = face === "U" || face === "F" ? !reverse : reverse;
+        rotateGroupe(selectedSquare.classList[2], reverse);
+        break;
+
+      default:
+        break;
     }
   }
 }
@@ -306,6 +448,7 @@ function rotateGroupe(move, reverse = false) {
         break;
     }
 
+    onMouseUp()
     setTimeout(() => {
       setNewPos();
       isAnimate = false;
@@ -594,7 +737,7 @@ window.addEventListener(
   "DOMContentLoaded",
   () => {
     initializeEventListeners();
-    displayMouseCoord()
+    displayMouseCoord();
     generateCubeHTML(cube);
   },
   false
