@@ -69,18 +69,19 @@ let downFace = cube[5];
 function initializeEventListeners() {
   document.addEventListener("mousedown", onMouseDown);
   document.addEventListener("mouseup", onMouseUp);
-  // document.addEventListener("touchstart", onTouchStart);
-  // document.addEventListener("touchend", onTouchEnd);
+  document.addEventListener("touchstart", onTouchStart);
+  document.addEventListener("touchend", onTouchEnd);
 }
 
 function onMouseDown(ev) {
   startPointer = { x: ev.clientX, y: ev.clientY };
   currentPointer = { x: ev.clientX, y: ev.clientY };
   selectedSquare = getSelectedSquare(ev);
-
+  
   if (selectedSquare) {
-    // set reference vector
+    // set reference vectors
     getFaceVectors(selectedSquare);
+    console.log("🚀 ~ onMouseDown ~ selectedSquare:", selectedSquare)
   }
 
   document.addEventListener("mousemove", onPointerMove);
@@ -96,26 +97,26 @@ function onMouseUp() {
   document.removeEventListener("mousemove", onPointerMove);
 }
 
-// function onTouchStart(ev) {
-//   lastMouseX = ev.touches[0].clientX;
-//   lastMouseY = ev.touches[0].clientY;
-//   selectedSquare = getSelectedSquare(ev);
+function onTouchStart(ev) {
+  startPointer = { x: ev.touches[0].clientX, y: ev.touches[0].clientY };
+  currentPointer = { x: ev.touches[0].clientX, y: ev.touches[0].clientY };
+  selectedSquare = getSelectedSquare(ev);
 
-//   if (selectedSquare) {
-//     // set pointer vector point A
-//     setReferencePoint(selectedSquare);
-//   }
-//   // todo prevent scroll
-//   document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
-//     passive: false,
-//   });
-//   document.addEventListener("touchmove", onPointerMove);
-// }
+  if (selectedSquare) {
+    // set reference vectors
+    getFaceVectors(selectedSquare);
+  }
 
-// function onTouchEnd() {
-//   selectedSquare = null;
-//   document.removeEventListener("touchmove", onPointerMove);
-// }
+  document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
+    passive: false,
+  });
+  document.addEventListener("touchmove", onPointerMove);
+}
+
+function onTouchEnd() {
+  selectedSquare = null;
+  document.removeEventListener("touchmove", onPointerMove);
+}
 
 function getSelectedSquare(ev) {
   const squareClicked =
@@ -154,23 +155,9 @@ function analyzeVectors(mouseVector, faceVector) {
   const faceDir = getVectorDirection(faceVector);
 
   const cosineAngle = getCosineAngle(mouseDir, faceDir);
-  const crossProduct = getCrossProduct(mouseDir, faceDir);
+  // const crossProduct = getCrossProduct(mouseDir, faceDir);
+  return cosineAngle;
 
-  // Ajuster le seuil pour détecter parallèle ou perpendiculaire
-  const absCosine = Math.abs(cosineAngle);
-  direction = closerToZeroOrOne(absCosine);
-  console.log("🚀 ~ analyzeVectors ~ direction:", direction)
-  if (direction == 1) {
-    // Plus proche de parallèle
-    return cosineAngle > 0
-      ? "1"
-      : "-1";
-  } else {
-    // Plus proche de perpendiculaire
-    return crossProduct > 0
-      ? "-0"
-      : "0";
-  }
 }
 
 // old vector manipulation
@@ -181,96 +168,19 @@ function vectorLength(vector) {
   return Math.sqrt(dx * dx + dy * dy);
 }
 
-// function dotProduct(v1, v2) {
-//   let dx1 = v1.x - v1.x;
-//   let dy1 = v1.y - v1.y;
-
-//   let dx2 = v2.x - v2.x;
-//   let dy2 = v2.y - v2.y;
-
-//   return dx1 * dx2 + dy1 * dy2;
-// }
-
-// function compareVectors(mouseVector, faceVectors) {
-//   let normalizedMouse = normalizeVector(mouseVector);
-
-//   let closestVector = null;
-//   let highestDot = -Infinity;
-
-//   for (let key in faceVectors) {
-//     let faceVector = normalizeVector(faceVectors[key]);
-//     let dot = dotProduct(normalizedMouse, faceVector);
-
-//     if (dot > highestDot) {
-//       highestDot = dot;
-//       closestVector = key; // 'x' ou 'y'
-//     }
-//   }
-
-//   return closestVector;
-// }
-
-// function compareVectors(mouseVector, faceVectors) {
-//   const normalizedMouse = normalizeVector(mouseVector);
-
-//   let closestVector = null;
-//   let highestDot = -Infinity;
-
-//   for (let key in faceVectors) {
-//     const faceVector = normalizeVector(faceVectors[key]);
-//     const negativeFaceVector = { x: -faceVector.x, y: -faceVector.y };
-
-//     const dotPositive = dotProduct(normalizedMouse, faceVector);
-//     const dotNegative = dotProduct(normalizedMouse, negativeFaceVector);
-
-//     if (dotPositive > highestDot) {
-//       highestDot = dotPositive;
-//       closestVector = key; // 'x' or 'y'
-//     }
-
-//     if (dotNegative > highestDot) {
-//       highestDot = dotNegative;
-//       closestVector = `-${key}`; // '-x' or '-y'
-//     }
-//   }
-
-//   return closestVector;
-// }
-
-// function normalizeVector(vector) {
-//   // Calculate the vector components
-//   let vx = vector.end.x - vector.start.x;
-//   let vy = vector.end.y - vector.start.y;
-
-//   // Calculate the magnitude (norm) of the vector
-//   let magnitude = Math.sqrt(vx * vx + vy * vy);
-
-//   // If magnitude is not zero, normalize the vector
-//   if (magnitude !== 0) {
-//     return { x: vx / magnitude, y: vy / magnitude };
-//   }
-
-//   // If the vector has zero magnitude, return { x: 0, y: 0 }
-//   return { x: 0, y: 0 };
-// };
-
 function getFaceVectors(square) {
   const faceLetter = square.classList[1][0];
   const faceIndex = getFaceIndex(faceLetter);
 
   if (faceIndex !== -1) {
-    faceVector = {
+    faceHorizontalVector = {
       start: { x: getPoint(faceIndex, 1, 0).x, y: getPoint(faceIndex, 1, 0).y },
       end: { x: getPoint(faceIndex, 1, 2).x, y: getPoint(faceIndex, 1, 2).y },
     };
-    // faceHorizontalVector = {
-    //   start: { x: getPoint(faceIndex, 1, 0).x, y: getPoint(faceIndex, 1, 0).y },
-    //   end: { x: getPoint(faceIndex, 1, 2).x, y: getPoint(faceIndex, 1, 2).y },
-    // };
-    // faceVerticalVector = {
-    //   start: { x: getPoint(faceIndex, 0, 1).x, y: getPoint(faceIndex, 0, 1).y },
-    //   end: { x: getPoint(faceIndex, 2, 1).x, y: getPoint(faceIndex, 2, 1).y },
-    // };
+    faceVerticalVector = {
+      start: { x: getPoint(faceIndex, 0, 1).x, y: getPoint(faceIndex, 0, 1).y },
+      end: { x: getPoint(faceIndex, 2, 1).x, y: getPoint(faceIndex, 2, 1).y },
+    };
   }
 }
 
@@ -326,30 +236,42 @@ function handleCubeMovement() {
 }
 
 function handleRotationGroup() {
-
   const mouseVector = {
     start: { x: startPointer.x, y: startPointer.y },
     end: { x: currentPointer.x, y: currentPointer.y },
   };
 
   if (vectorLength(mouseVector) > THRESHOLD) {
-    let moveDirection = analyzeVectors(mouseVector, faceVector);
-    console.log("🚀 ~ handleRotationGroup ~ moveDirection:", moveDirection)
-
+    let moveDirection = ""
+    // check which ref is the most similar
+    let horizontal = analyzeVectors(mouseVector, faceHorizontalVector);
+    if (horizontal < 0) {
+      moveDirection += "-"
+    }
+    moveDirection += "h";
+    let vertical = analyzeVectors(mouseVector, faceVerticalVector);
+    if (Math.abs(vertical) > Math.abs(horizontal)) {
+      moveDirection = ""
+      if (vertical < 0) {
+        moveDirection += "-"
+      }
+      moveDirection += "v";
+    }
+    
     const face = selectedSquare.classList[1][0];
     let reverse = face === "D" || face === "L";
     switch (moveDirection) {
-      case "1":
+      case "h":
         rotateGroupe(selectedSquare.classList[3], !reverse);
         break;
-      case "-1":
+      case "-h":
         rotateGroupe(selectedSquare.classList[3], reverse);
         break;
-      case "0":
+      case "v":
         reverse = face === "U" || face === "F" ? !reverse : reverse;
         rotateGroupe(selectedSquare.classList[2], !reverse);
         break;
-      case "-0":
+      case "-v":
         reverse = face === "U" || face === "F" ? !reverse : reverse;
         rotateGroupe(selectedSquare.classList[2], reverse);
         break;
@@ -357,6 +279,8 @@ function handleRotationGroup() {
       default:
         break;
     }
+    moveDirection = ""
+    onMouseUp();
   }
 }
 
@@ -448,7 +372,7 @@ function rotateGroupe(move, reverse = false) {
         break;
     }
 
-    onMouseUp()
+    onMouseUp();
     setTimeout(() => {
       setNewPos();
       isAnimate = false;
