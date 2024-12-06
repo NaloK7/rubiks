@@ -81,7 +81,6 @@ function onMouseDown(ev) {
   if (selectedSquare) {
     // set reference vectors
     getFaceVectors(selectedSquare);
-    console.log("🚀 ~ onMouseDown ~ selectedSquare:", selectedSquare)
   }
 
   document.addEventListener("mousemove", onPointerMove);
@@ -242,44 +241,38 @@ function handleRotationGroup() {
   };
 
   if (vectorLength(mouseVector) > THRESHOLD) {
-    let moveDirection = ""
-    // check which ref is the most similar
-    let horizontal = analyzeVectors(mouseVector, faceHorizontalVector);
-    if (horizontal < 0) {
-      moveDirection += "-"
-    }
-    moveDirection += "h";
-    let vertical = analyzeVectors(mouseVector, faceVerticalVector);
+    let moveDirection = "";
+    const horizontal = analyzeVectors(mouseVector, faceHorizontalVector);
+    const vertical = analyzeVectors(mouseVector, faceVerticalVector);
+
     if (Math.abs(vertical) > Math.abs(horizontal)) {
-      moveDirection = ""
-      if (vertical < 0) {
-        moveDirection += "-"
-      }
-      moveDirection += "v";
+      moveDirection = vertical < 0 ? "-v" : "v";
+    } else {
+      moveDirection = horizontal < 0 ? "-h" : "h";
     }
-    
+
     const face = selectedSquare.classList[1][0];
-    let reverse = face === "D" || face === "L";
+    let reverse = false;
+
     switch (moveDirection) {
       case "h":
+        reverse = face === "D";
         rotateGroupe(selectedSquare.classList[3], !reverse);
         break;
       case "-h":
+        reverse = face === "D";
         rotateGroupe(selectedSquare.classList[3], reverse);
         break;
       case "v":
-        reverse = face === "U" || face === "F" ? !reverse : reverse;
-        rotateGroupe(selectedSquare.classList[2], !reverse);
-        break;
-      case "-v":
-        reverse = face === "U" || face === "F" ? !reverse : reverse;
+        reverse = face === "R" || face === "B";
         rotateGroupe(selectedSquare.classList[2], reverse);
         break;
-
-      default:
+      case "-v":
+        reverse = face === "R" || face === "B";
+        rotateGroupe(selectedSquare.classList[2], !reverse);
         break;
     }
-    moveDirection = ""
+
     onMouseUp();
   }
 }
@@ -455,7 +448,7 @@ function moveL(reverse) {
 
 function moveM(reverse) {
   // save edges
-  let upEdge = upFace.map((row) => row[1]);
+  let upEdge = upFace.map((row) => row[1]).reverse();
   let frontEdge = frontFace.map((row) => row[1]);
   let downEdge = downFace.map((row) => row[1]);
   let backEdge = backFace.map((row) => row[1]).reverse();
@@ -467,6 +460,8 @@ function moveM(reverse) {
     for (let i = 0; i < 3; i++) downFace[i][1] = backEdge[i];
     for (let i = 0; i < 3; i++) backFace[i][1] = upEdge[i];
   } else {
+    downEdge = downEdge.reverse()
+    upEdge = upEdge.reverse()
     for (let i = 0; i < 3; i++) upFace[i][1] = backEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][1] = upEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][1] = frontEdge[i];
