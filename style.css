@@ -10,7 +10,10 @@
   @media screen and (max-width: 376px) {
     * {
     
-      --square-size: 62px;
+      --square-size: 67px;
+    }
+    #displayMoveBtn {
+      width: 100%;
     }
   }
   
@@ -39,6 +42,10 @@
   button {
     padding: 10px 10px;
   }
+  #displayMoveBtn {
+    padding: 0px 10px;
+    display: block;
+  }
   
   .buttonSection {
     display: grid;
@@ -52,7 +59,8 @@
   }
   .container {
     /* canvas to display the cube */
-    width: calc(var(--square-size) * 6);
+    /* width: calc(var(--square-size) * 6); */
+    width: 100%;
     height: calc(var(--square-size) * 6);
     /* center horizontally */
     padding: 0% 50%;
