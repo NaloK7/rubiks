@@ -1,13 +1,12 @@
 // initial cube rotation
 let rotateX = -25;
-let rotateY = -30;
+let rotateY = -35;
 
 // pointer coordinates
 let startPointer = null;
 let currentPointer = null;
 
 // reference vector
-let faceVector = null;
 let faceHorizontalVector = null;
 let faceVerticalVector = null;
 
@@ -64,6 +63,11 @@ let rightFace = cube[3];
 let upFace = cube[4];
 let downFace = cube[5];
 
+function handView() {
+  rotateY = -rotateY
+  applyCubeRotation(rotateX, rotateY)
+}
+
 // MOUSE & TOUCH HANDLER
 
 // Event listeners for mouse and touch events
@@ -80,7 +84,6 @@ function onMouseDown(ev) {
   selectedSquare = getSelectedSquare(ev);
 
   if (selectedSquare) {
-    console.log("🚀 ~ onMouseDown ~ selectedSquare:", selectedSquare)
     // set reference vectors
     getFaceVectors(selectedSquare);
   }
@@ -92,7 +95,6 @@ function resetMouvement() {
   selectedSquare = null;
   startPointer = null;
   currentPointer = null;
-  faceVector = null;
   faceHorizontalVector = null;
   faceVerticalVector = null;
 }
@@ -145,10 +147,6 @@ function getCosAngle(vector1, vector2) {
   const dotProduct = vector1.x * vector2.x + vector1.y * vector2.y;
   const magnitudeProduct = vectorMagnitude(vector1) * vectorMagnitude(vector2);
   return dotProduct / magnitudeProduct;
-}
-
-function getCrossProduct(vector1, vector2) {
-  return vector1.x * vector2.y - vector1.y * vector2.x;
 }
 
 function analyzeVectors(mouseVector, faceVector) {
@@ -229,11 +227,6 @@ function handleCubeMovement() {
   rotateX += deltaY * -0.5;
   rotateY -= deltaX * -0.5;
   
-  const pageX = document.querySelector("#x");
-  const pageY = document.querySelector("#y");
-  pageX.innerText = rotateX;
-  pageY.innerText = rotateY;
-
   startPointer.x += deltaX;
   startPointer.y += deltaY;
   applyCubeRotation(rotateX, rotateY);
