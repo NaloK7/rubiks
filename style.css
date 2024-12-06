@@ -54,7 +54,7 @@
     width: calc(var(--square-size) * 6);
     height: calc(var(--square-size) * 6);
     /* center horizontally */
-    margin: auto;
+    padding: 0% 50%;
     /* create perspective and preserve 3D  */
     perspective: 1000px;
     transform-style: preserve-3d;

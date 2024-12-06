@@ -1,6 +1,6 @@
 // initial cube rotation
 let rotateX = -25;
-let rotateY = -35;
+let rotateY = -45;
 
 // pointer coordinates
 let startPointer = null;
@@ -62,11 +62,6 @@ let backFace = cube[2];
 let rightFace = cube[3];
 let upFace = cube[4];
 let downFace = cube[5];
-
-function handView() {
-  rotateY = -rotateY
-  applyCubeRotation(rotateX, rotateY)
-}
 
 // MOUSE & TOUCH HANDLER
 
@@ -225,12 +220,15 @@ function handleCubeMovement() {
   const deltaY = currentPointer.y - startPointer.y;
 
   rotateX += deltaY * -0.5;
-  rotateY -= deltaX * -0.5;
+  rotateX = rotateX % 360;
+  rotateY += deltaX * 0.5;
+  rotateY = rotateY % 360;
   
   startPointer.x += deltaX;
   startPointer.y += deltaY;
   applyCubeRotation(rotateX, rotateY);
 }
+
 
 function handleRotationGroup() {
   const mouseVector = {
