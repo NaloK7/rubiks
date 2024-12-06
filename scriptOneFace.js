@@ -429,11 +429,13 @@ function moveL(reverse) {
 
   // update edges
   if (reverse) {
+    upEdge = upEdge.reverse()
     for (let i = 0; i < 3; i++) upFace[i][0] = frontEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][0] = downEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][0] = backEdge[i];
     for (let i = 0; i < 3; i++) backFace[i][2] = upEdge[i];
   } else {
+    downEdge = downEdge.reverse()
     for (let i = 0; i < 3; i++) upFace[i][0] = backEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][0] = upEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][0] = frontEdge[i];
@@ -476,11 +478,13 @@ function moveR(reverse) {
 
   // update edges
   if (reverse) {
+    upEdge = upEdge.reverse()
     for (let i = 0; i < 3; i++) upFace[i][2] = frontEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][2] = downEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][2] = backEdge[i];
     for (let i = 0; i < 3; i++) backFace[i][0] = upEdge[i];
   } else {
+    downEdge = downEdge.reverse()
     for (let i = 0; i < 3; i++) upFace[i][2] = backEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][2] = upEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][2] = frontEdge[i];
