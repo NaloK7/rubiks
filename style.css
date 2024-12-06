@@ -20,20 +20,21 @@
     grid-template-columns: repeat(3, 1fr);
   }
   aside {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
+
     margin: 20px;
   }
   
   #btn {
     width: auto;
-    display: grid;
+    /* display: grid; */
     grid-template-rows: repeat(3, 1fr);
     gap: 10px 10px;
     margin: 20px;
+    display: none;
   }
   button {
     padding: 10px 10px;

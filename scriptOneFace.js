@@ -634,12 +634,25 @@ function moveB(reverse) {
     for (let i = 0; i < 3; i++) leftFace[i][0] = upEdge[i];
   }
 }
-
+function displayBtn() {
+  let btn = document.querySelector('#displayMoveBtn')
+  let aside = document.querySelector('#btn')
+  btn.addEventListener('click', () => {
+    const isHidden = aside.style.display === 'none' || aside.style.display === '';
+    
+    // Toggle the display property of the aside
+    aside.style.display = isHidden ? 'block' : 'none';
+    
+    // Update the button text based on the visibility
+    btn.textContent = isHidden ? '<' : '>';
+});
+}
 // Initialize the cube and event listeners
 window.addEventListener(
   "DOMContentLoaded",
   () => {
     initializeEventListeners();
+    displayBtn()
     generateCubeHTML(cube);
   },
   false
