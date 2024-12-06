@@ -637,7 +637,7 @@ function moveB(reverse) {
 function displayBtn() {
   let btn = document.querySelector('#displayMoveBtn')
   let aside = document.querySelector('#btn')
-  btn.addEventListener('click', () => {
+  // btn.addEventListener('click', () => {
     const isHidden = aside.style.display === 'none' || aside.style.display === '';
     
     // Toggle the display property of the aside
@@ -645,14 +645,13 @@ function displayBtn() {
     
     // Update the button text based on the visibility
     btn.textContent = isHidden ? '<' : '>';
-});
+// });
 }
 // Initialize the cube and event listeners
 window.addEventListener(
   "DOMContentLoaded",
   () => {
     initializeEventListeners();
-    displayBtn()
     generateCubeHTML(cube);
   },
   false
