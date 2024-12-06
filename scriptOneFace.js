@@ -11,6 +11,7 @@ let faceVector = null;
 let faceHorizontalVector = null;
 let faceVerticalVector = null;
 
+// threshold to trigger group rotation
 const THRESHOLD = 100;
 
 // global variable to track the selected square
@@ -77,8 +78,9 @@ function onMouseDown(ev) {
   startPointer = { x: ev.clientX, y: ev.clientY };
   currentPointer = { x: ev.clientX, y: ev.clientY };
   selectedSquare = getSelectedSquare(ev);
-  
+
   if (selectedSquare) {
+    console.log("🚀 ~ onMouseDown ~ selectedSquare:", selectedSquare)
     // set reference vectors
     getFaceVectors(selectedSquare);
   }
@@ -86,13 +88,17 @@ function onMouseDown(ev) {
   document.addEventListener("mousemove", onPointerMove);
 }
 
-function onMouseUp() {
+function resetMouvement() {
   selectedSquare = null;
   startPointer = null;
   currentPointer = null;
   faceVector = null;
   faceHorizontalVector = null;
   faceVerticalVector = null;
+}
+
+function onMouseUp() {
+  resetMouvement()
   document.removeEventListener("mousemove", onPointerMove);
 }
 
@@ -102,10 +108,8 @@ function onTouchStart(ev) {
   selectedSquare = getSelectedSquare(ev);
 
   if (selectedSquare) {
-    // set reference vectors
     getFaceVectors(selectedSquare);
   }
-
   document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
     passive: false,
   });
@@ -137,7 +141,7 @@ function vectorMagnitude(vector) {
   return Math.sqrt(vector.x ** 2 + vector.y ** 2);
 }
 
-function getCosineAngle(vector1, vector2) {
+function getCosAngle(vector1, vector2) {
   const dotProduct = vector1.x * vector2.x + vector1.y * vector2.y;
   const magnitudeProduct = vectorMagnitude(vector1) * vectorMagnitude(vector2);
   return dotProduct / magnitudeProduct;
@@ -146,17 +150,13 @@ function getCosineAngle(vector1, vector2) {
 function getCrossProduct(vector1, vector2) {
   return vector1.x * vector2.y - vector1.y * vector2.x;
 }
-function closerToZeroOrOne(num) {
-  return Math.abs(num - 0) < Math.abs(num - 1) ? 0 : 1;
-}
+
 function analyzeVectors(mouseVector, faceVector) {
   const mouseDir = getVectorDirection(mouseVector);
   const faceDir = getVectorDirection(faceVector);
 
-  const cosineAngle = getCosineAngle(mouseDir, faceDir);
-  // const crossProduct = getCrossProduct(mouseDir, faceDir);
-  return cosineAngle;
-
+  const cosAngle = getCosAngle(mouseDir, faceDir);
+  return cosAngle;
 }
 
 // old vector manipulation
@@ -228,6 +228,11 @@ function handleCubeMovement() {
 
   rotateX += deltaY * -0.5;
   rotateY -= deltaX * -0.5;
+  
+  const pageX = document.querySelector("#x");
+  const pageY = document.querySelector("#y");
+  pageX.innerText = rotateX;
+  pageY.innerText = rotateY;
 
   startPointer.x += deltaX;
   startPointer.y += deltaY;
@@ -272,12 +277,11 @@ function handleRotationGroup() {
         rotateGroupe(selectedSquare.classList[2], !reverse);
         break;
     }
-
     onMouseUp();
   }
 }
 
-// CUBE ROTATION
+// VISUAL CUBE ROTATION
 function applyCubeRotation(x, y) {
   const cubeElement = document.querySelector(".cube");
   cubeElement.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
@@ -460,8 +464,8 @@ function moveM(reverse) {
     for (let i = 0; i < 3; i++) downFace[i][1] = backEdge[i];
     for (let i = 0; i < 3; i++) backFace[i][1] = upEdge[i];
   } else {
-    downEdge = downEdge.reverse()
-    upEdge = upEdge.reverse()
+    downEdge = downEdge.reverse();
+    upEdge = upEdge.reverse();
     for (let i = 0; i < 3; i++) upFace[i][1] = backEdge[i];
     for (let i = 0; i < 3; i++) frontFace[i][1] = upEdge[i];
     for (let i = 0; i < 3; i++) downFace[i][1] = frontEdge[i];
@@ -640,23 +644,11 @@ function moveB(reverse) {
   }
 }
 
-function displayMouseCoord() {
-  document.addEventListener("mousemove", updateDisplay);
-  document.addEventListener("mouseenter", updateDisplay);
-  document.addEventListener("mouseleave", updateDisplay);
-}
-function updateDisplay(event) {
-  const pageX = document.getElementById("x");
-  const pageY = document.getElementById("y");
-  pageX.innerText = event.pageX;
-  pageY.innerText = event.pageY;
-}
 // Initialize the cube and event listeners
 window.addEventListener(
   "DOMContentLoaded",
   () => {
     initializeEventListeners();
-    displayMouseCoord();
     generateCubeHTML(cube);
   },
   false
