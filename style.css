@@ -1,352 +1,556 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  
-    /* variable */
-    --square-size: 100px;
-  }
-  
-  @media screen and (max-width: 376px) {
-    * {
-    
-      --square-size: 67px;
-    }
-    #displayMoveBtn {
-      width: 100%;
-    }
-  }
-  
-  #displayValue {
-    height: 55px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  aside {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 
-    margin: 20px;
-  }
-  
-  #btn {
-    width: auto;
-    /* display: grid; */
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px 10px;
-    margin: 20px;
-    display: none;
-  }
-  button {
-    padding: 10px 10px;
-  }
-  #displayMoveBtn {
-    padding: 0px 10px;
-    display: block;
-  }
-  
-  .buttonSection {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-  }
-  
-  
-  .buttonSection button {
-    font-size: large;
-  }
-  .container {
-    /* canvas to display the cube */
-    /* width: calc(var(--square-size) * 6); */
-    width: 100%;
-    height: calc(var(--square-size) * 6);
-    /* center horizontally */
-    padding: 0% 50%;
-    /* create perspective and preserve 3D  */
-    perspective: 1000px;
-    transform-style: preserve-3d;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  
-  .cube {
-    /* use to create a reference point in center of the cube */
-    width: var(--square-size);
-    height: var(--square-size);
-    /* center the cube in the canvas */
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-  
-    transform-style: preserve-3d;
-    /* start position of the cube */
-    /* transform: rotateX(-25deg) rotateY(-30deg) rotateZ(0deg); */
-  }
-  
-  .square {
-    width: var(--square-size);
-    height: var(--square-size);
-    position: absolute;
-    background-color: black;
-    z-index: 999;
-  }
-  .square span {
-    border-radius: 10%;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    width: 95%;
-    height: 95%;
-  }
-  
-  .x{
-    rotate: x 90deg;
-  }
-  .y{
-    rotate: y 90deg;
-  }
-  .z{
-    rotate: z 90deg;
-  }
-  
-  .-x{
-    rotate: x -90deg;
-  }
-  .-y{
-    rotate: y -90deg;
-  }
-  .-z{
-    rotate: z -90deg;
-  }
-  
-  /* FRONT */
-  
-  .blue {
-    background-color: rgb(72, 72, 253);
-  }
-  /* top */
-  .Ftl {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Ftc {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Ftr {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(calc(var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  /* middle */
-  .Fml {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), 0px, calc(1.5 * var(--square-size)));
-  }
-  .Fmc {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, 0px, calc(1.5 * var(--square-size)));
-  }
-  .Fmr {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
-  }
-  /* bottom */
-  .Fbl {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Fbc {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Fbr {
-    transform: rotate3d(0, 0, 0, 90deg) translate3d(var(--square-size), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  
-  /*  */
-  
-  /* RIGHT */
-  .orange {
-    background-color: orange;
-  }
-  /* top */
-  .Rtl {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(calc(-1 * var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Rtc {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Rtr {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  /* middle */
-  .Rml {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(calc(-1 * var(--square-size)), 0px, calc(1.5 * var(--square-size)));
-  }
-  .Rmc {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, 0px, calc(1.5 * var(--square-size)));
-  }
-  .Rmr {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
-  }
-  /* bottom */
-  .Rbl {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(calc(-1 * var(--square-size)), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Rbc {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Rbr {
-    transform: rotate3d(0, 1, 0, 90deg) translate3d(var(--square-size), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  
-  /*  */
-  
-  /* BACK */
-  .green {
-    background-color: green;
-  }
-  /* top */
-  .Btl {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(calc(-1 * var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Btc {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(0px, calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Btr {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  /* middle */
-  .Bml {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(calc(-1 * var(--square-size)), 0px, calc(1.5 * var(--square-size)));
-  }
-  .Bmc {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(0px, 0px, calc(1.5 * var(--square-size)));
-  }
-  .Bmr {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
-  }
-  /* bottom */
-  .Bbl {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(calc(-1 * var(--square-size)), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Bbc {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Bbr {
-    transform: rotate3d(0, 1, 0, 180deg) translate3d(var(--square-size), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  
-  /*  */
-  
-  /* LEFT */
-  .red {
-    background-color: red;
-  }
-  /* top */
-  .Ltl {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(calc(-1 * var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Ltc {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Ltr {
-    /* transform: rotate3d(0, 1, 0, 270deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size))); */
-    transform: rotateX(0deg) rotateY(270deg) rotateZ(0deg) translateX(var(--square-size)) translateY(calc(-1 * var(--square-size))) translateZ(calc(1.5 * var(--square-size)));
-  }
-  /* middle */
-  .Lml {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(calc(-1 * var(--square-size)), 0px, calc(1.5 * var(--square-size)));
-  }
-  .Lmc {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, 0px, calc(1.5 * var(--square-size)));
-  }
-  .Lmr {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
-  }
-  /* bottom */
-  .Lbl {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(calc(-1 * var(--square-size)), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Lbc {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Lbr {
-    transform: rotate3d(0, 1, 0, 270deg) translate3d(var(--square-size), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  
-  /*  */
-  
-  /* UP */
-  .white {
-   
-    background-color: white;
-  }
-  /* top */
-  .Utl {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Utc {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Utr {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  /* middle */
-  .Uml {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), 0px, calc(1.5 * var(--square-size)));
-  }
-  .Umc {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, 0px, calc(1.5 * var(--square-size)));
-  }
-  .Umr {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
-  }
-  /* bottom */
-  .Ubl {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Ubc {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Ubr {
-    transform: rotate3d(1, 0, 0, 90deg) translate3d(var(--square-size), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  
-  /*  */
-  
-  /* DOWN */
-  .yellow {
-    background-color: yellow;
-  }
-  /* top */
-  .Dtl {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Dtc {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  .Dtr {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size)));
-  }
-  /* middle */
-  .Dml {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), 0px, calc(1.5 * var(--square-size)));
-  }
-  .Dmc {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, 0px, calc(1.5 * var(--square-size)));
-  }
-  .Dmr {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
-  }
-  /* bottom */
-  .Dbl {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(calc(-1 * var(--square-size)), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Dbc {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  .Dbr {
-    transform: rotate3d(-1, 0, 0, 90deg) translate3d(var(--square-size), var(--square-size), calc(1.5 * var(--square-size)));
-  }
-  
+  /* variable */
+  --square-size: 100px;
+}
+
+@media screen and (max-width: 376px) {
+  * {
+    --square-size: 67px;
+  }
+}
+
+.container {
+  /* canvas to display the cube */
+  /* width: calc(var(--square-size) * 6); */
+  width: 100%;
+  height: calc(var(--square-size) * 6);
+  /* center horizontally */
+  padding: 0% 50%;
+  /* create perspective and preserve 3D  */
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.cube {
+  background-color: black;
+  /* use to create a reference point in center of the cube */
+  width: var(--square-size);
+  height: var(--square-size);
+  /* center the cube in the canvas */
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  transform-style: preserve-3d;
+}
+
+.blackSquare {
+  background-color: transparent;
+  height: 300px;
+  width: 300px;
+  position: absolute;
+}
+/* STANDING BLACK SQUARE */
+.standing{
+  transform-origin: 50px 50px;
+  rotate: y 0deg;
+}
+.standing.front {
+
+  transform: translateX(calc(-1 * var(--square-size)))
+  translateY(calc(-1 * var(--square-size)))
+  translateZ(calc(0.5 * var(--square-size)));
+}
+.standing.back {
+
+  transform: translateX(calc(-1 * var(--square-size)))
+  translateY(calc(-1 * var(--square-size)))
+  translateZ(calc(-0.5 * var(--square-size)));
+}
+
+/* MIDDLE BLACK SQUARE */
+.middle{
+  transform-origin: 150px 50px;
+  rotate: y 0deg;
+}
+.middle.right {
+
+  transform: rotateY(90deg) translateZ(calc(-0.5 * var(--square-size)))
+  translateY(calc(-1 * var(--square-size)));
+}
+.middle.left {
+
+  transform: rotateY(90deg) translateZ(calc(-1.5 * var(--square-size)))
+  translateY(calc(-1 * var(--square-size)));
+}
+/* EQUATOR BLACK SQUARE */
+.equator{
+  transform-origin: 50px 150px;
+  rotate: y 0deg;
+}
+.equator.up {
+  transform: rotateX(90deg) translateX(calc(-1 * var(--square-size)))
+  translateY(calc(0 * var(--square-size)))
+  translateZ(calc(1.5 * var(--square-size)));
+}
+.equator.down {
+  transform: rotateX(90deg) translateX(calc(-1 * var(--square-size)))
+    translateY(calc(0 * var(--square-size)))
+    translateZ(calc(0.5 * var(--square-size)));
+}
+
+.x {
+  rotate: x 90deg;
+}
+.y {
+  rotate: y 90deg;
+}
+.z {
+  rotate: z 90deg;
+}
+
+.-x {
+  rotate: x -90deg;
+}
+.-y {
+  rotate: y -90deg;
+}
+.-z {
+  rotate: z -90deg;
+}
+
+.square {
+  width: var(--square-size);
+  height: var(--square-size);
+  position: absolute;
+  background-color: black;
+  z-index: 999;
+}
+.square span {
+  border-radius: 10%;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 95%;
+  height: 95%;
+  backface-visibility: hidden;
+}
+
+/* FRONT */
+
+.blue {
+  background-color: rgb(72, 72, 253);
+}
+/* top */
+.Ftl {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+
+.Ftc {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(
+      0px,
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Ftr {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(
+      calc(var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+/* middle */
+.Fml {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      0px,
+      calc(1.5 * var(--square-size))
+    );
+}
+.Fmc {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(0px, 0px, calc(1.5 * var(--square-size)));
+}
+.Fmr {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
+}
+/* bottom */
+.Fbl {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Fbc {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
+}
+.Fbr {
+  transform: rotate3d(0, 0, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+
+/*  */
+
+/* RIGHT */
+.orange {
+  background-color: orange;
+}
+/* top */
+.Rtl {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Rtc {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(
+      0px,
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Rtr {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+/* middle */
+.Rml {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      0px,
+      calc(1.5 * var(--square-size))
+    );
+}
+.Rmc {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(0px, 0px, calc(1.5 * var(--square-size)));
+}
+.Rmr {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
+}
+/* bottom */
+.Rbl {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Rbc {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
+}
+.Rbr {
+  transform: rotate3d(0, 1, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+
+/*  */
+
+/* BACK */
+.green {
+  background-color: green;
+}
+/* top */
+.Btl {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Btc {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(
+      0px,
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Btr {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(
+      var(--square-size),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+/* middle */
+.Bml {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      0px,
+      calc(1.5 * var(--square-size))
+    );
+}
+.Bmc {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(0px, 0px, calc(1.5 * var(--square-size)));
+}
+.Bmr {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
+}
+/* bottom */
+.Bbl {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Bbc {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
+}
+.Bbr {
+  transform: rotate3d(0, 1, 0, 180deg)
+    translate3d(
+      var(--square-size),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+
+/*  */
+
+/* LEFT */
+.red {
+  background-color: red;
+}
+/* top */
+.Ltl {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Ltc {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(
+      0px,
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Ltr {
+  /* transform: rotate3d(0, 1, 0, 270deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size))); */
+  transform: rotateX(0deg) rotateY(270deg) rotateZ(0deg)
+    translateX(var(--square-size)) translateY(calc(-1 * var(--square-size)))
+    translateZ(calc(1.5 * var(--square-size)));
+}
+/* middle */
+.Lml {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      0px,
+      calc(1.5 * var(--square-size))
+    );
+}
+.Lmc {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(0px, 0px, calc(1.5 * var(--square-size)));
+}
+.Lmr {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
+}
+/* bottom */
+.Lbl {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Lbc {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
+}
+.Lbr {
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(
+      var(--square-size),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+
+/*  */
+
+/* UP */
+.white {
+  background-color: white;
+}
+/* top */
+.Utl {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Utc {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(
+      0px,
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Utr {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+/* middle */
+.Uml {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      0px,
+      calc(1.5 * var(--square-size))
+    );
+}
+.Umc {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(0px, 0px, calc(1.5 * var(--square-size)));
+}
+.Umr {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
+}
+/* bottom */
+.Ubl {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Ubc {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
+}
+.Ubr {
+  transform: rotate3d(1, 0, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+
+/*  */
+
+/* DOWN */
+.yellow {
+  background-color: yellow;
+}
+/* top */
+.Dtl {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Dtc {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(
+      0px,
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Dtr {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
+}
+/* middle */
+.Dml {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      0px,
+      calc(1.5 * var(--square-size))
+    );
+}
+.Dmc {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(0px, 0px, calc(1.5 * var(--square-size)));
+}
+.Dmr {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
+}
+/* bottom */
+.Dbl {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(
+      calc(-1 * var(--square-size)),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}
+.Dbc {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(0px, var(--square-size), calc(1.5 * var(--square-size)));
+}
+.Dbr {
+  transform: rotate3d(-1, 0, 0, 90deg)
+    translate3d(
+      var(--square-size),
+      var(--square-size),
+      calc(1.5 * var(--square-size))
+    );
+}

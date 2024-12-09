@@ -318,9 +318,13 @@ function rotateGroupe(move, reverse = false) {
       move === "L" || move === "M" || move === "R"
         ? "x"
         : move === "U" || move === "E" || move === "D"
-        ? "y"
-        : "z";
-
+          ? "y"
+          : "z";
+    const blackSquare = document.querySelectorAll(`.blackSquare.${move}`);
+    blackSquare.forEach((square) => {
+      square.style.backgroundColor = "black"
+    }
+    )
     const group = document.querySelectorAll(`.${move}`);
     group.forEach((square) => {
       square.style.transition = "rotate ease 0.5s";
@@ -364,6 +368,10 @@ function rotateGroupe(move, reverse = false) {
     setTimeout(() => {
       setNewPos();
       isAnimate = false;
+      blackSquare.forEach((square) => {
+        square.style.backgroundColor = "transparent"
+      square.classList.remove(deg);
+    });
     }, 500);
   }
 }
