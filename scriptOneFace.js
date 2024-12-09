@@ -279,7 +279,7 @@ function applyCubeRotation(x, y) {
 }
 
 // GENERATE CUBE
-function generateCubeHTML(cube) {
+function generateCubeHTML() {
   const faceColors = {
     front: "blue",
     up: "white",
@@ -646,25 +646,30 @@ function moveB(reverse) {
     for (let i = 0; i < 3; i++) leftFace[i][0] = upEdge[i];
   }
 }
-function displayBtn() {
-  let btn = document.querySelector('#displayMoveBtn')
-  let aside = document.querySelector('#btn')
-  // btn.addEventListener('click', () => {
-    const isHidden = aside.style.display === 'none' || aside.style.display === '';
-    
-    // Toggle the display property of the aside
-    aside.style.display = isHidden ? 'block' : 'none';
-    
-    // Update the button text based on the visibility
-    btn.textContent = isHidden ? '<' : '>';
-// });
+
+function shakeCube() {
+  const possibleMove = ["L", "M", "R", "U", "E", "D", "F", "S", "B"]
+  const randomMoves = Array.from({ length: 15 }, () => 
+    possibleMove[Math.floor(Math.random() * possibleMove.length)]
+);
+let index = 0;
+
+function performMove() {
+  if (index < randomMoves.length) {
+    rotateGroupe(randomMoves[index]); // Effectue le mouvement
+    index++;
+    setTimeout(performMove, 600); // Appelle le prochain mouvement après 500ms
+  }
+}
+
+performMove(); 
 }
 // Initialize the cube and event listeners
 window.addEventListener(
   "DOMContentLoaded",
   () => {
     initializeEventListeners();
-    generateCubeHTML(cube);
+    generateCubeHTML();
   },
   false
 );
