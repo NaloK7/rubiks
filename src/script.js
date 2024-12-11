@@ -1,5 +1,5 @@
-import { Cube } from "../src/Cube.js";
-import { CubeEventHandler } from "../src/CubeEventHandler.js";
+import { Cube } from "./Cube.js";
+import { CubeEventHandler } from "./CubeEventHandler.js";
 
 export const cubeEvent = new CubeEventHandler();
 export const myCube = new Cube();
