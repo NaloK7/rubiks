@@ -12,10 +12,19 @@
     --square-size: 67px;
   }
 }
-
+#btn {
+  margin: 10px 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#btn button {
+  padding: 3px 5px;
+  font-weight: bold;
+}
 .container {
   /* canvas to display the cube */
-  /* width: calc(var(--square-size) * 6); */
   width: 100%;
   height: calc(var(--square-size) * 6);
   /* center horizontally */
