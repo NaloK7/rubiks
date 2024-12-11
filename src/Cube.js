@@ -1,4 +1,4 @@
-import { cubeEvent } from '/src/script.js';
+import { cubeEvent } from './src/script.js';
 
 export class Cube {
   constructor() {
