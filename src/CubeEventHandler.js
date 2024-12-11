@@ -1,5 +1,5 @@
-import { VectorUtils } from "./src/VectorUtils.js";
-import { myCube } from "./src/script.js";
+import { VectorUtils } from "./rubiks/src/VectorUtils.js";
+import { myCube } from "./rubiks/src/script.js";
 
 const vector = new VectorUtils();
 export class CubeEventHandler {
