@@ -12,10 +12,19 @@
     --square-size: 67px;
   }
 }
-
+#btn {
+  margin: 10px 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#btn button {
+  padding: 3px 5px;
+  font-weight: bold;
+}
 .container {
   /* canvas to display the cube */
-  /* width: calc(var(--square-size) * 6); */
   width: 100%;
   height: calc(var(--square-size) * 6);
   /* center horizontally */
@@ -44,13 +53,13 @@
 
 .blackSquare {
   background-color: transparent;
-  height: 300px;
-  width: 300px;
+  height: calc(3 * var(--square-size));
+  width: calc(3 * var(--square-size));
   position: absolute;
 }
 /* STANDING BLACK SQUARE */
 .standing{
-  transform-origin: 50px 50px;
+  transform-origin: calc(0.5 * var(--square-size)) calc(0.5 * var(--square-size));
   rotate: y 0deg;
 }
 .standing.front {
@@ -68,7 +77,7 @@
 
 /* MIDDLE BLACK SQUARE */
 .middle{
-  transform-origin: 150px 50px;
+  transform-origin: calc(1.5 * var(--square-size)) calc(0.5 * var(--square-size));
   rotate: y 0deg;
 }
 .middle.right {
@@ -83,7 +92,7 @@
 }
 /* EQUATOR BLACK SQUARE */
 .equator{
-  transform-origin: 50px 150px;
+  transform-origin: calc(0.5 * var(--square-size)) calc(1.5 * var(--square-size));
   rotate: y 0deg;
 }
 .equator.up {
