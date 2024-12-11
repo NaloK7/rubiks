@@ -1,5 +1,5 @@
-import { myCube } from "/src/script.js";
-import { cubeEvent } from "/src/script.js";
+import { myCube } from "./src/script.js";
+import { cubeEvent } from "./src/script.js";
 
   
   export class VectorUtils {

@@ -1,5 +1,5 @@
-import { Cube } from "/src/Cube.js";
-import { CubeEventHandler } from "/src/CubeEventHandler.js";
+import { Cube } from "./src/Cube.js";
+import { CubeEventHandler } from "./src/CubeEventHandler.js";
 
 export const cubeEvent = new CubeEventHandler();
 export const myCube = new Cube();
@@ -9,7 +9,7 @@ window.addEventListener(
   () => {
     cubeEvent.initializeEventListeners();
     myCube.generateCubeHTML();
-    
+
     const mixButton = document.querySelector("#mixButton");
     mixButton.addEventListener("click", () => myCube.mixCube());
 
