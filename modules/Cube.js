@@ -1,4 +1,4 @@
-import { cubeEvent } from './rubiks/src/script.js';
+import { cubeEvent } from '../main.js';
 
 export class Cube {
   constructor() {

@@ -1,8 +1,8 @@
-import { Cube } from "./Cube.js";
-import { CubeEventHandler } from "./CubeEventHandler.js";
+import { Cube } from "./modules/Cube.js";
+import { CubeEventHandler } from "./modules/CubeEventHandler.js";
 
-export const cubeEvent = new CubeEventHandler();
 export const myCube = new Cube();
+export const cubeEvent = new CubeEventHandler();
 
 window.addEventListener(
   "DOMContentLoaded",

@@ -1,5 +1,4 @@
-import { myCube } from "./rubiks/src/script.js";
-import { cubeEvent } from "./rubiks/src/script.js";
+import { myCube, cubeEvent } from "../main.js";
 
   
   export class VectorUtils {
