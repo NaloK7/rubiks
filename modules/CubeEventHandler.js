@@ -73,9 +73,10 @@ export class CubeEventHandler {
       x: ev.touches[0].clientX,
       y: ev.touches[0].clientY,
     };
-    this.selectedSquare = this.getSelectedSquare(ev);
-
-    if (this.selectedSquare) {
+    this.getElementClicked(ev)
+    
+    if (this.clickedTag === "square") {
+      this.selectedSquare = this.getSelectedSquare(ev);
       vector.getFaceVectors(this.selectedSquare);
     }
 
