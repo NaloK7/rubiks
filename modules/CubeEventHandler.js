@@ -112,41 +112,13 @@ export class CubeEventHandler {
     const deltaX = this.currentPointer.x - this.startPointer.x;
     const deltaY = this.currentPointer.y - this.startPointer.y;
 
-    // Determine the effective axis of rotation based on current orientation
-    if (
-      myCube.rotateX % 360 > 45 &&
-      myCube.rotateX % 360 <= 135
-      // &&
-      // myCube.rotateY % 360 > 45 &&
-      // myCube.rotateY % 360 <= 315
-    ) {
-      console.log("1");
-
-      // Rotate around Z-axis when Y is between 45 and 135 degrees
-      myCube.updateRotateX(deltaY * -0.5);
-      myCube.updateRotateZ(deltaX * 0.5);
-      // myCube.rotateY = 0
-    } else if (myCube.rotateX % 360 > 135 && myCube.rotateX % 360 <= 225) {
-      console.log("2");
-
-      // Invert X-axis rotation when Y is between 135 and 225 degrees
+    if (myCube.rotateX % 360 > 135 && myCube.rotateX % 360 <= 225) {
       myCube.updateRotateX(deltaY * -0.5);
       myCube.updateRotateY(deltaX * 0.5);
-      // myCube.rotateZ = 0
-    } else if (myCube.rotateX % 360 > 225 && myCube.rotateX % 360 <= 315) {
-      console.log("3");
 
-      // Rotate around Z-axis when Y is between 225 and 315 degrees
-      myCube.updateRotateX(deltaY * -0.5);
-      myCube.updateRotateZ(deltaX * -0.5);
-      // myCube.rotateY = 0
     } else {
-      console.log("4");
-
-      // Default rotation around X-axis
       myCube.updateRotateX(deltaY * -0.5);
       myCube.updateRotateY(deltaX * -0.5);
-      // myCube.rotateZ = 0
     }
 
     this.startPointer.x += deltaX;
@@ -154,6 +126,36 @@ export class CubeEventHandler {
 
     myCube.applyCubeRotation();
   }
+
+  // other approach !!! gimbal lock: sometimes mix X and Z axis !!!
+
+  // handleCubeMovement() {
+  //   const deltaX = this.currentPointer.x - this.startPointer.x;
+  //   const deltaY = this.currentPointer.y - this.startPointer.y;
+
+    
+  //   if (myCube.rotateX % 360 > 45 && myCube.rotateX % 360 <= 135) {
+  //     myCube.updateRotateX(deltaY * -0.5);
+  //     myCube.updateRotateZ(deltaX * 0.5);
+
+  //   } else if (myCube.rotateX % 360 > 135 && myCube.rotateX % 360 <= 225) {
+  //     myCube.updateRotateX(deltaY * -0.5);
+  //     myCube.updateRotateY(deltaX * 0.5);
+
+  //   } else if (myCube.rotateX % 360 > 225 && myCube.rotateX % 360 <= 315) {
+  //     myCube.updateRotateX(deltaY * -0.5);
+  //     myCube.updateRotateZ(deltaX * -0.5);
+
+  //   } else {
+  //     myCube.updateRotateX(deltaY * -0.5);
+  //     myCube.updateRotateY(deltaX * -0.5);
+  //   }
+
+  //   this.startPointer.x += deltaX;
+  //   this.startPointer.y += deltaY;
+
+  //   myCube.applyCubeRotation();
+  // }
 
   handleRotationGroup() {
     const mouseVector = {

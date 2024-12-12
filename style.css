@@ -37,7 +37,6 @@
 }
 
 .cube {
-  background-color: black;
   /* use to create a reference point in center of the cube */
   width: var(--square-size);
   height: var(--square-size);
@@ -144,6 +143,10 @@
   width: 95%;
   height: 95%;
   backface-visibility: hidden;
+}
+
+.square span:hover {
+  border: 3px solid gray
 }
 
 /* FRONT */

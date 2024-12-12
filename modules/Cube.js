@@ -62,10 +62,10 @@ export class Cube {
     this.rotateZ = (this.rotateZ - value + 360) % 360;
   }
   resetPos() {
-    console.log("reset");
-    
-    const cubeElement = document.querySelector(".cube");
-    cubeElement.style.transform = `rotateX(335deg) rotateY(315deg) rotateZ(0deg)`;
+    this.rotateX = 335;
+    this.rotateY = 315;
+    this.rotateZ = 0;
+    this.applyCubeRotation()
   }
   applyCubeRotation() {    
     const cubeElement = document.querySelector(".cube");
