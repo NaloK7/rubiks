@@ -1,4 +1,4 @@
-import { cubeEvent } from '../main.js';
+import { cubeEvent } from "../main.js";
 
 export class Cube {
   constructor() {
@@ -47,8 +47,8 @@ export class Cube {
     this.backFace = this.cube[2];
     this.rightFace = this.cube[3];
     this.upFace = this.cube[4];
-      this.downFace = this.cube[5];
-      this.applyCubeRotation()
+    this.downFace = this.cube[5];
+    this.applyCubeRotation();
   }
 
   updateRotateX(value) {
@@ -65,15 +65,14 @@ export class Cube {
     this.rotateX = 335;
     this.rotateY = 315;
     this.rotateZ = 0;
-    this.applyCubeRotation()
+    this.applyCubeRotation();
   }
-  applyCubeRotation() {    
+  applyCubeRotation() {
     const cubeElement = document.querySelector(".cube");
     cubeElement.style.transform = `rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg) rotateZ(${this.rotateZ}deg)`;
   }
 
-    rotateGroupe(move,reverse = false, speed = 300) {
-      
+  rotateGroupe(move, reverse = false, speed = 300) {
     if (!this.isAnimate) {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
@@ -88,8 +87,9 @@ export class Cube {
         square.style.backgroundColor = "black";
       });
       const group = document.querySelectorAll(`.${move}`);
+      
       group.forEach((square) => {
-        square.style.transition = `rotate ease ${speed*0.001}s`;
+        square.style.transition = `rotate ease ${speed * 0.001}s`;
         square.classList.add(deg);
       });
 
@@ -142,8 +142,10 @@ export class Cube {
     this.cube.forEach((face, faceIndex) => {
       face.forEach((row, rowIndex) => {
         row.forEach((column, columnIndex) => {
-          const refSquare = this.refCube[faceIndex][rowIndex][columnIndex].split(" ");
-          const movedSquare = this.cube[faceIndex][rowIndex][columnIndex].split(" ");
+          const refSquare =
+            this.refCube[faceIndex][rowIndex][columnIndex].split(" ");
+          const movedSquare =
+            this.cube[faceIndex][rowIndex][columnIndex].split(" ");
           const squareList = document.querySelectorAll(`.${movedSquare[0]}`);
 
           squareList.forEach((square) => {
@@ -216,7 +218,7 @@ export class Cube {
     let frontEdge = this.frontFace.map((row) => row[1]);
     let downEdge = this.downFace.map((row) => row[1]);
     let backEdge = this.backFace.map((row) => row[1]).reverse();
-  
+
     // update edges
     if (reverse) {
       for (let i = 0; i < 3; i++) this.upFace[i][1] = frontEdge[i];
@@ -232,43 +234,43 @@ export class Cube {
       for (let i = 0; i < 3; i++) this.backFace[i][1] = downEdge[i];
     }
   }
-  
+
   moveR(reverse) {
     // rotate right face
     this.rotateFace(this.rightFace, !reverse);
-  
+
     // save edges
     let upEdge = this.upFace.map((row) => row[2]);
     let frontEdge = this.frontFace.map((row) => row[2]);
     let downEdge = this.downFace.map((row) => row[2]);
     let backEdge = this.backFace.map((row) => row[0]).reverse();
-  
+
     // update edges
     if (reverse) {
-      upEdge = upEdge.reverse()
+      upEdge = upEdge.reverse();
       for (let i = 0; i < 3; i++) this.upFace[i][2] = frontEdge[i];
       for (let i = 0; i < 3; i++) this.frontFace[i][2] = downEdge[i];
       for (let i = 0; i < 3; i++) this.downFace[i][2] = backEdge[i];
       for (let i = 0; i < 3; i++) this.backFace[i][0] = upEdge[i];
     } else {
-      downEdge = downEdge.reverse()
+      downEdge = downEdge.reverse();
       for (let i = 0; i < 3; i++) this.upFace[i][2] = backEdge[i];
       for (let i = 0; i < 3; i++) this.frontFace[i][2] = upEdge[i];
       for (let i = 0; i < 3; i++) this.downFace[i][2] = frontEdge[i];
       for (let i = 0; i < 3; i++) this.backFace[i][0] = downEdge[i];
     }
   }
-  
+
   moveU(reverse) {
     // Rotate up face
     this.rotateFace(this.upFace, reverse);
-  
+
     // Save edges
     let frontEdge = this.frontFace[0].slice();
     let rightEdge = this.rightFace[0].slice();
     let backEdge = this.backFace[0].slice();
     let leftEdge = this.leftFace[0].slice();
-  
+
     // Update edges
     if (reverse) {
       this.frontFace[0] = leftEdge;
@@ -282,14 +284,14 @@ export class Cube {
       this.leftFace[0] = frontEdge;
     }
   }
-  
+
   moveE(reverse) {
     // Save edges
     let frontEdge = this.frontFace[1].slice();
     let rightEdge = this.rightFace[1].slice();
     let backEdge = this.backFace[1].slice();
     let leftEdge = this.leftFace[1].slice();
-  
+
     // Update edges
     if (reverse) {
       this.frontFace[1] = leftEdge;
@@ -303,17 +305,17 @@ export class Cube {
       this.leftFace[1] = frontEdge;
     }
   }
-  
+
   moveD(reverse) {
     // Rotate down face
     this.rotateFace(this.downFace, !reverse);
-  
+
     // Save edges
     let frontEdge = this.frontFace[2].slice();
     let rightEdge = this.rightFace[2].slice();
     let backEdge = this.backFace[2].slice();
     let leftEdge = this.leftFace[2].slice();
-  
+
     // Update edges
     if (reverse) {
       this.frontFace[2] = leftEdge;
@@ -327,17 +329,17 @@ export class Cube {
       this.leftFace[2] = frontEdge;
     }
   }
-  
+
   moveF(reverse) {
     // Rotate front face
     this.rotateFace(this.frontFace, !reverse);
-  
+
     // Save edges
     let upEdge = this.upFace[2].slice();
     let rightEdge = this.rightFace.map((row) => row[0]);
     let downEdge = this.downFace[0].slice();
     let leftEdge = this.leftFace.map((row) => row[2]);
-  
+
     // Update edges
     if (reverse) {
       this.upFace[2] = leftEdge.reverse();
@@ -347,21 +349,21 @@ export class Cube {
     } else {
       downEdge = downEdge.reverse();
       upEdge = upEdge.reverse();
-  
+
       this.upFace[2] = rightEdge;
       for (let i = 0; i < 3; i++) this.rightFace[i][0] = downEdge[i];
       this.downFace[0] = leftEdge;
       for (let i = 0; i < 3; i++) this.leftFace[i][2] = upEdge[i];
     }
   }
-  
+
   moveS(reverse) {
     // Save edges
     let upEdge = this.upFace[1].slice();
     let rightEdge = this.rightFace.map((row) => row[1]);
     let downEdge = this.downFace[1].slice();
     let leftEdge = this.leftFace.map((row) => row[1]);
-  
+
     // Update edges
     if (reverse) {
       this.upFace[1] = leftEdge.reverse();
@@ -371,24 +373,24 @@ export class Cube {
     } else {
       upEdge = upEdge.reverse();
       downEdge = downEdge.reverse();
-  
+
       this.upFace[1] = rightEdge;
       for (let i = 0; i < 3; i++) this.rightFace[i][1] = downEdge[i];
       this.downFace[1] = leftEdge;
       for (let i = 0; i < 3; i++) this.leftFace[i][1] = upEdge[i];
     }
   }
-  
+
   moveB(reverse) {
     // Rotate back face
     this.rotateFace(this.backFace, reverse);
-  
+
     // Save edges
     let upEdge = this.upFace[0].slice();
     let rightEdge = this.rightFace.map((row) => row[2]);
     let downEdge = this.downFace[2].slice();
     let leftEdge = this.leftFace.map((row) => row[0]);
-  
+
     // Update edges
     if (reverse) {
       this.upFace[0] = leftEdge.reverse();
@@ -398,7 +400,7 @@ export class Cube {
     } else {
       upEdge = upEdge.reverse();
       downEdge = downEdge.reverse();
-  
+
       this.upFace[0] = rightEdge;
       for (let i = 0; i < 3; i++) this.rightFace[i][2] = downEdge[i];
       this.downFace[2] = leftEdge;
@@ -407,26 +409,32 @@ export class Cube {
   }
 
   mixCube() {
+    
     const possibleMove = ["L", "M", "R", "U", "E", "D", "F", "S", "B"];
     const sequence = [];
+    const moveNumber = 35
     
-    while (sequence.length < 30) {
-        const randomElement = possibleMove[Math.floor(Math.random() * possibleMove.length)];
-        if (sequence.length === 0 || randomElement !== sequence[sequence.length - 1]) {
-            sequence.push(randomElement);
-        }
+    while (sequence.length < moveNumber) {
+      const randomElement =
+      possibleMove[Math.floor(Math.random() * possibleMove.length)];
+      if (
+        sequence.length === 0 ||
+        randomElement !== sequence[sequence.length - 1]
+      ) {
+        sequence.push(randomElement);
+      }
     }
     let index = 0;
-
+    
     const performMove = () => {
-      if (index < sequence.length) {  
-        let reverse = Math.random() > 0.5 ? false : true
-        this.rotateGroupe(sequence[index], reverse, 200);
+      if (index < sequence.length) {
+        // let reverse = Math.random() > 0.5 ? false : true;
+        this.rotateGroupe(sequence[index], false, 200);
         index++;
-        setTimeout(performMove, 250);
+      setTimeout(performMove, 240);
       }
     };
-
+    
     performMove();
   }
 

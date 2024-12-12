@@ -2,11 +2,12 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
   /* variable */
   --square-size: 100px;
 }
-
+::-webkit-scrollbar {
+  display: none;
+}
 @media screen and (max-width: 376px) {
   * {
     --square-size: 67px;
@@ -22,6 +23,11 @@
 #btn button {
   padding: 3px 5px;
   font-weight: bold;
+}
+#helpSection {
+  height: 170px;
+  background-image: url("./img/bandeau solutions.svg");
+  background-size: cover;
 }
 .container {
   /* canvas to display the cube */
@@ -55,11 +61,12 @@
   height: calc(3 * var(--square-size));
   width: calc(3 * var(--square-size));
   position: absolute;
+  border-radius: 25%;
 }
 /* STANDING BLACK SQUARE */
 .standing{
   transform-origin: calc(0.5 * var(--square-size)) calc(0.5 * var(--square-size));
-  rotate: y 0deg;
+  /* rotate: y 0deg; */
 }
 .standing.front {
 
@@ -77,7 +84,7 @@
 /* MIDDLE BLACK SQUARE */
 .middle{
   transform-origin: calc(1.5 * var(--square-size)) calc(0.5 * var(--square-size));
-  rotate: y 0deg;
+  /* rotate: y 0deg; */
 }
 .middle.right {
 
@@ -92,7 +99,7 @@
 /* EQUATOR BLACK SQUARE */
 .equator{
   transform-origin: calc(0.5 * var(--square-size)) calc(1.5 * var(--square-size));
-  rotate: y 0deg;
+  /* rotate: y 0deg; */
 }
 .equator.up {
   transform: rotateX(90deg) translateX(calc(-1 * var(--square-size)))
