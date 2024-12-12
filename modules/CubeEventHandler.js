@@ -9,6 +9,8 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.faceHorizontalVector = null;
     this.faceVerticalVector = null;
+    this.scrollOffset = 0
+    this.clickedTag = null
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
@@ -49,12 +51,15 @@ export class CubeEventHandler {
   onMouseDown(ev) {
     this.startPointer = { x: ev.clientX, y: ev.clientY };
     this.currentPointer = { x: ev.clientX, y: ev.clientY };
-    this.selectedSquare = this.getSelectedSquare(ev);
 
-    if (this.selectedSquare) {
+    this.getElementClicked(ev)
+    
+    if (this.clickedTag === "square") {
+      this.selectedSquare = this.getSelectedSquare(ev);
       vector.getFaceVectors(this.selectedSquare);
     }
-    document.addEventListener("mousemove", this.onPointerMove);
+      document.addEventListener("mousemove", this.onPointerMove);
+    
   }
 
   onMouseUp() {
@@ -85,6 +90,15 @@ export class CubeEventHandler {
     document.removeEventListener("touchmove", this.onPointerMove.bind(this));
   }
 
+  getElementClicked(ev) {
+    if (ev.target.id === "container") {
+      this.clickedTag = "cube"
+    } else if (ev.target.tagName === "SPAN") {
+      this.clickedTag = "square"
+    } else if (ev.target.id === "helpSection") {
+      this.clickedTag = "helpSection"
+    }
+  }
   getSelectedSquare(ev) {
     const squareClicked =
       ev.target.tagName === "SPAN" &&
@@ -93,6 +107,7 @@ export class CubeEventHandler {
   }
 
   onPointerMove(ev) {
+    
     if (ev.type === "mousemove") {
       this.currentPointer.x = ev.clientX;
       this.currentPointer.y = ev.clientY;
@@ -101,13 +116,24 @@ export class CubeEventHandler {
       this.currentPointer.y = ev.touches[0].clientY;
     }
 
-    if (this.selectedSquare) {
+    
+    if (this.clickedTag === "square") {
       this.handleRotationGroup();
-    } else {
+    } else if (this.clickedTag === "cube"){
       this.handleCubeMovement();
+    } else if (this.clickedTag === "helpSection") {
+      this.handleScrollImage()
     }
   }
+  handleScrollImage() {
+    let image = document.querySelector("#helpSection")
 
+    const deltaX = this.currentPointer.x - this.startPointer.x;
+    this.scrollOffset += deltaX
+    image.style.backgroundPositionX = `${this.scrollOffset}px`;
+    this.startPointer.x += deltaX;
+    
+}
   handleCubeMovement() {
     const deltaX = this.currentPointer.x - this.startPointer.x;
     const deltaY = this.currentPointer.y - this.startPointer.y;

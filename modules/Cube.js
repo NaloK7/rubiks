@@ -428,10 +428,9 @@ export class Cube {
     
     const performMove = () => {
       if (index < sequence.length) {
-        // let reverse = Math.random() > 0.5 ? false : true;
-        this.rotateGroupe(sequence[index], false, 200);
+        this.rotateGroupe(sequence[index], false, 100);
         index++;
-      setTimeout(performMove, 240);
+      setTimeout(performMove, 140);
       }
     };
     

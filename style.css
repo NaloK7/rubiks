@@ -5,9 +5,7 @@
   /* variable */
   --square-size: 100px;
 }
-::-webkit-scrollbar {
-  display: none;
-}
+
 @media screen and (max-width: 376px) {
   * {
     --square-size: 67px;
@@ -17,17 +15,21 @@
   margin: 10px 40%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 #btn button {
+  margin: 0px 5px;
   padding: 3px 5px;
   font-weight: bold;
 }
 #helpSection {
   height: 170px;
+  width: 100vw;
   background-image: url("./img/bandeau solutions.svg");
   background-size: cover;
+  position: relative;
+  overflow: hidden;
 }
 .container {
   /* canvas to display the cube */
