@@ -10,8 +10,12 @@
   * {
     --square-size: 67px;
   }
+  #btn {
+    margin: 10px 0px !important;
+  }
 }
 #btn {
+  height: 3vh;
   margin: 10px 40%;
   display: flex;
   flex-direction: row;
@@ -27,14 +31,16 @@
 .container {
   /* canvas to display the cube */
   width: 100%;
-  height: calc(var(--square-size) * 6);
+  height: 75vh;
   /* center horizontally */
   padding: 0% 50%;
   /* create perspective and preserve 3D  */
-  perspective: 1000px;
+  perspective: 1500px;
   transform-style: preserve-3d;
-  -webkit-user-select: none;
+  border:1px solid gray;
   user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: contain;
 }
 
 .cube {

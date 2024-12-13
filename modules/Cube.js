@@ -8,6 +8,7 @@ export class Cube {
     this.THRESHOLD = 100;
     this.animationSpeed = 350;
     this.isAnimate = false;
+    this.start = false
 
     this.refCube = [
       [
@@ -74,6 +75,7 @@ export class Cube {
   }
 
   rotateGroupe(move, reverse = false, speed = this.animationSpeed) {
+    this.start = true
     if (!this.isAnimate) {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
