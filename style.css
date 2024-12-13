@@ -13,6 +13,9 @@
   #btn {
     margin: 10px 0px !important;
   }
+  .cube {
+    top: -100px !important
+  }
 }
 #btn {
   height: 3vh;
@@ -43,7 +46,7 @@
   /* create perspective and preserve 3D  */
   perspective: 1500px;
   transform-style: preserve-3d;
-  border:1px solid gray;
+  border: 1px solid gray;
   user-select: none;
   -webkit-user-select: none;
   overscroll-behavior: contain;
@@ -70,48 +73,45 @@
   position: absolute;
   border-radius: 25%;
 }
+
 /* STANDING BLACK SQUARE */
-.standing{
-  transform-origin: calc(0.5 * var(--square-size)) calc(0.5 * var(--square-size));
-  /* rotate: y 0deg; */
+.standing {
+  transform-origin: calc(0.5 * var(--square-size))
+    calc(0.5 * var(--square-size));
 }
 .standing.front {
-
   transform: translateX(calc(-1 * var(--square-size)))
-  translateY(calc(-1 * var(--square-size)))
-  translateZ(calc(0.5 * var(--square-size)));
+    translateY(calc(-1 * var(--square-size)))
+    translateZ(calc(0.5 * var(--square-size)));
 }
 .standing.back {
-
   transform: translateX(calc(-1 * var(--square-size)))
-  translateY(calc(-1 * var(--square-size)))
-  translateZ(calc(-0.5 * var(--square-size)));
+    translateY(calc(-1 * var(--square-size)))
+    translateZ(calc(-0.5 * var(--square-size)));
 }
 
 /* MIDDLE BLACK SQUARE */
-.middle{
-  transform-origin: calc(1.5 * var(--square-size)) calc(0.5 * var(--square-size));
-  /* rotate: y 0deg; */
+.middle {
+  transform-origin: calc(1.5 * var(--square-size))
+    calc(0.5 * var(--square-size));
 }
 .middle.right {
-
   transform: rotateY(90deg) translateZ(calc(-0.5 * var(--square-size)))
-  translateY(calc(-1 * var(--square-size)));
+    translateY(calc(-1 * var(--square-size)));
 }
 .middle.left {
-
   transform: rotateY(90deg) translateZ(calc(-1.5 * var(--square-size)))
-  translateY(calc(-1 * var(--square-size)));
+    translateY(calc(-1 * var(--square-size)));
 }
 /* EQUATOR BLACK SQUARE */
-.equator{
-  transform-origin: calc(0.5 * var(--square-size)) calc(1.5 * var(--square-size));
-  /* rotate: y 0deg; */
+.equator {
+  transform-origin: calc(0.5 * var(--square-size))
+    calc(1.5 * var(--square-size));
 }
 .equator.up {
   transform: rotateX(90deg) translateX(calc(-1 * var(--square-size)))
-  translateY(calc(0 * var(--square-size)))
-  translateZ(calc(1.5 * var(--square-size)));
+    translateY(calc(0 * var(--square-size)))
+    translateZ(calc(1.5 * var(--square-size)));
 }
 .equator.down {
   transform: rotateX(90deg) translateX(calc(-1 * var(--square-size)))
@@ -160,7 +160,7 @@
 }
 
 .square span:hover {
-  border: 3px solid gray
+  border: 3px solid gray;
 }
 
 /* FRONT */
@@ -397,10 +397,12 @@
     );
 }
 .Ltr {
-  /* transform: rotate3d(0, 1, 0, 270deg) translate3d(var(--square-size), calc(-1 * var(--square-size)), calc(1.5 * var(--square-size))); */
-  transform: rotateX(0deg) rotateY(270deg) rotateZ(0deg)
-    translateX(var(--square-size)) translateY(calc(-1 * var(--square-size)))
-    translateZ(calc(1.5 * var(--square-size)));
+  transform: rotate3d(0, 1, 0, 270deg)
+    translate3d(
+      var(--square-size),
+      calc(-1 * var(--square-size)),
+      calc(1.5 * var(--square-size))
+    );
 }
 /* middle */
 .Lml {
