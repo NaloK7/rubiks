@@ -5,10 +5,10 @@ export class Cube {
     this.rotateX = 335;
     this.rotateY = 315;
     this.rotateZ = 0;
-    this.THRESHOLD = 100;
+    this.THRESHOLD = 60;
     this.animationSpeed = 350;
     this.isAnimate = false;
-    this.start = false
+    this.start = false;
 
     this.refCube = [
       [
@@ -75,7 +75,7 @@ export class Cube {
   }
 
   rotateGroupe(move, reverse = false, speed = this.animationSpeed) {
-    this.start = true
+    this.start = true;
     if (!this.isAnimate) {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
@@ -90,7 +90,7 @@ export class Cube {
         square.style.backgroundColor = "black";
       });
       const group = document.querySelectorAll(`.${move}`);
-      
+
       group.forEach((square) => {
         square.style.transition = `rotate ease ${speed * 0.001}s`;
         square.classList.add(deg);
@@ -412,14 +412,13 @@ export class Cube {
   }
 
   mixCube() {
-    
     const possibleMove = ["L", "M", "R", "U", "E", "D", "F", "S", "B"];
     const sequence = [];
-    const moveNumber = 35
-    
+    const moveNumber = 35;
+
     while (sequence.length < moveNumber) {
       const randomElement =
-      possibleMove[Math.floor(Math.random() * possibleMove.length)];
+        possibleMove[Math.floor(Math.random() * possibleMove.length)];
       if (
         sequence.length === 0 ||
         randomElement !== sequence[sequence.length - 1]
@@ -428,15 +427,15 @@ export class Cube {
       }
     }
     let index = 0;
-    
+
     const performMove = () => {
       if (index < sequence.length) {
-        this.rotateGroupe(sequence[index], false, this.animationSpeed/2);
+        this.rotateGroupe(sequence[index], false, this.animationSpeed / 2);
         index++;
-      setTimeout(performMove, this.animationSpeed/2 + 40);
+        setTimeout(performMove, this.animationSpeed / 2 + 40);
       }
     };
-    
+
     performMove();
   }
 

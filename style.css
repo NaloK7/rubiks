@@ -14,7 +14,7 @@
     margin: 10px 0px !important;
   }
   .cube {
-    top: -100px !important
+    top: -100px !important;
   }
 }
 #btn {
@@ -71,7 +71,7 @@
   height: calc(3 * var(--square-size));
   width: calc(3 * var(--square-size));
   position: absolute;
-  border-radius: 25%;
+  border-radius: 15%;
 }
 
 /* STANDING BLACK SQUARE */
@@ -146,6 +146,7 @@
   background-color: black;
   z-index: 999;
 }
+
 .square span {
   border-radius: 10%;
   position: absolute;

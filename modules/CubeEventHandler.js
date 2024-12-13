@@ -10,8 +10,8 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.faceHorizontalVector = null;
     this.faceVerticalVector = null;
-    this.scrollOffset = 0
-    this.clickedTag = null
+    this.scrollOffset = 0;
+    this.clickedTag = null;
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
@@ -53,14 +53,13 @@ export class CubeEventHandler {
     this.startPointer = { x: ev.clientX, y: ev.clientY };
     this.currentPointer = { x: ev.clientX, y: ev.clientY };
 
-    this.getElementClicked(ev)
-    
+    this.getElementClicked(ev);
+
     if (this.clickedTag === "square") {
       this.selectedSquare = this.getSelectedSquare(ev);
       vector.getFaceVectors(this.selectedSquare);
     }
-      document.addEventListener("mousemove", this.onPointerMove);
-    
+    document.addEventListener("mousemove", this.onPointerMove);
   }
 
   onMouseUp() {
@@ -74,8 +73,8 @@ export class CubeEventHandler {
       x: ev.touches[0].clientX,
       y: ev.touches[0].clientY,
     };
-    this.getElementClicked(ev)
-    
+    this.getElementClicked(ev);
+
     if (this.clickedTag === "square") {
       this.selectedSquare = this.getSelectedSquare(ev);
       vector.getFaceVectors(this.selectedSquare);
@@ -94,29 +93,33 @@ export class CubeEventHandler {
 
   getElementClicked(ev) {
     if (ev.target.id === "container") {
-      this.clickedTag = "cube"
-    } else if (ev.target.tagName === "SPAN" || ev.target.classList.contains("square")) {
-      this.clickedTag = "square"
-    }  else if (ev.target.id === "helpSection") {
-      this.clickedTag = "helpSection"
-    }else {
-      this.clickedTag = null
+      this.clickedTag = "cube";
+    } else if (
+      ev.target.tagName === "SPAN" ||
+      ev.target.classList.contains("square")
+    ) {
+      this.clickedTag = "square";
+    } else if (ev.target.id === "helpSection") {
+      this.clickedTag = "helpSection";
+    } else {
+      this.clickedTag = null;
     }
   }
 
   getSelectedSquare(ev) {
-    let squareClicked = null
-    if (ev.target.tagName === "SPAN" &&
-      ev.target.parentNode.classList.contains("square")) {
-        squareClicked = ev.target.parentNode
+    let squareClicked = null;
+    if (
+      ev.target.tagName === "SPAN" &&
+      ev.target.parentNode.classList.contains("square")
+    ) {
+      squareClicked = ev.target.parentNode;
     } else if (ev.target.classList.contains("square")) {
-      squareClicked = ev.target
+      squareClicked = ev.target;
     }
     return squareClicked;
   }
 
   onPointerMove(ev) {
-    
     if (ev.type === "mousemove") {
       this.currentPointer.x = ev.clientX;
       this.currentPointer.y = ev.clientY;
@@ -125,25 +128,23 @@ export class CubeEventHandler {
       this.currentPointer.y = ev.touches[0].clientY;
     }
 
-    
     if (this.clickedTag === "square") {
       this.handleRotationGroup();
-    } else if (this.clickedTag === "cube"){
+    } else if (this.clickedTag === "cube") {
       this.handleCubeMovement();
     } else if (this.clickedTag === "helpSection") {
-      this.handleScrollImage()
+      this.handleScrollImage();
     }
   }
- 
+
   handleScrollImage() {
-    let image = document.querySelector("#helpSection")
+    let image = document.querySelector("#helpSection");
 
     const deltaX = this.currentPointer.x - this.startPointer.x;
-    this.scrollOffset += deltaX
+    this.scrollOffset += deltaX;
     image.style.backgroundPositionX = `${this.scrollOffset}px`;
     this.startPointer.x += deltaX;
-    
-}
+  }
 
   // reminder: more complex approach may lead to gimbal lock((mix axis)
   handleCubeMovement() {
@@ -153,7 +154,6 @@ export class CubeEventHandler {
     if (myCube.rotateX % 360 > 135 && myCube.rotateX % 360 <= 225) {
       myCube.updateRotateX(deltaY * -0.5);
       myCube.updateRotateY(deltaX * 0.5);
-
     } else {
       myCube.updateRotateX(deltaY * -0.5);
       myCube.updateRotateY(deltaX * -0.5);
@@ -164,7 +164,6 @@ export class CubeEventHandler {
 
     myCube.applyCubeRotation();
   }
-
 
   handleRotationGroup() {
     const mouseVector = {
