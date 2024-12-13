@@ -7,7 +7,6 @@ export class Cube {
     this.rotateZ = 0;
     this.THRESHOLD = 100;
     this.isAnimate = false;
-
     this.refCube = [
       [
         ["Ftl L U F", "Ftc M U F", "Ftr R U F"],

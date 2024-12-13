@@ -2,6 +2,7 @@ import { VectorUtils } from "./VectorUtils.js";
 import { myCube } from "../main.js";
 
 const vector = new VectorUtils();
+
 export class CubeEventHandler {
   constructor() {
     this.startPointer = null;

@@ -1,6 +1,5 @@
 import { myCube, cubeEvent } from "../main.js";
 
-  
   export class VectorUtils {
     getVectorDirection(vector) {
       return {
