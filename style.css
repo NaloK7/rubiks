@@ -23,14 +23,7 @@
   padding: 3px 5px;
   font-weight: bold;
 }
-#helpSection {
-  height: 170px;
-  width: 100vw;
-  background-image: url("./img/bandeau solutions.svg");
-  background-size: cover;
-  position: relative;
-  overflow: hidden;
-}
+
 .container {
   /* canvas to display the cube */
   width: 100%;

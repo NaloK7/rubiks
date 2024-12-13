@@ -96,10 +96,9 @@ export class CubeEventHandler {
       this.clickedTag = "cube"
     } else if (ev.target.tagName === "SPAN") {
       this.clickedTag = "square"
-    } else if (ev.target.id === "helpSection") {
-      this.clickedTag = "helpSection"
     }
   }
+
   getSelectedSquare(ev) {
     const squareClicked =
       ev.target.tagName === "SPAN" &&
@@ -122,19 +121,11 @@ export class CubeEventHandler {
       this.handleRotationGroup();
     } else if (this.clickedTag === "cube"){
       this.handleCubeMovement();
-    } else if (this.clickedTag === "helpSection") {
-      this.handleScrollImage()
     }
   }
-  handleScrollImage() {
-    let image = document.querySelector("#helpSection")
-
-    const deltaX = this.currentPointer.x - this.startPointer.x;
-    this.scrollOffset += deltaX
-    image.style.backgroundPositionX = `${this.scrollOffset}px`;
-    this.startPointer.x += deltaX;
+ 
     
-}
+
   handleCubeMovement() {
     const deltaX = this.currentPointer.x - this.startPointer.x;
     const deltaY = this.currentPointer.y - this.startPointer.y;
