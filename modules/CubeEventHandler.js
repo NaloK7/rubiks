@@ -94,16 +94,22 @@ export class CubeEventHandler {
   getElementClicked(ev) {
     if (ev.target.id === "container") {
       this.clickedTag = "cube"
-    } else if (ev.target.tagName === "SPAN") {
+    } else if (ev.target.tagName === "SPAN" || ev.target.classList.contains("square")) {
       this.clickedTag = "square"
+    } else {
+      this.clickedTag = null
     }
   }
 
   getSelectedSquare(ev) {
-    const squareClicked =
-      ev.target.tagName === "SPAN" &&
-      ev.target.parentNode.classList.contains("square");
-    return squareClicked ? ev.target.parentNode : null;
+    let squareClicked = null
+    if (ev.target.tagName === "SPAN" &&
+      ev.target.parentNode.classList.contains("square")) {
+        squareClicked = ev.target.parentNode
+    } else if (ev.target.classList.contains("square")) {
+      squareClicked = ev.target
+    }
+    return squareClicked;
   }
 
   onPointerMove(ev) {
@@ -126,6 +132,7 @@ export class CubeEventHandler {
  
     
 
+  // reminder: more complex approach may lead to gimbal lock((mix axis)
   handleCubeMovement() {
     const deltaX = this.currentPointer.x - this.startPointer.x;
     const deltaY = this.currentPointer.y - this.startPointer.y;
@@ -145,35 +152,6 @@ export class CubeEventHandler {
     myCube.applyCubeRotation();
   }
 
-  // other approach !!! gimbal lock: sometimes mix X and Z axis !!!
-
-  // handleCubeMovement() {
-  //   const deltaX = this.currentPointer.x - this.startPointer.x;
-  //   const deltaY = this.currentPointer.y - this.startPointer.y;
-
-    
-  //   if (myCube.rotateX % 360 > 45 && myCube.rotateX % 360 <= 135) {
-  //     myCube.updateRotateX(deltaY * -0.5);
-  //     myCube.updateRotateZ(deltaX * 0.5);
-
-  //   } else if (myCube.rotateX % 360 > 135 && myCube.rotateX % 360 <= 225) {
-  //     myCube.updateRotateX(deltaY * -0.5);
-  //     myCube.updateRotateY(deltaX * 0.5);
-
-  //   } else if (myCube.rotateX % 360 > 225 && myCube.rotateX % 360 <= 315) {
-  //     myCube.updateRotateX(deltaY * -0.5);
-  //     myCube.updateRotateZ(deltaX * -0.5);
-
-  //   } else {
-  //     myCube.updateRotateX(deltaY * -0.5);
-  //     myCube.updateRotateY(deltaX * -0.5);
-  //   }
-
-  //   this.startPointer.x += deltaX;
-  //   this.startPointer.y += deltaY;
-
-  //   myCube.applyCubeRotation();
-  // }
 
   handleRotationGroup() {
     const mouseVector = {
