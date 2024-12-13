@@ -6,7 +6,10 @@ export class Cube {
     this.rotateY = 315;
     this.rotateZ = 0;
     this.THRESHOLD = 100;
+    this.animationSpeed = 350;
     this.isAnimate = false;
+    this.start = false
+
     this.refCube = [
       [
         ["Ftl L U F", "Ftc M U F", "Ftr R U F"],
@@ -71,7 +74,8 @@ export class Cube {
     cubeElement.style.transform = `rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg) rotateZ(${this.rotateZ}deg)`;
   }
 
-  rotateGroupe(move, reverse = false, speed = 300) {
+  rotateGroupe(move, reverse = false, speed = this.animationSpeed) {
+    this.start = true
     if (!this.isAnimate) {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
@@ -427,9 +431,9 @@ export class Cube {
     
     const performMove = () => {
       if (index < sequence.length) {
-        this.rotateGroupe(sequence[index], false, 100);
+        this.rotateGroupe(sequence[index], false, this.animationSpeed/2);
         index++;
-      setTimeout(performMove, 140);
+      setTimeout(performMove, this.animationSpeed/2 + 40);
       }
     };
     
