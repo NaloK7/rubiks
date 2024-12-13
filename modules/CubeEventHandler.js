@@ -97,7 +97,9 @@ export class CubeEventHandler {
       this.clickedTag = "cube"
     } else if (ev.target.tagName === "SPAN" || ev.target.classList.contains("square")) {
       this.clickedTag = "square"
-    } else {
+    }  else if (ev.target.id === "helpSection") {
+      this.clickedTag = "helpSection"
+    }else {
       this.clickedTag = null
     }
   }
@@ -128,10 +130,20 @@ export class CubeEventHandler {
       this.handleRotationGroup();
     } else if (this.clickedTag === "cube"){
       this.handleCubeMovement();
+    } else if (this.clickedTag === "helpSection") {
+      this.handleScrollImage()
     }
   }
  
+  handleScrollImage() {
+    let image = document.querySelector("#helpSection")
+
+    const deltaX = this.currentPointer.x - this.startPointer.x;
+    this.scrollOffset += deltaX
+    image.style.backgroundPositionX = `${this.scrollOffset}px`;
+    this.startPointer.x += deltaX;
     
+}
 
   // reminder: more complex approach may lead to gimbal lock((mix axis)
   handleCubeMovement() {

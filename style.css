@@ -16,6 +16,7 @@
 }
 #btn {
   height: 3vh;
+  width: auto;
   margin: 10px 40%;
   display: flex;
   flex-direction: row;
@@ -28,7 +29,7 @@
   font-weight: bold;
 }
 #helpSection {
-  height: 170px;
+  height: 18vh;
   width: 100vw;
   background-image: url("./img/memoBoard.svg");
   background-size: cover;
@@ -39,8 +40,6 @@
   /* canvas to display the cube */
   width: 100%;
   height: 75vh;
-  /* center horizontally */
-  padding: 0% 50%;
   /* create perspective and preserve 3D  */
   perspective: 1500px;
   transform-style: preserve-3d;
