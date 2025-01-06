@@ -146,7 +146,7 @@ export class CubeEventHandler {
     this.startPointer.x += deltaX;
   }
 
-  // reminder: more complex approach may lead to gimbal lock((mix axis)
+  // reminder: more complex approach may lead to gimbal lock (mix axis)
   handleCubeMovement() {
     const deltaX = this.currentPointer.x - this.startPointer.x;
     const deltaY = this.currentPointer.y - this.startPointer.y;

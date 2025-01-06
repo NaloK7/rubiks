@@ -51,6 +51,9 @@
   -webkit-user-select: none;
   overscroll-behavior: contain;
 }
+.container:hover {
+  cursor: move;
+}
 
 .cube {
   /* use to create a reference point in center of the cube */
@@ -145,6 +148,12 @@
   position: absolute;
   background-color: black;
   z-index: 999;
+}
+.square:hover {
+  cursor: grab ;
+}
+.square:active {
+  cursor: grabbing ;
 }
 
 .square span {
