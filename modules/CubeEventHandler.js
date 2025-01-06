@@ -1,37 +1,20 @@
-import { VectorUtils } from "./VectorUtils.js";
 import { myCube } from "../main.js";
-
-const vector = new VectorUtils();
 
 export class CubeEventHandler {
   constructor() {
     this.startPointer = null;
     this.currentPointer = null;
     this.selectedSquare = null;
-    this.faceHorizontalVector = null;
-    this.faceVerticalVector = null;
+
     this.scrollOffset = 0;
     this.clickedTag = null;
 
+    this.THRESHOLD = 60;
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
-  }
-
-  setFaceHorizontalVector(startX, startY, endX, endY) {
-    this.faceHorizontalVector = {
-      start: { x: startX, y: startY },
-      end: { x: endX, y: endY },
-    };
-  }
-
-  setFaceVerticalVector(startX, startY, endX, endY) {
-    this.faceVerticalVector = {
-      start: { x: startX, y: startY },
-      end: { x: endX, y: endY },
-    };
   }
 
   initializeEventListeners() {
@@ -45,9 +28,10 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.startPointer = null;
     this.currentPointer = null;
-    this.faceHorizontalVector = null;
-    this.faceVerticalVector = null;
+    myCube.resetFaceVectors();
   }
+
+  // CLICK
 
   onMouseDown(ev) {
     this.startPointer = { x: ev.clientX, y: ev.clientY };
@@ -57,7 +41,7 @@ export class CubeEventHandler {
 
     if (this.clickedTag === "square") {
       this.selectedSquare = this.getSelectedSquare(ev);
-      vector.getFaceVectors(this.selectedSquare);
+      myCube.setFaceVectors(this.selectedSquare);
     }
     document.addEventListener("mousemove", this.onPointerMove);
   }
@@ -77,7 +61,7 @@ export class CubeEventHandler {
 
     if (this.clickedTag === "square") {
       this.selectedSquare = this.getSelectedSquare(ev);
-      vector.getFaceVectors(this.selectedSquare);
+      myCube.setFaceVectors(this.selectedSquare);
     }
 
     document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
@@ -119,6 +103,8 @@ export class CubeEventHandler {
     return squareClicked;
   }
 
+  // MOVE
+  
   onPointerMove(ev) {
     if (ev.type === "mousemove") {
       this.currentPointer.x = ev.clientX;
@@ -171,15 +157,15 @@ export class CubeEventHandler {
       end: { x: this.currentPointer.x, y: this.currentPointer.y },
     };
 
-    if (vector.vectorLength(mouseVector) > myCube.THRESHOLD) {
+    if (myCube.vectorLength(mouseVector) > this.THRESHOLD) {
       let moveDirection = "";
-      const horizontal = vector.analyzeVectors(
+      const horizontal = myCube.analyzeVectors(
         mouseVector,
-        this.faceHorizontalVector
+        myCube.faceHorizontalVector
       );
-      const vertical = vector.analyzeVectors(
+      const vertical = myCube.analyzeVectors(
         mouseVector,
-        this.faceVerticalVector
+        myCube.faceVerticalVector
       );
 
       if (Math.abs(vertical) > Math.abs(horizontal)) {

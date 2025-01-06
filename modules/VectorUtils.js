@@ -1,6 +1,5 @@
-import { myCube, cubeEvent } from "../main.js";
-
 export class VectorUtils {
+
   getVectorDirection(vector) {
     return {
       x: vector.end.x - vector.start.x,
@@ -19,6 +18,16 @@ export class VectorUtils {
     return dotProduct / magnitudeProduct;
   }
 
+  /**
+   * Analyzes the directional relationship between two vectors by calculating
+   * the cosine of the angle between them.
+   *
+   * @param {Object} mouseVector - The vector representing the mouse movement,
+   *   with properties `start` and `end` containing `x` and `y` coordinates.
+   * @param {Object} faceVector - The vector representing the face direction,
+   *   with properties `start` and `end` containing `x` and `y` coordinates.
+   * @returns {number} The cosine of the angle between the two vectors.
+   */
   analyzeVectors(mouseVector, faceVector) {
     const mouseDir = this.getVectorDirection(mouseVector);
     const faceDir = this.getVectorDirection(faceVector);
@@ -33,44 +42,10 @@ export class VectorUtils {
     return Math.sqrt(dx * dx + dy * dy);
   }
 
-  getFaceVectors(square) {
-    const faceLetter = square.classList[1][0];
-    const faceIndex = this.getFaceIndex(faceLetter);
-
-    if (faceIndex !== -1) {
-      cubeEvent.setFaceHorizontalVector(
-        this.getPoint(faceIndex, 1, 0).x,
-        this.getPoint(faceIndex, 1, 0).y,
-        this.getPoint(faceIndex, 1, 2).x,
-        this.getPoint(faceIndex, 1, 2).y
-      );
-      cubeEvent.setFaceVerticalVector(
-        this.getPoint(faceIndex, 0, 1).x,
-        this.getPoint(faceIndex, 0, 1).y,
-        this.getPoint(faceIndex, 2, 1).x,
-        this.getPoint(faceIndex, 2, 1).y
-      );
-    }
-  }
-
-  getPoint(faceIndex, row, col) {
-    const select = myCube.cube[faceIndex][row][col].split(" ")[0]; // ex: Ftl
-    const square = document.querySelector(`.${select}`);
-    const squareRect = square.getBoundingClientRect();
-    let x = squareRect.left + squareRect.width / 2;
-    let y = squareRect.top + squareRect.height / 2;
-    return { x, y };
-  }
-
-  getFaceIndex(faceLetter) {
-    const faceMap = {
-      F: 0, // Front face
-      L: 1, // Left face
-      B: 2, // Back face
-      R: 3, // Right face
-      U: 4, // Up face
-      D: 5, // Down face
+  createVector(startX, startY, endX, endY) {
+    return {
+      start: { x: startX, y: startY },
+      end: { x: endX, y: endY },
     };
-    return faceMap[faceLetter] ?? -1;
   }
 }
