@@ -159,8 +159,8 @@ export class CubeEventHandler {
       myCube.updateRotateY(deltaX * -0.5);
     }
 
-    this.startPointer.x += deltaX;
-    this.startPointer.y += deltaY;
+    this.startPointer.x = this.currentPointer.x;
+    this.startPointer.y = this.currentPointer.y;
 
     myCube.applyCubeRotation();
   }
