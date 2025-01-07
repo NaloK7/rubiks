@@ -55,10 +55,10 @@
   cursor: move;
 }
 
+/* used to rotate a whole group  instead of each elements individually*/
 .moveGroup {
-  /* display: contents; */
   transform-style: preserve-3d;
-  transform-origin: calc(var(--square-size)/2) calc(var(--square-size)/2);
+  transform-origin: calc(var(--square-size) / 2) calc(var(--square-size) / 2);
 }
 .cube {
   /* use to create a reference point in center of the cube */
@@ -79,7 +79,6 @@
   height: calc(3 * var(--square-size));
   width: calc(3 * var(--square-size));
   position: absolute;
-  /* border-radius: 15%; */
 }
 
 /* STANDING BLACK SQUARE */
@@ -152,13 +151,12 @@
   height: var(--square-size);
   position: absolute;
   background-color: black;
-  z-index: 999;
 }
 .square:hover {
-  cursor: grab ;
+  cursor: grab;
 }
 .square:active {
-  cursor: grabbing ;
+  cursor: grabbing;
 }
 
 .square span {
@@ -172,6 +170,8 @@
   width: 95%;
   height: 95%;
   backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .square span:hover {

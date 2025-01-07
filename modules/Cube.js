@@ -164,11 +164,12 @@ export class Cube extends VectorUtils {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
       deg +=
-        move === "L" || move === "M" || move === "R"
-          ? "x"
-          : move === "U" || move === "E" || move === "D"
-          ? "y"
-          : "z";
+      move === "L" || move === "M" || move === "R"
+      ? "x"
+      : move === "U" || move === "E" || move === "D"
+      ? "y"
+            : "z";
+      // select 4 blacksquare: black x4 / move x2 / fix x2
       const blackSquare = document.querySelectorAll(`.blackSquare.${move}`);
       blackSquare.forEach((square) => {
         square.style.backgroundColor = "black";
@@ -218,7 +219,6 @@ export class Cube extends VectorUtils {
         this.setNewPos();
         blackSquare.forEach((square) => {
           square.style.backgroundColor = "transparent";
-          square.classList.remove(deg);
         });
         const cube = document.querySelector(".cube");
         group.forEach((square) => {

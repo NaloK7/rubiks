@@ -1,5 +1,4 @@
 export class VectorUtils {
-
   getVectorDirection(vector) {
     return {
       x: vector.end.x - vector.start.x,

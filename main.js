@@ -25,11 +25,11 @@ window.addEventListener(
       if (myCube.start) {
         if (confirm("remettre le cube a zero ?")) {
           myCube.generateCubeHTML();
-          myCube.resetPos()
+          myCube.resetPos();
         }
       } else {
         myCube.generateCubeHTML();
-        myCube.resetPos()
+        myCube.resetPos();
       }
     });
 

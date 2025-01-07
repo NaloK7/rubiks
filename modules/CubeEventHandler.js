@@ -37,9 +37,9 @@ export class CubeEventHandler {
     if (!myCube.isAnimate) {
       this.startPointer = { x: ev.clientX, y: ev.clientY };
       this.currentPointer = { x: ev.clientX, y: ev.clientY };
-  
+
       this.getElementClicked(ev);
-  
+
       if (this.clickedTag === "square") {
         this.selectedSquare = this.getSelectedSquare(ev);
         myCube.setFaceVectors(this.selectedSquare);
@@ -106,7 +106,7 @@ export class CubeEventHandler {
   }
 
   // MOVE
-  
+
   onPointerMove(ev) {
     if (ev.type === "mousemove") {
       this.currentPointer.x = ev.clientX;
