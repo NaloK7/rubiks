@@ -9,7 +9,6 @@ window.addEventListener(
   () => {
     cubeEvent.initializeEventListeners();
     myCube.generateCubeHTML();
-
     const mixButton = document.querySelector("#mixButton");
     mixButton.addEventListener("click", () => {
       if (myCube.start) {
@@ -26,9 +25,11 @@ window.addEventListener(
       if (myCube.start) {
         if (confirm("remettre le cube a zero ?")) {
           myCube.generateCubeHTML();
+          myCube.resetPos()
         }
       } else {
-        myCube.mixCube();
+        myCube.generateCubeHTML();
+        myCube.resetPos()
       }
     });
 

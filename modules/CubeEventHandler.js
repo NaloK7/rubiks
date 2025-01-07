@@ -1,36 +1,20 @@
-import { VectorUtils } from "./VectorUtils.js";
 import { myCube } from "../main.js";
 
-const vector = new VectorUtils();
 export class CubeEventHandler {
   constructor() {
     this.startPointer = null;
     this.currentPointer = null;
     this.selectedSquare = null;
-    this.faceHorizontalVector = null;
-    this.faceVerticalVector = null;
-    this.scrollOffset = 0
-    this.clickedTag = null
 
+    this.scrollOffset = 0;
+    this.clickedTag = null;
+
+    this.THRESHOLD = 60;
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
     this.onTouchStart = this.onTouchStart.bind(this);
     this.onTouchEnd = this.onTouchEnd.bind(this);
-  }
-
-  setFaceHorizontalVector(startX, startY, endX, endY) {
-    this.faceHorizontalVector = {
-      start: { x: startX, y: startY },
-      end: { x: endX, y: endY },
-    };
-  }
-
-  setFaceVerticalVector(startX, startY, endX, endY) {
-    this.faceVerticalVector = {
-      start: { x: startX, y: startY },
-      end: { x: endX, y: endY },
-    };
   }
 
   initializeEventListeners() {
@@ -44,22 +28,24 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.startPointer = null;
     this.currentPointer = null;
-    this.faceHorizontalVector = null;
-    this.faceVerticalVector = null;
+    myCube.resetFaceVectors();
   }
 
-  onMouseDown(ev) {
-    this.startPointer = { x: ev.clientX, y: ev.clientY };
-    this.currentPointer = { x: ev.clientX, y: ev.clientY };
+  // CLICK
 
-    this.getElementClicked(ev)
-    
-    if (this.clickedTag === "square") {
-      this.selectedSquare = this.getSelectedSquare(ev);
-      vector.getFaceVectors(this.selectedSquare);
-    }
+  onMouseDown(ev) {
+    if (!myCube.isAnimate) {
+      this.startPointer = { x: ev.clientX, y: ev.clientY };
+      this.currentPointer = { x: ev.clientX, y: ev.clientY };
+  
+      this.getElementClicked(ev);
+  
+      if (this.clickedTag === "square") {
+        this.selectedSquare = this.getSelectedSquare(ev);
+        myCube.setFaceVectors(this.selectedSquare);
+      }
       document.addEventListener("mousemove", this.onPointerMove);
-    
+    }
   }
 
   onMouseUp() {
@@ -73,11 +59,11 @@ export class CubeEventHandler {
       x: ev.touches[0].clientX,
       y: ev.touches[0].clientY,
     };
-    this.getElementClicked(ev)
-    
+    this.getElementClicked(ev);
+
     if (this.clickedTag === "square") {
       this.selectedSquare = this.getSelectedSquare(ev);
-      vector.getFaceVectors(this.selectedSquare);
+      myCube.setFaceVectors(this.selectedSquare);
     }
 
     document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
@@ -93,27 +79,35 @@ export class CubeEventHandler {
 
   getElementClicked(ev) {
     if (ev.target.id === "container") {
-      this.clickedTag = "cube"
-    } else if (ev.target.tagName === "SPAN" || ev.target.classList.contains("square")) {
-      this.clickedTag = "square"
+      this.clickedTag = "cube";
+    } else if (
+      ev.target.tagName === "SPAN" ||
+      ev.target.classList.contains("square")
+    ) {
+      this.clickedTag = "square";
+    } else if (ev.target.id === "helpSection") {
+      this.clickedTag = "helpSection";
     } else {
-      this.clickedTag = null
+      this.clickedTag = null;
     }
   }
 
   getSelectedSquare(ev) {
-    let squareClicked = null
-    if (ev.target.tagName === "SPAN" &&
-      ev.target.parentNode.classList.contains("square")) {
-        squareClicked = ev.target.parentNode
+    let squareClicked = null;
+    if (
+      ev.target.tagName === "SPAN" &&
+      ev.target.parentNode.classList.contains("square")
+    ) {
+      squareClicked = ev.target.parentNode;
     } else if (ev.target.classList.contains("square")) {
-      squareClicked = ev.target
+      squareClicked = ev.target;
     }
     return squareClicked;
   }
 
+  // MOVE
+  
   onPointerMove(ev) {
-    
     if (ev.type === "mousemove") {
       this.currentPointer.x = ev.clientX;
       this.currentPointer.y = ev.clientY;
@@ -122,17 +116,25 @@ export class CubeEventHandler {
       this.currentPointer.y = ev.touches[0].clientY;
     }
 
-    
     if (this.clickedTag === "square") {
       this.handleRotationGroup();
-    } else if (this.clickedTag === "cube"){
+    } else if (this.clickedTag === "cube") {
       this.handleCubeMovement();
+    } else if (this.clickedTag === "helpSection") {
+      this.handleScrollImage();
     }
   }
- 
-    
 
-  // reminder: more complex approach may lead to gimbal lock((mix axis)
+  handleScrollImage() {
+    let image = document.querySelector("#helpSection");
+
+    const deltaX = this.currentPointer.x - this.startPointer.x;
+    this.scrollOffset += deltaX;
+    image.style.backgroundPositionX = `${this.scrollOffset}px`;
+    this.startPointer.x += deltaX;
+  }
+
+  // reminder: more complex approach may lead to gimbal lock (mix axis)
   handleCubeMovement() {
     const deltaX = this.currentPointer.x - this.startPointer.x;
     const deltaY = this.currentPointer.y - this.startPointer.y;
@@ -140,18 +142,16 @@ export class CubeEventHandler {
     if (myCube.rotateX % 360 > 135 && myCube.rotateX % 360 <= 225) {
       myCube.updateRotateX(deltaY * -0.5);
       myCube.updateRotateY(deltaX * 0.5);
-
     } else {
       myCube.updateRotateX(deltaY * -0.5);
       myCube.updateRotateY(deltaX * -0.5);
     }
 
-    this.startPointer.x += deltaX;
-    this.startPointer.y += deltaY;
+    this.startPointer.x = this.currentPointer.x;
+    this.startPointer.y = this.currentPointer.y;
 
     myCube.applyCubeRotation();
   }
-
 
   handleRotationGroup() {
     const mouseVector = {
@@ -159,15 +159,15 @@ export class CubeEventHandler {
       end: { x: this.currentPointer.x, y: this.currentPointer.y },
     };
 
-    if (vector.vectorLength(mouseVector) > myCube.THRESHOLD) {
+    if (myCube.vectorLength(mouseVector) > this.THRESHOLD) {
       let moveDirection = "";
-      const horizontal = vector.analyzeVectors(
+      const horizontal = myCube.analyzeVectors(
         mouseVector,
-        this.faceHorizontalVector
+        myCube.faceHorizontalVector
       );
-      const vertical = vector.analyzeVectors(
+      const vertical = myCube.analyzeVectors(
         mouseVector,
-        this.faceVerticalVector
+        myCube.faceVerticalVector
       );
 
       if (Math.abs(vertical) > Math.abs(horizontal)) {
