@@ -34,16 +34,18 @@ export class CubeEventHandler {
   // CLICK
 
   onMouseDown(ev) {
-    this.startPointer = { x: ev.clientX, y: ev.clientY };
-    this.currentPointer = { x: ev.clientX, y: ev.clientY };
-
-    this.getElementClicked(ev);
-
-    if (this.clickedTag === "square") {
-      this.selectedSquare = this.getSelectedSquare(ev);
-      myCube.setFaceVectors(this.selectedSquare);
+    if (!myCube.isAnimate) {
+      this.startPointer = { x: ev.clientX, y: ev.clientY };
+      this.currentPointer = { x: ev.clientX, y: ev.clientY };
+  
+      this.getElementClicked(ev);
+  
+      if (this.clickedTag === "square") {
+        this.selectedSquare = this.getSelectedSquare(ev);
+        myCube.setFaceVectors(this.selectedSquare);
+      }
+      document.addEventListener("mousemove", this.onPointerMove);
     }
-    document.addEventListener("mousemove", this.onPointerMove);
   }
 
   onMouseUp() {

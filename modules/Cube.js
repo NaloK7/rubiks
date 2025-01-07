@@ -6,7 +6,8 @@ export class Cube extends VectorUtils {
     this.rotateX = 335;
     this.rotateY = 315;
     this.rotateZ = 0;
-    this.animationSpeed = 350;
+    this.animationSpeed = 300;
+    this.mixSpeed = this.animationSpeed / 5;
     this.isAnimate = false;
     this.start = false;
 
@@ -140,7 +141,6 @@ export class Cube extends VectorUtils {
     this.applyCubeRotation();
   }
 
-
   applyCubeRotation() {
     const cubeElement = document.querySelector(".cube");
     cubeElement.style.transform = `rotateX(${this.rotateX}deg) rotateY(${this.rotateY}deg) rotateZ(${this.rotateZ}deg)`;
@@ -150,11 +150,11 @@ export class Cube extends VectorUtils {
 
   /**
    * Rotates a specified group of squares on the cube based on the move type.
-   * 
+   *
    * @param {string} move - The move type indicating which group to rotate (e.g., "L", "M", "R", "U", "E", "D", "F", "S", "B").
    * @param {boolean} [reverse=false] - Whether to rotate the group in reverse direction.
    * @param {number} [speed=this.animationSpeed] - The speed of the rotation animation in milliseconds.
-   * 
+   *
    * Initiates the rotation animation for the specified group, updates the cube's state,
    * and resets the animation state after completion.
    */
@@ -174,11 +174,13 @@ export class Cube extends VectorUtils {
         square.style.backgroundColor = "black";
       });
       const group = document.querySelectorAll(`.${move}`);
+      const moveGroup = document.querySelector(".moveGroup");
 
       group.forEach((square) => {
-        square.style.transition = `rotate ease ${speed * 0.001}s`;
-        square.classList.add(deg);
+        moveGroup.appendChild(square);
       });
+      moveGroup.style.transition = `rotate ease ${speed * 0.001}s`;
+      moveGroup.classList.add(deg);
 
       switch (move) {
         case "L":
@@ -214,11 +216,16 @@ export class Cube extends VectorUtils {
       }
       setTimeout(() => {
         this.setNewPos();
-        this.isAnimate = false;
         blackSquare.forEach((square) => {
           square.style.backgroundColor = "transparent";
           square.classList.remove(deg);
         });
+        const cube = document.querySelector(".cube");
+        group.forEach((square) => {
+          cube.appendChild(square);
+        });
+        moveGroup.classList.remove(deg);
+        this.isAnimate = false;
       }, speed);
     }
   }
@@ -264,15 +271,15 @@ export class Cube extends VectorUtils {
     this.upFace = this.cube[4];
     this.downFace = this.cube[5];
   }
-  
+
   mixCube() {
     const possibleMove = ["L", "M", "R", "U", "E", "D", "F", "S", "B"];
     const sequence = [];
     const moveNumber = 35;
-    
+
     while (sequence.length < moveNumber) {
       const randomElement =
-      possibleMove[Math.floor(Math.random() * possibleMove.length)];
+        possibleMove[Math.floor(Math.random() * possibleMove.length)];
       if (
         sequence.length === 0 ||
         randomElement !== sequence[sequence.length - 1]
@@ -281,18 +288,19 @@ export class Cube extends VectorUtils {
       }
     }
     let index = 0;
-    
+
     const performMove = () => {
+      let speed = this.mixSpeed;
       if (index < sequence.length) {
-        this.rotateGroupe(sequence[index], false, this.animationSpeed / 2);
+        this.rotateGroupe(sequence[index], false, speed);
         index++;
-        setTimeout(performMove, this.animationSpeed / 2 + 40);
+        setTimeout(performMove, speed + 50);
       }
     };
-    
+
     performMove();
   }
-  
+
   generateCubeHTML() {
     const faceColors = {
       front: "blue",
@@ -304,13 +312,13 @@ export class Cube extends VectorUtils {
     };
     const faceNames = ["front", "left", "back", "right", "up", "bottom"];
     const cubeContainer = document.querySelector(".cube");
-    
+
     faceNames.forEach((face, faceIndex) => {
       this.cube[faceIndex].forEach((row, rowIndex) => {
         row.forEach((element, columnIndex) => {
           const div = document.createElement("div");
           div.className = `square ${this.cube[faceIndex][rowIndex][columnIndex]}`;
-          
+
           const span = document.createElement("span");
           span.className = faceColors[face];
           div.appendChild(span);
@@ -319,34 +327,34 @@ export class Cube extends VectorUtils {
       });
     });
   }
-  
+
   // MOUVEMENT METHODS
-  
-    rotateFace(face, reverse) {
-      const temp = reverse
-        ? [
-            [face[0][2], face[1][2], face[2][2]],
-            [face[0][1], face[1][1], face[2][1]],
-            [face[0][0], face[1][0], face[2][0]],
-          ]
-        : [
-            [face[2][0], face[1][0], face[0][0]],
-            [face[2][1], face[1][1], face[0][1]],
-            [face[2][2], face[1][2], face[0][2]],
-          ];
-      face[0] = temp[0];
-      face[1] = temp[1];
-      face[2] = temp[2];
-    }
-  
+
+  rotateFace(face, reverse) {
+    const temp = reverse
+      ? [
+          [face[0][2], face[1][2], face[2][2]],
+          [face[0][1], face[1][1], face[2][1]],
+          [face[0][0], face[1][0], face[2][0]],
+        ]
+      : [
+          [face[2][0], face[1][0], face[0][0]],
+          [face[2][1], face[1][1], face[0][1]],
+          [face[2][2], face[1][2], face[0][2]],
+        ];
+    face[0] = temp[0];
+    face[1] = temp[1];
+    face[2] = temp[2];
+  }
+
   moveL(reverse) {
     this.rotateFace(this.leftFace, reverse);
-    
+
     let upEdge = this.upFace.map((row) => row[0]);
     let frontEdge = this.frontFace.map((row) => row[0]);
     let downEdge = this.downFace.map((row) => row[0]);
     let backEdge = this.backFace.map((row) => row[2]).reverse();
-    
+
     if (reverse) {
       upEdge = upEdge.reverse();
       for (let i = 0; i < 3; i++) this.upFace[i][0] = frontEdge[i];
