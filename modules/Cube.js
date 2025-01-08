@@ -12,6 +12,11 @@ export class Cube extends VectorUtils {
     this.start = false;
     this.isSolved = false;
 
+    this.timer = null;
+    this.startTime = null;
+    this.elapsedTime = 0;
+    this.isTiming = false;
+
     this.refCube = [
       [
         ["Ftl L U F", "Ftc M U F", "Ftr R U F"],
@@ -161,6 +166,9 @@ export class Cube extends VectorUtils {
    */
   rotateGroup(move, reverse = false, speed = this.animationSpeed) {
     this.start = true;
+    if (!this.isTiming) {
+      this.startTimer();
+    }
     if (!this.isAnimate) {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
@@ -357,9 +365,43 @@ export class Cube extends VectorUtils {
       }
     }
     this.isSolved = true;
+    this.stopTimer();
     return true;
   }
 
+  startTimer() {
+    this.startTime = Date.now() - this.elapsedTime;
+    this.timer = setInterval(() => {
+      this.elapsedTime = Date.now() - this.startTime;
+      this.updateTimerDisplay();
+    }, 10);
+    this.isTiming = true;
+  }
+  
+  stopTimer() {
+    clearInterval(this.timer);
+    this.isTiming = false;
+  }
+  
+  updateTimerDisplay() {
+    const time = this.elapsedTime;
+    const ms = time % 1000;
+    const s = Math.floor((time / 1000) % 60);
+    const min = Math.floor((time / (1000 * 60)) % 60);
+    const h = Math.floor((time / (1000 * 60 * 60)) % 24);
+  
+    let displayTime = '';
+
+    if (h > 0) {
+      displayTime += `<span>${h} h&nbsp;:&nbsp;</span>`;
+    }
+    if (min > 0 || h > 0) {
+      displayTime += `<span>${min} m&nbsp;:&nbsp;</span>`;
+    }
+    displayTime += `<span>${s} s&nbsp;:&nbsp;</span><span>${ms} ms</span>`;
+  
+    document.querySelector("#timer #time").innerHTML = displayTime;
+  }
   // MOUVEMENT METHODS
 
   rotateFace(face, reverse) {

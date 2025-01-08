@@ -33,6 +33,12 @@
   font-weight: bold;
 }
 
+/* TIMER */
+
+#time {
+  display: flex;
+  justify-content: center;
+}
 /* CUBE  */
 
 #cubeContainer {
