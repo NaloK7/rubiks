@@ -7,9 +7,8 @@
 
   <link rel="stylesheet" href="style.css">
   <script type="module" src="main.js"></script>
-  <title>Rubik's</title>
+  <title>Solve Me</title>
 </head>
-
 
 <body>
   <section id="btn">
@@ -17,16 +16,25 @@
     <button id="mixButton">mixUp</button>
     <button id="resetCube">reset</button>
   </section>
-  <section id="container" class="container">
+  <section id="cubeContainer">
     <div class="cube">
       <div class="moveGroup"></div>
-      <!-- double each -->
-      <div class="blackSquare standing front S F"></div>  <!-- z -->
-      <div class="blackSquare standing back S B"></div>   <!-- z -->
-      <div class="blackSquare middle left M L"></div>     <!-- x -->
-      <div class="blackSquare middle right M R"></div>    <!-- x -->
-      <div class="blackSquare equator up E U"></div>      <!-- y -->
-      <div class="blackSquare equator down E D"></div>    <!-- y -->
+
+      <!-- Slice between row and column to prevent seeing the inside of the cube -->
+      <div class="blackPlate standing front S F"></div>
+      <div class="blackPlate standing fix front S F"></div>
+      <div class="blackPlate standing back S B"></div>
+      <div class="blackPlate standing fix back S B"></div>
+
+      <div class="blackPlate middle left M L"></div>
+      <div class="blackPlate middle fix left M L"></div>
+      <div class="blackPlate middle right M R"></div>
+      <div class="blackPlate middle fix right M R"></div>
+
+      <div class="blackPlate equator up E U"></div>
+      <div class="blackPlate equator fix up E U"></div>
+      <div class="blackPlate equator down E D"></div>
+      <div class="blackPlate equator fix down E D"></div>
     </div>
   </section>
   <section>

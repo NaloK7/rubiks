@@ -10,6 +10,7 @@ export class Cube extends VectorUtils {
     this.mixSpeed = this.animationSpeed / 5;
     this.isAnimate = false;
     this.start = false;
+    this.isSolved = false;
 
     this.refCube = [
       [
@@ -158,27 +159,30 @@ export class Cube extends VectorUtils {
    * Initiates the rotation animation for the specified group, updates the cube's state,
    * and resets the animation state after completion.
    */
-  rotateGroupe(move, reverse = false, speed = this.animationSpeed) {
+  rotateGroup(move, reverse = false, speed = this.animationSpeed) {
     this.start = true;
     if (!this.isAnimate) {
       this.isAnimate = true;
       let deg = reverse ? "" : "-";
       deg +=
-      move === "L" || move === "M" || move === "R"
-      ? "x"
-      : move === "U" || move === "E" || move === "D"
-      ? "y"
-            : "z";
-      // select 4 blacksquare: black x4 / move x2 / fix x2
-      const blackSquare = document.querySelectorAll(`.blackSquare.${move}`);
-      blackSquare.forEach((square) => {
+        move === "L" || move === "M" || move === "R"
+          ? "x"
+          : move === "U" || move === "E" || move === "D"
+          ? "y"
+          : "z";
+      const blackPlate = document.querySelectorAll(`.blackPlate.${move}`);
+      blackPlate.forEach((square) => {
         square.style.backgroundColor = "black";
       });
       const group = document.querySelectorAll(`.${move}`);
       const moveGroup = document.querySelector(".moveGroup");
 
+      // add every part that need move except 2 "blackPlate"
       group.forEach((square) => {
-        moveGroup.appendChild(square);
+        if (square.classList.contains("fix")) {
+        } else {
+          moveGroup.appendChild(square);
+        }
       });
       moveGroup.style.transition = `rotate ease ${speed * 0.001}s`;
       moveGroup.classList.add(deg);
@@ -215,9 +219,10 @@ export class Cube extends VectorUtils {
           console.log("function not ready");
           break;
       }
+      // Wait for the animation to end before proceeding to the next step
       setTimeout(() => {
         this.setNewPos();
-        blackSquare.forEach((square) => {
+        blackPlate.forEach((square) => {
           square.style.backgroundColor = "transparent";
         });
         const cube = document.querySelector(".cube");
@@ -226,11 +231,13 @@ export class Cube extends VectorUtils {
         });
         moveGroup.classList.remove(deg);
         this.isAnimate = false;
+
+        this.isCubeSolved();
       }, speed);
     }
   }
 
-  // GENERATE / RESET / REPOSITION
+  // GENERATE / RESET / REPOSITION / IS SOLVED
 
   /**
    * Resets the cube's position to its initial state by updating the class
@@ -292,7 +299,7 @@ export class Cube extends VectorUtils {
     const performMove = () => {
       let speed = this.mixSpeed;
       if (index < sequence.length) {
-        this.rotateGroupe(sequence[index], false, speed);
+        this.rotateGroup(sequence[index], false, speed);
         index++;
         setTimeout(performMove, speed + 50);
       }
@@ -326,6 +333,31 @@ export class Cube extends VectorUtils {
         });
       });
     });
+  }
+
+  isCubeSolved() {
+    const faces = ["F", "L", "B", "R", "U", "D"];
+    let allSquare = document.querySelectorAll(".square");
+
+    for (const face of faces) {
+      let refSpan = document.querySelector(`.${face}tr > span`);
+      let refColor = refSpan.classList[0];
+
+      for (const square of allSquare) {
+        if (square.classList[1].startsWith(face)) {
+          let currentSpan = document.querySelector(
+            `.${square.classList[1]} > span`
+          );
+          let currentColor = currentSpan.classList[0];
+
+          if (currentColor !== refColor) {
+            return false;
+          }
+        }
+      }
+    }
+    this.isSolved = true;
+    return true;
   }
 
   // MOUVEMENT METHODS

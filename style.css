@@ -17,6 +17,7 @@
     top: -100px !important;
   }
 }
+/* BUTTON */
 #btn {
   height: 3vh;
   width: auto;
@@ -31,15 +32,10 @@
   padding: 3px 5px;
   font-weight: bold;
 }
-#helpSection {
-  height: 18vh;
-  width: 100vw;
-  background-image: url("./img/memoBoard.svg");
-  background-size: cover;
-  position: relative;
-  overflow: hidden;
-}
-.container {
+
+/* CUBE  */
+
+#cubeContainer {
   /* canvas to display the cube */
   width: 100%;
   height: 75vh;
@@ -51,7 +47,8 @@
   -webkit-user-select: none;
   overscroll-behavior: contain;
 }
-.container:hover {
+
+#cubeContainer:hover {
   cursor: move;
 }
 
@@ -60,6 +57,7 @@
   transform-style: preserve-3d;
   transform-origin: calc(var(--square-size) / 2) calc(var(--square-size) / 2);
 }
+
 .cube {
   /* use to create a reference point in center of the cube */
   width: var(--square-size);
@@ -74,14 +72,36 @@
   transform-style: preserve-3d;
 }
 
-.blackSquare {
+/* GROUP ROTATION */
+
+.x {
+  rotate: x 90deg;
+}
+.-x {
+  rotate: x -90deg;
+}
+.y {
+  rotate: y 90deg;
+}
+.-y {
+  rotate: y -90deg;
+}
+.z {
+  rotate: z 90deg;
+}
+.-z {
+  rotate: z -90deg;
+}
+
+/* BLACK PLATE */
+.blackPlate {
   background-color: transparent;
   height: calc(3 * var(--square-size));
   width: calc(3 * var(--square-size));
   position: absolute;
 }
 
-/* STANDING BLACK SQUARE */
+/* STANDING BLACK PLATE */
 .standing {
   transform-origin: calc(0.5 * var(--square-size))
     calc(0.5 * var(--square-size));
@@ -97,7 +117,7 @@
     translateZ(calc(-0.5 * var(--square-size)));
 }
 
-/* MIDDLE BLACK SQUARE */
+/* MIDDLE BLACK PLATE */
 .middle {
   transform-origin: calc(1.5 * var(--square-size))
     calc(0.5 * var(--square-size));
@@ -110,7 +130,7 @@
   transform: rotateY(90deg) translateZ(calc(-1.5 * var(--square-size)))
     translateY(calc(-1 * var(--square-size)));
 }
-/* EQUATOR BLACK SQUARE */
+/* EQUATOR BLACK PLATE */
 .equator {
   transform-origin: calc(0.5 * var(--square-size))
     calc(1.5 * var(--square-size));
@@ -126,25 +146,7 @@
     translateZ(calc(0.5 * var(--square-size)));
 }
 
-.x {
-  rotate: x 90deg;
-}
-.y {
-  rotate: y 90deg;
-}
-.z {
-  rotate: z 90deg;
-}
-
-.-x {
-  rotate: x -90deg;
-}
-.-y {
-  rotate: y -90deg;
-}
-.-z {
-  rotate: z -90deg;
-}
+/* CUBE SQUARE */
 
 .square {
   width: var(--square-size);
@@ -169,21 +171,20 @@
   bottom: 0;
   width: 95%;
   height: 95%;
-  backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
 }
 
 .square span:hover {
   border: 3px solid gray;
 }
 
+/* FACES */
+
 /* FRONT */
 
 .blue {
   background-color: rgb(72, 72, 253);
 }
-/* top */
+/* top row */
 .Ftl {
   transform: rotate3d(0, 0, 0, 90deg)
     translate3d(
@@ -209,7 +210,7 @@
       calc(1.5 * var(--square-size))
     );
 }
-/* middle */
+/* middle row */
 .Fml {
   transform: rotate3d(0, 0, 0, 90deg)
     translate3d(
@@ -226,7 +227,7 @@
   transform: rotate3d(0, 0, 0, 90deg)
     translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
 }
-/* bottom */
+/* bottom row */
 .Fbl {
   transform: rotate3d(0, 0, 0, 90deg)
     translate3d(
@@ -248,13 +249,12 @@
     );
 }
 
-/*  */
-
 /* RIGHT */
+
 .orange {
   background-color: orange;
 }
-/* top */
+/* top row */
 .Rtl {
   transform: rotate3d(0, 1, 0, 90deg)
     translate3d(
@@ -279,7 +279,7 @@
       calc(1.5 * var(--square-size))
     );
 }
-/* middle */
+/* middle row */
 .Rml {
   transform: rotate3d(0, 1, 0, 90deg)
     translate3d(
@@ -296,7 +296,7 @@
   transform: rotate3d(0, 1, 0, 90deg)
     translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
 }
-/* bottom */
+/* bottom row */
 .Rbl {
   transform: rotate3d(0, 1, 0, 90deg)
     translate3d(
@@ -318,13 +318,12 @@
     );
 }
 
-/*  */
-
 /* BACK */
+
 .green {
   background-color: green;
 }
-/* top */
+/* top row */
 .Btl {
   transform: rotate3d(0, 1, 0, 180deg)
     translate3d(
@@ -349,7 +348,7 @@
       calc(1.5 * var(--square-size))
     );
 }
-/* middle */
+/* middle row */
 .Bml {
   transform: rotate3d(0, 1, 0, 180deg)
     translate3d(
@@ -366,7 +365,7 @@
   transform: rotate3d(0, 1, 0, 180deg)
     translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
 }
-/* bottom */
+/* bottom row */
 .Bbl {
   transform: rotate3d(0, 1, 0, 180deg)
     translate3d(
@@ -388,13 +387,12 @@
     );
 }
 
-/*  */
-
 /* LEFT */
+
 .red {
   background-color: red;
 }
-/* top */
+/* top row */
 .Ltl {
   transform: rotate3d(0, 1, 0, 270deg)
     translate3d(
@@ -419,7 +417,7 @@
       calc(1.5 * var(--square-size))
     );
 }
-/* middle */
+/* middle row */
 .Lml {
   transform: rotate3d(0, 1, 0, 270deg)
     translate3d(
@@ -436,7 +434,7 @@
   transform: rotate3d(0, 1, 0, 270deg)
     translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
 }
-/* bottom */
+/* bottom row */
 .Lbl {
   transform: rotate3d(0, 1, 0, 270deg)
     translate3d(
@@ -458,13 +456,12 @@
     );
 }
 
-/*  */
-
 /* UP */
+
 .white {
   background-color: white;
 }
-/* top */
+/* top row */
 .Utl {
   transform: rotate3d(1, 0, 0, 90deg)
     translate3d(
@@ -489,7 +486,7 @@
       calc(1.5 * var(--square-size))
     );
 }
-/* middle */
+/* middle row */
 .Uml {
   transform: rotate3d(1, 0, 0, 90deg)
     translate3d(
@@ -506,7 +503,7 @@
   transform: rotate3d(1, 0, 0, 90deg)
     translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
 }
-/* bottom */
+/* bottom row */
 .Ubl {
   transform: rotate3d(1, 0, 0, 90deg)
     translate3d(
@@ -528,13 +525,12 @@
     );
 }
 
-/*  */
-
 /* DOWN */
+
 .yellow {
   background-color: yellow;
 }
-/* top */
+/* top row */
 .Dtl {
   transform: rotate3d(-1, 0, 0, 90deg)
     translate3d(
@@ -559,7 +555,7 @@
       calc(1.5 * var(--square-size))
     );
 }
-/* middle */
+/* middle row */
 .Dml {
   transform: rotate3d(-1, 0, 0, 90deg)
     translate3d(
@@ -576,7 +572,7 @@
   transform: rotate3d(-1, 0, 0, 90deg)
     translate3d(var(--square-size), 0px, calc(1.5 * var(--square-size)));
 }
-/* bottom */
+/* bottom row */
 .Dbl {
   transform: rotate3d(-1, 0, 0, 90deg)
     translate3d(
@@ -596,4 +592,15 @@
       var(--square-size),
       calc(1.5 * var(--square-size))
     );
+}
+
+/* HELP SECTION */
+
+#helpSection {
+  height: 18vh;
+  width: 100vw;
+  background-image: url("./img/memoBoard.svg");
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
 }

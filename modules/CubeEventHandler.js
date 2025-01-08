@@ -78,7 +78,7 @@ export class CubeEventHandler {
   }
 
   getElementClicked(ev) {
-    if (ev.target.id === "container") {
+    if (ev.target.id === "cubeContainer") {
       this.clickedTag = "cube";
     } else if (
       ev.target.tagName === "SPAN" ||
@@ -182,19 +182,19 @@ export class CubeEventHandler {
       switch (moveDirection) {
         case "h":
           reverse = face === "D";
-          myCube.rotateGroupe(this.selectedSquare.classList[3], !reverse);
+          myCube.rotateGroup(this.selectedSquare.classList[3], !reverse);
           break;
         case "-h":
           reverse = face === "D";
-          myCube.rotateGroupe(this.selectedSquare.classList[3], reverse);
+          myCube.rotateGroup(this.selectedSquare.classList[3], reverse);
           break;
         case "v":
           reverse = face === "R" || face === "B";
-          myCube.rotateGroupe(this.selectedSquare.classList[2], reverse);
+          myCube.rotateGroup(this.selectedSquare.classList[2], reverse);
           break;
         case "-v":
           reverse = face === "R" || face === "B";
-          myCube.rotateGroupe(this.selectedSquare.classList[2], !reverse);
+          myCube.rotateGroup(this.selectedSquare.classList[2], !reverse);
           break;
       }
       this.onMouseUp();
