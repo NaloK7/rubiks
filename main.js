@@ -4,6 +4,17 @@ import { CubeEventHandler } from "./modules/CubeEventHandler.js";
 export const myCube = new Cube();
 export const cubeEvent = new CubeEventHandler();
 
+const helpButton = document.querySelector("#helpButton")
+helpButton.addEventListener('mouseup', () => {
+  const helpSection = document.querySelector("#helpSection")
+  if (helpSection.style.display == "none") {
+    helpSection.style.display = "block"
+  } else {
+    helpSection.style.display = "none"
+  }
+})
+
+
 window.addEventListener(
   "DOMContentLoaded",
   () => {

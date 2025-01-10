@@ -2,35 +2,45 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: roboto;
   /* variable */
   --square-size: 100px;
+  --main-color: black;
 }
 
 @media screen and (max-width: 376px) {
   * {
     --square-size: 67px;
   }
-  #btn {
+  #btnSection {
     margin: 10px 0px !important;
   }
-  .cube {
-    top: -100px !important;
-  }
+  /* .cube {
+    top: -50% !important;
+  } */
+}
+body {
+  height: 100vh
 }
 /* BUTTON */
-#btn {
-  height: 3vh;
+#btnSection {
+  min-height: 6%;
   width: auto;
-  margin: 10px 40%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
 }
-#btn button {
-  margin: 0px 5px;
+
+#btnSection button {
+  height: 24px;
   padding: 3px 5px;
+  margin: 15px 10px;
   font-weight: bold;
+  border: 1px solid grey;
+  border-radius: 5px;
+  justify-self: center;
+}
+#btnSection div {
+  justify-self: center;
 }
 
 /* TIMER */
@@ -39,16 +49,26 @@
   display: flex;
   justify-content: center;
 }
+
+/* MAIN SECTION */
+
+.mainSection {
+  display: flex;
+  width: 100%;
+  min-height: 94%;
+  max-height: 100%;
+  border-top: 1px solid var(--main-color);
+}
 /* CUBE  */
 
 #cubeContainer {
   /* canvas to display the cube */
+  min-width: 70%;
   width: 100%;
-  height: 75vh;
+  min-height: calc(var(--square-size) *7);
   /* create perspective and preserve 3D  */
   perspective: 1500px;
   transform-style: preserve-3d;
-  border: 1px solid gray;
   user-select: none;
   -webkit-user-select: none;
   overscroll-behavior: contain;
@@ -603,10 +623,44 @@
 /* HELP SECTION */
 
 #helpSection {
-  height: 18vh;
-  width: 100vw;
-  background-image: url("./img/memoBoard.svg");
-  background-size: cover;
+  /* height: 100%; */
+  width: 25%;
+  background-color: rgb(206, 206, 206);
+  border-left: 1px solid var(--main-color);
+}
+
+#helpSection > div > p {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.memoBoard {
+  height: auto;
+  max-height: 100%;
+  width: 100%;
   position: relative;
   overflow: hidden;
+border-bottom: 1px solid var(--main-color);
+}
+
+.memoCarousel {
+  display: flex;
+  overflow: hidden;
+}
+
+.memo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0px;
+}
+
+.memoCarousel img {
+ height: 130px;
+  width: auto;
+margin: 10px 50px;
+}
+.memoCarousel img:hover {
+  cursor: pointer;
 }

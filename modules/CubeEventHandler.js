@@ -85,8 +85,8 @@ export class CubeEventHandler {
       ev.target.classList.contains("square")
     ) {
       this.clickedTag = "square";
-    } else if (ev.target.id === "helpSection") {
-      this.clickedTag = "helpSection";
+    } else if (ev.target.id === "memo") {
+      this.clickedTag = "memo";
     } else {
       this.clickedTag = null;
     }
@@ -120,13 +120,13 @@ export class CubeEventHandler {
       this.handleRotationGroup();
     } else if (this.clickedTag === "cube") {
       this.handleCubeMovement();
-    } else if (this.clickedTag === "helpSection") {
+    } else if (this.clickedTag === "lastCross") {
       this.handleScrollImage();
     }
   }
 
   handleScrollImage() {
-    let image = document.querySelector("#helpSection");
+    let image = document.querySelector("#lastCrossMemo");
 
     const deltaX = this.currentPointer.x - this.startPointer.x;
     this.scrollOffset += deltaX;

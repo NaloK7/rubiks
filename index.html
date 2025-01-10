@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
   <script type="module" src="main.js"></script>
@@ -11,10 +16,14 @@
 </head>
 
 <body>
-  <section id="btn">
-    <button id="resetPos">reposition</button>
-    <button id="mixButton">mixUp</button>
-    <button id="resetCube">reset</button>
+  <section id="btnSection">
+    <div>
+      <button id="mixButton">start</button>
+      <button id="resetCube">reset</button>
+      <span>/</span>
+      <button id="resetPos">reposition</button>
+    </div>
+    <button id="helpButton">help</button>
   </section>
 
   <section id="timer">
@@ -22,30 +31,49 @@
     </div>
   </section>
 
-  <section id="cubeContainer">
-    <div class="cube">
-      <div class="moveGroup"></div>
+  <div class="mainSection">
 
-      <!-- Slice between row and column to prevent seeing the inside of the cube -->
-      <div class="blackPlate standing front S F"></div>
-      <div class="blackPlate standing fix front S F"></div>
-      <div class="blackPlate standing back S B"></div>
-      <div class="blackPlate standing fix back S B"></div>
+    <section id="cubeContainer">
+      <div class="cube">
+        <div class="moveGroup"></div>
 
-      <div class="blackPlate middle left M L"></div>
-      <div class="blackPlate middle fix left M L"></div>
-      <div class="blackPlate middle right M R"></div>
-      <div class="blackPlate middle fix right M R"></div>
+        <!-- Slice between row and column to prevent seeing the inside of the cube -->
+        <div class="blackPlate standing front S F"></div>
+        <div class="blackPlate standing fix front S F"></div>
+        <div class="blackPlate standing back S B"></div>
+        <div class="blackPlate standing fix back S B"></div>
 
-      <div class="blackPlate equator up E U"></div>
-      <div class="blackPlate equator fix up E U"></div>
-      <div class="blackPlate equator down E D"></div>
-      <div class="blackPlate equator fix down E D"></div>
-    </div>
-  </section>
-  <section>
-    <div id="helpSection"></div>
-  </section>
+        <div class="blackPlate middle left M L"></div>
+        <div class="blackPlate middle fix left M L"></div>
+        <div class="blackPlate middle right M R"></div>
+        <div class="blackPlate middle fix right M R"></div>
+
+        <div class="blackPlate equator up E U"></div>
+        <div class="blackPlate equator fix up E U"></div>
+        <div class="blackPlate equator down E D"></div>
+        <div class="blackPlate equator fix down E D"></div>
+      </div>
+    </section>
+    <section id="helpSection" style="display: block;">
+      <div id="lastCross" class="memoBoard">
+        <p>Complete the last cross</p>
+        <div id="lastCrossMemo" class="memoCarousel">
+          <div class="memo">
+            <img src="./img/memo/topCross/line-topCross.svg" alt="">
+            <p>FRU R'U'F'</p>
+          </div>
+          <div class="memo">
+            <img src="./img/memo/topCross/threeHour-topCross.svg" alt="">
+            <p>fRU R'U'f'</p>
+          </div>
+          <div class="memo">
+            <img src="./img/memo/topCross/centerPoint-topCross.svg" alt="">
+            <p>FRUR'U'F' fRUR'U'f'</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 
 </html>
