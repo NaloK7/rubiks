@@ -7,8 +7,8 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.swiper = null;
     this.swiperWidth = 0;
-    this.selectedText = null;
-    this.letter = 0;
+    this.selectedText = this.selectText.bind(this);
+    this.letterIndex = 0;
     this.target = null;
 
     this.scrollOffset = 0;
@@ -27,6 +27,11 @@ export class CubeEventHandler {
     document.addEventListener("mouseup", this.onMouseUp);
     document.addEventListener("touchstart", this.onTouchStart);
     document.addEventListener("touchend", this.onTouchEnd);
+    const buttons = document.querySelectorAll(".swiper .memo button");
+    buttons.forEach((button) => {
+      button.addEventListener("mouseup", this.selectText);
+      button.addEventListener("touchstart", this.selectText);
+    });
   }
 
   resetMovement() {
@@ -39,28 +44,25 @@ export class CubeEventHandler {
   // CLICK
 
   onMouseDown(ev) {
+    
     if (!myCube.isAnimate) {
       this.startPointer = { x: ev.clientX, y: ev.clientY };
       this.currentPointer = { x: ev.clientX, y: ev.clientY };
 
       this.getElementClicked(ev);
 
-      const buttons = document.querySelectorAll(".swiper .memo button");
-      buttons.forEach((button) => {
-        button.addEventListener("click", this.selectText);
-      });
-
       if (this.clickedTag === "square") {
         this.selectedSquare = this.getSelectedSquare(ev);
         myCube.setFaceVectors(this.selectedSquare);
       } else if (this.clickedTag === "memo") {
         this.swiper = this.getSwipper(ev);
-        let childrenList = this.swiper.children
-        this.swiperWidth = 0
+        // get the width of all memo in the clicked swiper
+        let childrenList = this.swiper.children;
+        this.swiperWidth = 0;
         for (let i = 0; i < childrenList.length; i++) {
           const child = childrenList[i];
           this.swiperWidth += child.offsetWidth;
-        }         
+        }
       }
 
       document.addEventListener("mousemove", this.onPointerMove);
@@ -83,6 +85,15 @@ export class CubeEventHandler {
     if (this.clickedTag === "square") {
       this.selectedSquare = this.getSelectedSquare(ev);
       myCube.setFaceVectors(this.selectedSquare);
+    } else if (this.clickedTag === "memo") {
+      this.swiper = this.getSwipper(ev);
+      // get the width of all memo in the clicked swiper
+      let childrenList = this.swiper.children;
+      this.swiperWidth = 0;
+      for (let i = 0; i < childrenList.length; i++) {
+        const child = childrenList[i];
+        this.swiperWidth += child.offsetWidth;
+      }
     }
 
     document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
@@ -231,7 +242,6 @@ export class CubeEventHandler {
   // MEMO EVENT
 
   handleScrollImage() {
-
     this.scrollOffset = parseInt(this.swiper.style.left || 0, 10);
 
     let deltaX = this.currentPointer.x - this.startPointer.x;
@@ -248,9 +258,7 @@ export class CubeEventHandler {
 
   selectText(event) {
     let textElement = event.target.previousElementSibling;
-    
     if (this.target != textElement.innerText) {
-      
       document.querySelectorAll("span.currentLetter").forEach((span) => {
         const parent = span.parentNode;
         while (span.firstChild) {
@@ -258,21 +266,21 @@ export class CubeEventHandler {
         }
         span.remove();
       });
-      this.letter = 0;
+      this.letterIndex = 0;
     }
     this.target = textElement.innerText;
     let selectedText = this.target.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
 
-    if (this.letter >= selectedText.length) {
-      this.letter = 0;
+    if (this.letterIndex >= selectedText.length) {
+      this.letterIndex = 0;
     }
 
     if (selectedText.length > 0) {
-      selectedText[this.letter] = `<span class="currentLetter">${
-        selectedText[this.letter]
+      selectedText[this.letterIndex] = `<span class="currentLetter">${
+        selectedText[this.letterIndex]
       }</span>`;
       textElement.innerHTML = selectedText.join("");
-      this.letter++;
+      this.letterIndex++;
     }
   }
 }

@@ -42,7 +42,7 @@ window.addEventListener(
     const helpSection = document.querySelector("#helpSection");
     helpButton.addEventListener("mouseup", () => {
       if (helpSection.style.display == "none") {
-        helpSection.style.display = "block";
+        helpSection.style.display = "flex";
       } else {
         helpSection.style.display = "none";
       }
