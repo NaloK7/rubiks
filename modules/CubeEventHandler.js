@@ -5,6 +5,11 @@ export class CubeEventHandler {
     this.startPointer = null;
     this.currentPointer = null;
     this.selectedSquare = null;
+    this.swiper = null;
+    this.swiperWidth = 0;
+    this.selectedText = null;
+    this.letter = 0;
+    this.target = null;
 
     this.scrollOffset = 0;
     this.clickedTag = null;
@@ -40,10 +45,24 @@ export class CubeEventHandler {
 
       this.getElementClicked(ev);
 
+      const buttons = document.querySelectorAll(".swiper .memo button");
+      buttons.forEach((button) => {
+        button.addEventListener("click", this.selectText);
+      });
+
       if (this.clickedTag === "square") {
         this.selectedSquare = this.getSelectedSquare(ev);
         myCube.setFaceVectors(this.selectedSquare);
+      } else if (this.clickedTag === "memo") {
+        this.swiper = this.getSwipper(ev);
+        let childrenList = this.swiper.children
+        this.swiperWidth = 0
+        for (let i = 0; i < childrenList.length; i++) {
+          const child = childrenList[i];
+          this.swiperWidth += child.offsetWidth;
+        }         
       }
+
       document.addEventListener("mousemove", this.onPointerMove);
     }
   }
@@ -77,6 +96,8 @@ export class CubeEventHandler {
     document.removeEventListener("touchmove", this.onPointerMove.bind(this));
   }
 
+  // SELECT ELEMENT
+
   getElementClicked(ev) {
     if (ev.target.id === "cubeContainer") {
       this.clickedTag = "cube";
@@ -85,7 +106,10 @@ export class CubeEventHandler {
       ev.target.classList.contains("square")
     ) {
       this.clickedTag = "square";
-    } else if (ev.target.id === "memo") {
+    } else if (
+      ev.target.classList.contains("memo") ||
+      ev.target.classList.contains("swiper")
+    ) {
       this.clickedTag = "memo";
     } else {
       this.clickedTag = null;
@@ -105,7 +129,19 @@ export class CubeEventHandler {
     return squareClicked;
   }
 
-  // MOVE
+  getSwipper(ev) {
+    let swiperClicked = null;
+    if (
+      ev.target.classList.contains("memo") &&
+      ev.target.parentNode.classList.contains("swiper")
+    ) {
+      swiperClicked = ev.target.parentNode;
+    } else if (ev.target.classList.contains("swiper")) {
+      swiperClicked = ev.target;
+    }
+    return swiperClicked;
+  }
+  // CUBE EVENT
 
   onPointerMove(ev) {
     if (ev.type === "mousemove") {
@@ -120,18 +156,9 @@ export class CubeEventHandler {
       this.handleRotationGroup();
     } else if (this.clickedTag === "cube") {
       this.handleCubeMovement();
-    } else if (this.clickedTag === "lastCross") {
+    } else if (this.clickedTag === "memo") {
       this.handleScrollImage();
     }
-  }
-
-  handleScrollImage() {
-    let image = document.querySelector("#lastCrossMemo");
-
-    const deltaX = this.currentPointer.x - this.startPointer.x;
-    this.scrollOffset += deltaX;
-    image.style.backgroundPositionX = `${this.scrollOffset}px`;
-    this.startPointer.x += deltaX;
   }
 
   // reminder: more complex approach may lead to gimbal lock (mix axis)
@@ -198,6 +225,54 @@ export class CubeEventHandler {
           break;
       }
       this.onMouseUp();
+    }
+  }
+
+  // MEMO EVENT
+
+  handleScrollImage() {
+
+    this.scrollOffset = parseInt(this.swiper.style.left || 0, 10);
+
+    let deltaX = this.currentPointer.x - this.startPointer.x;
+    this.scrollOffset += deltaX;
+    // todo: improve min and max scroll
+    if (
+      this.scrollOffset + deltaX < 108 &&
+      this.scrollOffset + deltaX >= -1 * this.swiperWidth + 150
+    ) {
+      this.swiper.style.left = `${this.scrollOffset}px`;
+      this.startPointer.x += deltaX;
+    }
+  }
+
+  selectText(event) {
+    let textElement = event.target.previousElementSibling;
+    
+    if (this.target != textElement.innerText) {
+      
+      document.querySelectorAll("span.currentLetter").forEach((span) => {
+        const parent = span.parentNode;
+        while (span.firstChild) {
+          parent.insertBefore(span.firstChild, span);
+        }
+        span.remove();
+      });
+      this.letter = 0;
+    }
+    this.target = textElement.innerText;
+    let selectedText = this.target.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
+
+    if (this.letter >= selectedText.length) {
+      this.letter = 0;
+    }
+
+    if (selectedText.length > 0) {
+      selectedText[this.letter] = `<span class="currentLetter">${
+        selectedText[this.letter]
+      }</span>`;
+      textElement.innerHTML = selectedText.join("");
+      this.letter++;
     }
   }
 }

@@ -131,9 +131,9 @@ body {
 }
 
 #helpSection > div > p {
-  text-align: center;
+  text-align: left;
   font-weight: bold;
-  margin: 10px 0;
+  margin: 10px;
 }
 .memoBoard {
   display: flex;
@@ -148,7 +148,7 @@ body {
   text-align: center;
 }
 
-.swipper {
+.swiper {
   display: flex;
   overflow: visible;
   /* perspective: 1500px;
@@ -175,7 +175,7 @@ p {
   pointer-events: none;
   user-select: none;
 }
-.swipper img {
+.swiper img {
   height: 130px;
   width: auto;
 }

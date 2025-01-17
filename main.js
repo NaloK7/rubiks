@@ -4,20 +4,6 @@ import { CubeEventHandler } from "./modules/CubeEventHandler.js";
 export const myCube = new Cube();
 export const cubeEvent = new CubeEventHandler();
 
-const helpButton = document.querySelector("#helpButton")
-const helpSection = document.querySelector("#helpSection")
-helpButton.addEventListener('mouseup', () => {
-  if (helpSection.style.display == "none") {
-    helpSection.style.display = "block"
-  } else {
-    helpSection.style.display = "none"
-  }
-})
-helpSection.addEventListener('mouseup', () => {
-  console.log("help clicked");
-  
-})
-
 window.addEventListener(
   "DOMContentLoaded",
   () => {
@@ -49,6 +35,18 @@ window.addEventListener(
 
     const resetPos = document.querySelector("#resetPos");
     resetPos.addEventListener("click", () => myCube.resetPos());
+
+    // MEMO
+
+    const helpButton = document.querySelector("#helpButton");
+    const helpSection = document.querySelector("#helpSection");
+    helpButton.addEventListener("mouseup", () => {
+      if (helpSection.style.display == "none") {
+        helpSection.style.display = "block";
+      } else {
+        helpSection.style.display = "none";
+      }
+    });
   },
   false
 );
