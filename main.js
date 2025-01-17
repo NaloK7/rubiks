@@ -5,15 +5,18 @@ export const myCube = new Cube();
 export const cubeEvent = new CubeEventHandler();
 
 const helpButton = document.querySelector("#helpButton")
+const helpSection = document.querySelector("#helpSection")
 helpButton.addEventListener('mouseup', () => {
-  const helpSection = document.querySelector("#helpSection")
   if (helpSection.style.display == "none") {
     helpSection.style.display = "block"
   } else {
     helpSection.style.display = "none"
   }
 })
-
+helpSection.addEventListener('mouseup', () => {
+  console.log("help clicked");
+  
+})
 
 window.addEventListener(
   "DOMContentLoaded",

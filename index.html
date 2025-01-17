@@ -9,8 +9,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
     rel="stylesheet">
-
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cubeElementStyle.css">
   <script type="module" src="main.js"></script>
   <title>Solve Me</title>
 </head>
@@ -55,24 +56,53 @@
       </div>
     </section>
     <section id="helpSection" style="display: block;">
+
       <div id="lastCross" class="memoBoard">
-        <p>Complete the last cross</p>
-        <div id="lastCrossMemo" class="memoCarousel">
-          <div class="memo">
-            <img src="./img/memo/topCross/line-topCross.svg" alt="">
-            <p>FRU R'U'F'</p>
+          <p>Complete the last cross</p>
+
+          <div id="lastCrossMemo" class="swipper">
+
+              <div class="memo">
+                  <img src="./img/memo/topCross/line-topCross.svg" alt="">
+                  <p>FRUR'U'F'</p>
+                  <button onclick="selectText()">select</button>
+              </div>
+              
+              <div class="memo ">
+                  <img src="./img/memo/topCross/threeHour-topCross.svg" alt="">
+                  <p>fRUR'U'f'</p>
+                  <button onclick="selectText()">select</button>
+              </div>
+              
+              <div class="memo">
+                  <img src="./img/memo/topCross/centerPoint-topCross.svg" alt="">
+                  <p>FRUR'U'F'fRUR'U'f'</p>
+                  <button onclick="selectText()">select</button>
+              </div>
+
           </div>
-          <div class="memo">
-            <img src="./img/memo/topCross/threeHour-topCross.svg" alt="">
-            <p>fRU R'U'f'</p>
-          </div>
-          <div class="memo">
-            <img src="./img/memo/topCross/centerPoint-topCross.svg" alt="">
-            <p>FRUR'U'F' fRUR'U'f'</p>
-          </div>
-        </div>
       </div>
-    </section>
+      <div id="lastFace" class="memoBoard">
+          <p>Complete the last cross</p>
+          <div id="topFace" class="swipper">
+              <div class="memo">
+                  <img src="./img/memo/lastFace/doubleFish-topFace.svg" alt="">
+                  <p>FRUR'U'F'</p>
+                  <button onclick="selectText()">select</button>
+              </div>
+              <div class="memo">
+                  <img src="./img/memo/lastFace/fishFaceR-topFace.svg" alt="">
+                  <p>fRUR'U'f'</p>
+                  <button onclick="selectText()">select</button>
+              </div>
+              <div class="memo">
+                  <img src="./img/memo/lastFace/fishSideR-topFace.svg" alt="">
+                  <p>FRUR'U'F' fRUR'U'f'</p>
+                  <button onclick="selectText()">select</button>
+              </div>
+          </div>
+      </div>
+  </section>
   </div>
 </body>
 
