@@ -241,7 +241,7 @@ export class CubeEventHandler {
 
   // MEMO EVENT
 
-  handleScrollImage() {
+  handleScrollImage() {    
     this.scrollOffset = parseInt(this.swiper.style.left || 0, 10);
 
     let deltaX = this.currentPointer.x - this.startPointer.x;

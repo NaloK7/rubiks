@@ -13,7 +13,7 @@ body {
 }
 /* BUTTON */
 #btnSection {
-  min-height: 6%;
+  height: auto;
   width: auto;
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -44,8 +44,7 @@ body {
 .mainSection {
   display: flex;
   width: 100%;
-  min-height: 94%;
-  max-height: 100%;
+  height: auto;
   border-top: 1px solid var(--main-color);
   overflow-y: auto; 
 
@@ -56,13 +55,13 @@ body {
   /* canvas to display the cube */
   min-width: 70%;
   width: 100%;
-  min-height: calc(var(--square-size) * 7);
+  height: calc(var(--square-size) * 7);
   /* create perspective and preserve 3D  */
   perspective: 1500px;
   transform-style: preserve-3d;
   user-select: none;
   -webkit-user-select: none;
-  overscroll-behavior: contain;
+  /* overscroll-behavior: contain; */
 }
 
 #cubeContainer:hover {
@@ -114,7 +113,7 @@ body {
 
 #helpSection {
   width: 25%;
-  height: inherit;
+  height: 100%;
   border-left: 1px solid black;
   flex-direction: column;
   background-color: rgb(240, 239, 239);
@@ -196,13 +195,8 @@ p {
     --square-size: 67px;
   }
 
-  body {
-    height: 100vh;
-    overflow-y: auto; /* Ensure body can scroll */
-  }
-
   #btnSection {
-    margin: 10px 0px !important;
+    margin: 5px 0px !important;
   }
   /* .cube {
     top: -50% !important;
@@ -210,11 +204,16 @@ p {
   .mainSection {
     flex-direction: column;
   }
+  #cubeContainer {
+    height: calc(var(--square-size) * 6);;
+  }
   #helpSection {
     width: 100%;
+    height: auto;
     flex-direction: row;
-    overflow-x: visible;
+    overflow-x: scroll;
     padding-top: 10px;
+    overflow-y: auto;
   }
   .swiper img {
     height: 90px !important;
@@ -225,6 +224,7 @@ p {
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    height: auto;
   }
   #pagination a{
     color: black;
