@@ -8,26 +8,6 @@
   --main-color: black;
 }
 
-@media screen and (max-width: 376px) {
-  * {
-    --square-size: 67px;
-  }
-  #btnSection {
-    margin: 10px 0px !important;
-  }
-  /* .cube {
-    top: -50% !important;
-  } */
-  .mainSection {
-   flex-direction: column;
-  }
-   #helpSection {
-   width: 100% !important;
-   }
-   .swiper img {
-    height: 90px !important;
-   }
-}
 body {
   height: 100vh;
 }
@@ -67,6 +47,8 @@ body {
   min-height: 94%;
   max-height: 100%;
   border-top: 1px solid var(--main-color);
+  overflow-y: auto; 
+
 }
 /* CUBE  */
 
@@ -138,6 +120,7 @@ body {
   background-color: rgb(240, 239, 239);
   overflow-y: scroll;
   overflow-x: hidden;
+  position: relative;
 }
 
 #helpSection > div > p {
@@ -179,7 +162,7 @@ body {
   padding: 10px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(197, 197, 197)
+  border: 1px solid rgb(197, 197, 197);
 }
 .swiper img,
 p {
@@ -201,4 +184,52 @@ p {
   font-weight: bold;
   text-decoration: underline;
   font-size: larger;
+}
+
+#pagination {
+  display: none;
+  
+}
+
+@media screen and (max-width: 376px) {
+  * {
+    --square-size: 67px;
+  }
+
+  body {
+    height: 100vh;
+    overflow-y: auto; /* Ensure body can scroll */
+  }
+
+  #btnSection {
+    margin: 10px 0px !important;
+  }
+  /* .cube {
+    top: -50% !important;
+  } */
+  .mainSection {
+    flex-direction: column;
+  }
+  #helpSection {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: visible;
+    padding-top: 10px;
+  }
+  .swiper img {
+    height: 90px !important;
+  }
+  #pagination {
+    /* position: absolute; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  #pagination a{
+    color: black;
+    text-decoration: none;
+    margin: 0px 10px;
+  }
+
 }
