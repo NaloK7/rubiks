@@ -205,7 +205,9 @@ p {
     flex-direction: column;
   }
   #cubeContainer {
-    height: calc(var(--square-size) * 6);;
+    height: calc(var(--square-size) * 6);
+    width: 90%;
+    margin: auto;
   }
   #helpSection {
     width: 100%;
