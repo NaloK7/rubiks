@@ -15,6 +15,7 @@ export class CubeEventHandler {
     this.clickedTag = null;
 
     this.THRESHOLD = 60;
+    this.touchFlag = false;
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.onPointerMove = this.onPointerMove.bind(this);
@@ -29,8 +30,17 @@ export class CubeEventHandler {
     document.addEventListener("touchend", this.onTouchEnd);
     const buttons = document.querySelectorAll(".swiper .memo button");
     buttons.forEach((button) => {
-      button.addEventListener("mouseup", this.selectText);
-      button.addEventListener("touchstart", this.selectText);
+      button.addEventListener("mouseup", (event) => {
+        if (!this.touchFlag) {
+          this.selectText(event);
+        }
+        this.touchFlag = false;
+      });
+      button.addEventListener("touchstart", (event) => {
+        event.preventDefault();
+        this.touchFlag = true;
+        this.selectText(event);
+      });
     });
   }
 
@@ -96,9 +106,9 @@ export class CubeEventHandler {
       }
     }
 
-    document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
-      passive: false,
-    });
+    // document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
+    //   passive: false,
+    // });
     document.addEventListener("touchmove", this.onPointerMove.bind(this));
   }
 
