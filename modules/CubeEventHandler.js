@@ -105,10 +105,10 @@ export class CubeEventHandler {
         this.swiperWidth += child.offsetWidth;
       }
     }
-
-    // document.addEventListener("touchmove", (ev) => ev.preventDefault(), {
-    //   passive: false,
-    // });
+let cubeContainer = document.querySelector('#cubeContainer')
+    cubeContainer.addEventListener("touchmove", (ev) => ev.preventDefault(), {
+      passive: false,
+    });
     document.addEventListener("touchmove", this.onPointerMove.bind(this));
   }
 
