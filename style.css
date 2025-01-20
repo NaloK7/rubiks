@@ -12,32 +12,34 @@ body {
   height: 100vh;
 }
 /* BUTTON */
-#btnSection {
-  height: auto;
-  width: auto;
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-}
 
-#btnSection button {
-  height: 24px;
-  padding: 3px 5px;
-  margin: 15px 10px;
+#btnSectionMobile {
+  position: absolute;
+  height: 52px;
+  width: 100%;
+  border-bottom: 1px solid var(--main-color);
+}
+.btnContainer{
+  width: 450px;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  padding: 10px 0px;
+
+}
+.btnContainer button {
+  padding: 5px 15px;
+  /* margin: 15px 10px; */
+  font-size: 1em;
   font-weight: bold;
   border: 1px solid grey;
-  border-radius: 5px;
+  border-radius: 10px;
   justify-self: center;
 }
-#btnSection div {
+#btnSectionDesktop div {
   justify-self: center;
 }
 
-/* TIMER */
-
-#time {
-  display: flex;
-  justify-content: center;
-}
 
 /* MAIN SECTION */
 
@@ -45,10 +47,20 @@ body {
   display: flex;
   width: 100%;
   height: auto;
-  border-top: 1px solid var(--main-color);
+  /* border-top: 1px solid var(--main-color); */
   overflow-y: auto; 
-
+  
 }
+
+/* TIMER */
+
+#time {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px;
+  user-select: none;
+}
+
 /* CUBE  */
 
 #cubeContainer {
@@ -62,6 +74,8 @@ body {
   user-select: none;
   -webkit-user-select: none;
   /* overscroll-behavior: contain; */
+  position: relative;
+  top: 52px;
 }
 
 #cubeContainer:hover {
@@ -195,8 +209,32 @@ p {
     --square-size: 67px;
   }
 
-  #btnSection {
-    margin: 5px 0px !important;
+  #btnSectionMobile {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 52px;
+    border-top: 1px solid black;
+    border-radius: 10px;
+    border-bottom: transparent;
+    overflow: hidden;
+    
+  }
+  .btnContainer {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+
+  }
+  .btnContainer button{
+    width: 100%;
+    height: 100%;
+    border: transparent;
+    border-radius: 0;
+  }
+  #btnSectionMobile button:active{
+    background-color: rgb(206, 206, 206);
   }
   /* .cube {
     top: -50% !important;
@@ -205,17 +243,20 @@ p {
     flex-direction: column;
   }
   #cubeContainer {
-    height: calc(var(--square-size) * 6);
     width: 90%;
     margin: auto;
+    top: 0px;
   }
   #helpSection {
     width: 100%;
-    height: auto;
     flex-direction: row;
     overflow-x: scroll;
     padding-top: 10px;
     overflow-y: auto;
+    border-left: none;
+  }
+  .memoBoard {
+    border-bottom: none
   }
   .swiper img {
     height: 90px !important;

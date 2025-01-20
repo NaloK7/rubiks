@@ -17,24 +17,23 @@
 </head>
 
 <body>
-  <section id="btnSection">
-    <div>
-      <button id="mixButton">start</button>
-      <button id="resetCube">reset</button>
-      <span>/</span>
-      <button id="resetPos">reposition</button>
+  <!-- <section id="btnSectionDesktop">
+    <div class="btnContainer">
+      <button class="resetCube">reset</button>
+      <button class="mixButton">mix</button>
+      <button class="realign">realign</button>
+      <button class="helpButton">help</button>
     </div>
-    <button id="helpButton">help</button>
-  </section>
+  </section> -->
 
-  <section id="timer">
-    <div id="time">
-    </div>
-  </section>
 
   <div class="mainSection">
 
     <section id="cubeContainer">
+      <section id="timer">
+        <div id="time">
+        </div>
+      </section>
       <div class="cube">
         <div class="moveGroup"></div>
 
@@ -55,12 +54,6 @@
         <div class="blackPlate equator fix down E D"></div>
       </div>
     </section>
-    <div id="pagination">
-      <a href="#lastCross">1</a>
-      <a href="#lastFace">2</a>
-      <a href="#lastCorner">3</a>
-      <a href="#lastCenter">4</a>
-    </div>
     <section id="helpSection" style="display: none;">
       <!-- LAST CROSS -->
       <div id="lastCross" class="memoBoard">
@@ -172,6 +165,15 @@
         </div>
       </div>
     </section>
+    <section id="btnSectionMobile">
+      <div class="btnContainer">
+        <button class="resetCube">reset</button>
+        <button class="mixButton">mix</button>
+        <button class="realign">realign</button>
+        <button class="helpButton">help</button>
+      </div>
+    </section>
+  </div>
 </body>
 
 </html>
