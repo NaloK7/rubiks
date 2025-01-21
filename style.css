@@ -10,46 +10,38 @@
 
 body {
   height: 100vh;
+  min-height: 810px;
 }
 /* BUTTON */
 
-#btnSectionMobile {
+#btnSection {
   position: absolute;
   height: 52px;
   width: 100%;
   border-bottom: 1px solid var(--main-color);
 }
-.btnContainer{
+.btnContainer {
   width: 450px;
   display: flex;
   justify-content: space-between;
   margin: auto;
   padding: 10px 0px;
-
 }
 .btnContainer button {
   padding: 5px 15px;
-  /* margin: 15px 10px; */
   font-size: 1em;
   font-weight: bold;
   border: 1px solid grey;
   border-radius: 10px;
   justify-self: center;
 }
-#btnSectionDesktop div {
-  justify-self: center;
-}
-
 
 /* MAIN SECTION */
 
 .mainSection {
   display: flex;
   width: 100%;
-  height: auto;
-  /* border-top: 1px solid var(--main-color); */
-  overflow-y: auto; 
-  
+  height: calc(100% - 52px);
 }
 
 /* TIMER */
@@ -134,6 +126,7 @@ body {
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
+  top: 52px;
 }
 
 #helpSection > div > p {
@@ -171,7 +164,7 @@ body {
   justify-content: space-between;
   position: relative;
   flex-shrink: 0;
-  gap: 20px;
+  gap: 15px;
   padding: 10px;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
@@ -201,15 +194,14 @@ p {
 
 #pagination {
   display: none;
-  
 }
 
-@media screen and (max-width: 376px) {
+@media screen and (max-width: 813px) {
   * {
     --square-size: 67px;
   }
 
-  #btnSectionMobile {
+  #btnSection {
     display: block;
     position: fixed;
     bottom: 0;
@@ -219,21 +211,19 @@ p {
     border-radius: 10px;
     border-bottom: transparent;
     overflow: hidden;
-    
   }
   .btnContainer {
     width: 100%;
     height: 100%;
     padding: 0;
-
   }
-  .btnContainer button{
+  .btnContainer button {
     width: 100%;
     height: 100%;
     border: transparent;
     border-radius: 0;
   }
-  #btnSectionMobile button:active{
+  #btnSection button:active {
     background-color: rgb(206, 206, 206);
   }
   /* .cube {
@@ -241,6 +231,7 @@ p {
   } */
   .mainSection {
     flex-direction: column;
+    height: 100%;
   }
   #cubeContainer {
     width: 90%;
@@ -249,14 +240,16 @@ p {
   }
   #helpSection {
     width: 100%;
+    height: 38%;
     flex-direction: row;
-    overflow-x: scroll;
-    padding-top: 10px;
-    overflow-y: auto;
+    padding-top: 0px;
     border-left: none;
+    top: 0px;
+    overflow-x: scroll;
+    /* overflow-y: auto; */
   }
   .memoBoard {
-    border-bottom: none
+    border-bottom: none;
   }
   .swiper img {
     height: 90px !important;
@@ -269,10 +262,9 @@ p {
     width: 100%;
     height: auto;
   }
-  #pagination a{
+  #pagination a {
     color: black;
     text-decoration: none;
     margin: 0px 10px;
   }
-
 }
