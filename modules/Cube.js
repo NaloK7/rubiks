@@ -377,20 +377,20 @@ export class Cube extends VectorUtils {
     }, 10);
     this.isTiming = true;
   }
-  
+
   stopTimer() {
     clearInterval(this.timer);
     this.isTiming = false;
   }
-  
+
   updateTimerDisplay() {
     const time = this.elapsedTime;
     const ms = time % 1000;
     const s = Math.floor((time / 1000) % 60);
     const min = Math.floor((time / (1000 * 60)) % 60);
     const h = Math.floor((time / (1000 * 60 * 60)) % 24);
-  
-    let displayTime = '';
+
+    let displayTime = "";
 
     if (h > 0) {
       displayTime += `<span>${h} h&nbsp;:&nbsp;</span>`;
@@ -399,7 +399,7 @@ export class Cube extends VectorUtils {
       displayTime += `<span>${min} m&nbsp;:&nbsp;</span>`;
     }
     displayTime += `<span>${s} s&nbsp;:&nbsp;</span><span>${ms} ms</span>`;
-  
+
     document.querySelector("#timer #time").innerHTML = displayTime;
   }
   // MOUVEMENT METHODS

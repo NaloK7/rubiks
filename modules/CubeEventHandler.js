@@ -54,7 +54,6 @@ export class CubeEventHandler {
   // CLICK
 
   onMouseDown(ev) {
-    
     if (!myCube.isAnimate) {
       this.startPointer = { x: ev.clientX, y: ev.clientY };
       this.currentPointer = { x: ev.clientX, y: ev.clientY };
@@ -105,7 +104,7 @@ export class CubeEventHandler {
         this.swiperWidth += child.offsetWidth;
       }
     }
-let cubeContainer = document.querySelector('#cubeContainer')
+    let cubeContainer = document.querySelector("#cubeContainer");
     cubeContainer.addEventListener("touchmove", (ev) => ev.preventDefault(), {
       passive: false,
     });
@@ -251,7 +250,7 @@ let cubeContainer = document.querySelector('#cubeContainer')
 
   // MEMO EVENT
 
-  handleScrollImage() {    
+  handleScrollImage() {
     this.scrollOffset = parseInt(this.swiper.style.left || 0, 10);
 
     let deltaX = this.currentPointer.x - this.startPointer.x;
