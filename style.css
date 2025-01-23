@@ -9,9 +9,7 @@
 }
 
 body {
-  /* height: 100vh; */
-  /* min-height: inherit; */
-  overflow-y: scroll;
+  height: 100vh;
 }
 /* BUTTON */
 
