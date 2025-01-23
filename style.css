@@ -9,7 +9,7 @@
 }
 
 body {
-  height: 100vh;
+  /* height: 100vh; */
   /* min-height: inherit; */
   overflow-y: scroll;
 }
@@ -255,10 +255,7 @@ p {
   }
   #helpSection {
     width: 100vw;
-    /* height: calc(40% - 70px); */
-    height: calc(256px);
-    /* min-height: calc(256px + 70px); */
-    /* flex-direction: row; */
+    height: 256px;
     padding-top: 0px;
     border-left: none;
     top: 0px;
