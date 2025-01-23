@@ -164,10 +164,10 @@ export class CubeEventHandler {
   // CUBE EVENT
 
   onPointerMove(ev) {
-    if (ev.type === "mousemove") {
+    if (ev.type === "mousemove" && this.currentPointer != null) {
       this.currentPointer.x = ev.clientX;
       this.currentPointer.y = ev.clientY;
-    } else if (ev.type === "touchmove") {
+    } else if (ev.type === "touchmove" && this.currentPointer != null) {
       this.currentPointer.x = ev.touches[0].clientX;
       this.currentPointer.y = ev.touches[0].clientY;
     }
@@ -252,16 +252,17 @@ export class CubeEventHandler {
 
   handleScrollImage() {
     this.scrollOffset = parseInt(this.swiper.style.left || 0, 10);
-
-    let deltaX = this.currentPointer.x - this.startPointer.x;
-    this.scrollOffset += deltaX;
-    // todo: improve min and max scroll
-    if (
-      this.scrollOffset < 108 &&
-      this.scrollOffset >= -1 * this.swiperWidth + 150
-    ) {
-      this.swiper.style.left = `${this.scrollOffset}px`;
-      this.startPointer.x += deltaX;
+    if (this.currentPointer != null) {
+      let deltaX = this.currentPointer.x - this.startPointer.x;
+      this.scrollOffset += deltaX;
+      // todo: improve min and max scroll
+      if (
+        this.scrollOffset < 108 &&
+        this.scrollOffset >= -1 * this.swiperWidth + 150
+      ) {
+        this.swiper.style.left = `${this.scrollOffset}px`;
+        this.startPointer.x += deltaX;
+      }
     }
   }
 

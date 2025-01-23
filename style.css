@@ -10,7 +10,7 @@
 
 body {
   height: 100vh;
-  min-height: inherit;
+  /* min-height: inherit; */
   overflow-y: scroll;
 }
 /* BUTTON */
@@ -249,13 +249,15 @@ p {
   #cubeContainer {
     width: 90%;
     height: 60%;
+    min-height: calc(var(--square-size) * 7);
     margin: 0 auto;
     top: 0px;
   }
   #helpSection {
     width: 100vw;
-    height: calc(40% - 70px);
-    min-height: calc(256px + 70px);
+    /* height: calc(40% - 70px); */
+    height: calc(256px);
+    /* min-height: calc(256px + 70px); */
     /* flex-direction: row; */
     padding-top: 0px;
     border-left: none;
