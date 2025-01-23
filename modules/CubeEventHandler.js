@@ -7,12 +7,9 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.swiper = null;
     this.swiperWidth = 0;
-    // this.selectedText = this.selectText.bind(this);
-    // this.letterIndex = 0;
-    // this.target = null;
 
-    this.currentMemo = null; // Variable to store the currently selected memo element
-    this.currentTxt = null; // Variable to store the text of the currently selected memo
+    this.currentMemo = null; 
+    this.currentTxt = null; 
     this.index = -1;
     this.mouseDownOnMemo = this.mouseDownOnMemo.bind(this);
 
@@ -33,23 +30,19 @@ export class CubeEventHandler {
     document.addEventListener("mouseup", this.onMouseUp);
     document.addEventListener("touchstart", this.onTouchStart);
     document.addEventListener("touchend", this.onTouchEnd);
-    let memoList = document.querySelectorAll(".memo"); // Select all elements with class 'memo'
+    let memoList = document.querySelectorAll(".memo");
   memoList.forEach((memo) => {
-    // Iterate over each memo element
-    memo.addEventListener("mousedown", this.mouseDownOnMemo); // Add mousedown event listener to each memo to call mouseDownOnMemo
-  });
+    memo.addEventListener("mousedown", this.mouseDownOnMemo); });
   }
   mouseDownOnMemo() {
-    // if the currentTxt is different from the clicked memo's text
     if (this.currentTxt != event.target.children[1].innerText) {
-      // Reset the previous memo's text to its original state
       if (this.currentMemo != null) {
         this.currentMemo.children[1].innerHTML = currentTxt;
       }
-      this.currentTxt = event.target.children[1].innerText; // Update currentTxt with the clicked memo's text
-      this.currentMemo = event.target; // Update currentMemo with the clicked memo element
+      this.currentTxt = event.target.children[1].innerText;
+      this.currentMemo = event.target;
       this.index = -1;
-      this.selectText(); // Call moveSimulation to process the text
+      this.selectText();
     }
   }
   resetMovement() {
@@ -279,18 +272,16 @@ export class CubeEventHandler {
 
   selectText() {
     if (this.currentTxt) {
-      // Check if there is a current text
       this.index++;
       let newTxt = this.currentTxt.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
       if (this.index >= newTxt.length) {
-        // Check if the index is out of bounds
         // todo: reset the text in the memo
         this.currentMemo.children[1].innerHTML = this.currentTxt;
-        this.currentTxt = null; // Reset currentTxt if out of bounds
+        this.currentTxt = null;
         this.index = -1;
       } else {
         newTxt[this.index] = `<span class="currentLetter">${newTxt[this.index]}</span>`;
-        this.currentMemo.children[1].innerHTML = newTxt.join(""); // Update the memo's inner HTML with the new text
+        this.currentMemo.children[1].innerHTML = newTxt.join("");
       }
     }
   }
