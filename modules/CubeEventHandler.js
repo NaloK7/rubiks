@@ -7,9 +7,14 @@ export class CubeEventHandler {
     this.selectedSquare = null;
     this.swiper = null;
     this.swiperWidth = 0;
-    this.selectedText = this.selectText.bind(this);
-    this.letterIndex = 0;
-    this.target = null;
+    // this.selectedText = this.selectText.bind(this);
+    // this.letterIndex = 0;
+    // this.target = null;
+
+    this.currentMemo = null; // Variable to store the currently selected memo element
+    this.currentTxt = null; // Variable to store the text of the currently selected memo
+    this.index = -1;
+    this.mouseDownOnMemo = this.mouseDownOnMemo.bind(this);
 
     this.scrollOffset = 0;
     this.clickedTag = null;
@@ -28,22 +33,25 @@ export class CubeEventHandler {
     document.addEventListener("mouseup", this.onMouseUp);
     document.addEventListener("touchstart", this.onTouchStart);
     document.addEventListener("touchend", this.onTouchEnd);
-    const buttons = document.querySelectorAll(".swiper .memo button");
-    buttons.forEach((button) => {
-      button.addEventListener("mouseup", (event) => {
-        if (!this.touchFlag) {
-          this.selectText(event);
-        }
-        this.touchFlag = false;
-      });
-      button.addEventListener("touchstart", (event) => {
-        event.preventDefault();
-        this.touchFlag = true;
-        this.selectText(event);
-      });
-    });
+    let memoList = document.querySelectorAll(".memo"); // Select all elements with class 'memo'
+  memoList.forEach((memo) => {
+    // Iterate over each memo element
+    memo.addEventListener("mousedown", this.mouseDownOnMemo); // Add mousedown event listener to each memo to call mouseDownOnMemo
+  });
   }
-
+  mouseDownOnMemo() {
+    // if the currentTxt is different from the clicked memo's text
+    if (this.currentTxt != event.target.children[1].innerText) {
+      // Reset the previous memo's text to its original state
+      if (this.currentMemo != null) {
+        this.currentMemo.children[1].innerHTML = currentTxt;
+      }
+      this.currentTxt = event.target.children[1].innerText; // Update currentTxt with the clicked memo's text
+      this.currentMemo = event.target; // Update currentMemo with the clicked memo element
+      this.index = -1;
+      this.selectText(); // Call moveSimulation to process the text
+    }
+  }
   resetMovement() {
     this.selectedSquare = null;
     this.startPointer = null;
@@ -244,6 +252,9 @@ export class CubeEventHandler {
           myCube.rotateGroup(this.selectedSquare.classList[2], !reverse);
           break;
       }
+      if (this.currentTxt != null) {
+        this.selectText()
+      }
       this.onMouseUp();
     }
   }
@@ -266,31 +277,21 @@ export class CubeEventHandler {
     }
   }
 
-  selectText(event) {
-    let textElement = event.target.previousElementSibling;
-    if (this.target != textElement.innerText) {
-      document.querySelectorAll("span.currentLetter").forEach((span) => {
-        const parent = span.parentNode;
-        while (span.firstChild) {
-          parent.insertBefore(span.firstChild, span);
-        }
-        span.remove();
-      });
-      this.letterIndex = 0;
-    }
-    this.target = textElement.innerText;
-    let selectedText = this.target.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
-
-    if (this.letterIndex >= selectedText.length) {
-      this.letterIndex = 0;
-    }
-
-    if (selectedText.length > 0) {
-      selectedText[this.letterIndex] = `<span class="currentLetter">${
-        selectedText[this.letterIndex]
-      }</span>`;
-      textElement.innerHTML = selectedText.join("");
-      this.letterIndex++;
+  selectText() {
+    if (this.currentTxt) {
+      // Check if there is a current text
+      this.index++;
+      let newTxt = this.currentTxt.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
+      if (this.index >= newTxt.length) {
+        // Check if the index is out of bounds
+        // todo: reset the text in the memo
+        this.currentMemo.children[1].innerHTML = this.currentTxt;
+        this.currentTxt = null; // Reset currentTxt if out of bounds
+        this.index = -1;
+      } else {
+        newTxt[this.index] = `<span class="currentLetter">${newTxt[this.index]}</span>`;
+        this.currentMemo.children[1].innerHTML = newTxt.join(""); // Update the memo's inner HTML with the new text
+      }
     }
   }
 }
