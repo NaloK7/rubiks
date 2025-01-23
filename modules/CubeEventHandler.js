@@ -257,8 +257,8 @@ export class CubeEventHandler {
     this.scrollOffset += deltaX;
     // todo: improve min and max scroll
     if (
-      this.scrollOffset + deltaX < 108 &&
-      this.scrollOffset + deltaX >= -1 * this.swiperWidth + 150
+      this.scrollOffset < 108 &&
+      this.scrollOffset >= -1 * this.swiperWidth + 150
     ) {
       this.swiper.style.left = `${this.scrollOffset}px`;
       this.startPointer.x += deltaX;
