@@ -8,9 +8,10 @@ export class CubeEventHandler {
     this.swiper = null;
     this.swiperWidth = 0;
 
-    this.currentMemo = null; 
-    this.currentTxt = null; 
-    this.index = -1;
+    this.currentMemo = null;
+    this.currentTxt = null;
+    this.index = 0;
+    this.skipflag = false;
     this.mouseDownOnMemo = this.mouseDownOnMemo.bind(this);
 
     this.scrollOffset = 0;
@@ -31,17 +32,18 @@ export class CubeEventHandler {
     document.addEventListener("touchstart", this.onTouchStart);
     document.addEventListener("touchend", this.onTouchEnd);
     let memoList = document.querySelectorAll(".memo");
-  memoList.forEach((memo) => {
-    memo.addEventListener("mousedown", this.mouseDownOnMemo); });
+    memoList.forEach((memo) => {
+      memo.addEventListener("mousedown", this.mouseDownOnMemo);
+    });
   }
   mouseDownOnMemo() {
     if (this.currentTxt != event.target.children[1].innerText) {
       if (this.currentMemo != null) {
-        this.currentMemo.children[1].innerHTML = currentTxt;
+        this.currentMemo.children[1].innerHTML = this.currentTxt;
       }
       this.currentTxt = event.target.children[1].innerText;
       this.currentMemo = event.target;
-      this.index = -1;
+      this.index = 0;
       this.selectText();
     }
   }
@@ -246,7 +248,10 @@ export class CubeEventHandler {
           break;
       }
       if (this.currentTxt != null) {
-        this.selectText()
+        // let currentTxtList = this.currentTxt.match(/([a-zA-Z]')|[a-zA-Z]/g) || []
+        // if (currentTxtList[this.index] == currentTxtList[this.index].toUpperCase()) {
+        // }
+        this.selectText();
       }
       this.onMouseUp();
     }
@@ -272,17 +277,34 @@ export class CubeEventHandler {
 
   selectText() {
     if (this.currentTxt) {
-      this.index++;
-      let newTxt = this.currentTxt.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
-      if (this.index >= newTxt.length) {
-        // todo: reset the text in the memo
-        this.currentMemo.children[1].innerHTML = this.currentTxt;
-        this.currentTxt = null;
-        this.index = -1;
+      let currentTxtList = this.currentTxt.match(/([a-zA-Z]')|[a-zA-Z]/g) || [];
+      if (this.index >= currentTxtList.length) {
+        this.resetMemo();
       } else {
-        newTxt[this.index] = `<span class="currentLetter">${newTxt[this.index]}</span>`;
-        this.currentMemo.children[1].innerHTML = newTxt.join("");
+        // Get the current letter without
+        let currentLetter = currentTxtList[this.index];
+  
+        // Highlight the current letter
+        currentTxtList[this.index] = `<span class="currentLetter">${currentLetter}</span>`;
+        this.currentMemo.children[1].innerHTML = currentTxtList.join("");
+  
+        // Check if the letter is in lowercase
+        if (this.skipflag || currentLetter.toLowerCase() !== currentLetter) {
+          this.index++;
+          this.skipflag = false;
+        } else {
+          this.skipflag = true;
+        }
       }
     }
+  }
+  
+
+  resetMemo() {
+    this.currentMemo.children[1].innerHTML = this.currentTxt;
+    this.currentTxt = null;
+    this.currentMemo = null;
+    this.index = 0;
+    this.skipflag = false;
   }
 }
