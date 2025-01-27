@@ -127,6 +127,7 @@ body {
   background-color: rgb(240, 239, 239);
   overflow-y: scroll;
   overflow-x: hidden;
+  /* overflow: hidden; */
   position: relative;
   top: 52px;
 }
@@ -146,10 +147,8 @@ body {
 
 .memoBoard p {
   text-align: center;
-  font-weight: light;
   min-height: 23px;
   min-width: calc(100% + 3px);
-  margin: 0;
 }
 .memoBoard > div:first-child {
   position: relative;
@@ -172,6 +171,9 @@ body {
   gap: 20px;
   position: relative;
   left: 0px;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .memo {
@@ -180,6 +182,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  scroll-snap-align: center; 
   flex-shrink: 0;
   min-width: 227px;
   gap: 15px;

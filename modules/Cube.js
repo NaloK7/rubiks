@@ -3,7 +3,7 @@ import { VectorUtils } from "./VectorUtils.js";
 export class Cube extends VectorUtils {
   constructor() {
     super(VectorUtils);
-    this.rotateX = 335;
+    this.rotateX = 336;
     this.rotateY = 315;
     this.rotateZ = 0;
     this.animationSpeed = 300;
@@ -141,7 +141,7 @@ export class Cube extends VectorUtils {
   }
 
   resetPos() {
-    this.rotateX = 335;
+    this.rotateX = 336;
     this.rotateY = 315;
     this.rotateZ = 0;
     this.applyCubeRotation();

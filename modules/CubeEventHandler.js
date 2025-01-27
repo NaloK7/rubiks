@@ -39,7 +39,7 @@ export class CubeEventHandler {
   mouseDownOnMemo() {
     if (this.currentTxt != event.target.children[1].innerText) {
       if (this.currentMemo != null) {
-             this.currentMemo.style.border = ""
+        this.currentMemo.style.border = "";
         this.currentMemo.children[1].innerHTML = this.currentTxt;
       }
       this.currentTxt = event.target.children[1].innerText;
@@ -182,7 +182,7 @@ export class CubeEventHandler {
     } else if (this.clickedTag === "cube") {
       this.handleCubeMovement();
     } else if (this.clickedTag === "memo") {
-      this.handleScrollImage();
+      this.handleScrollMemo();
     }
   }
 
@@ -258,21 +258,19 @@ export class CubeEventHandler {
 
   // MEMO EVENT
 
-  handleScrollImage() {
-    this.scrollOffset = parseInt(this.swiper.style.left || 0, 10);
+  handleScrollMemo() {
+    this.scrollOffset = parseInt(this.swiper.scrollLeft || 0, 10);
+    console.log("🚀 ~ CubeEventHandler ~ handleScrollMemo ~ this.scrollOffset:", this.scrollOffset)
+
     if (this.currentPointer != null) {
       let deltaX = this.currentPointer.x - this.startPointer.x;
       this.scrollOffset += deltaX;
-      // todo: improve min and max scroll
-      if (
-        this.scrollOffset < 50 &&
-        this.scrollOffset >= -1 * this.swiperWidth + 150
-      ) {
-        this.swiper.style.left = `${this.scrollOffset}px`;
-        this.startPointer.x += deltaX;
-      }
+   
+      // this.swiper.scrollLeft = this.scrollOffset;
+      this.swiper.scrollLeft = deltaX;
     }
   }
+  
 
   selectText() {
     if (this.currentTxt) {
