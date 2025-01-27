@@ -39,10 +39,12 @@ export class CubeEventHandler {
   mouseDownOnMemo() {
     if (this.currentTxt != event.target.children[1].innerText) {
       if (this.currentMemo != null) {
+             this.currentMemo.style.border = ""
         this.currentMemo.children[1].innerHTML = this.currentTxt;
       }
       this.currentTxt = event.target.children[1].innerText;
       this.currentMemo = event.target;
+      this.currentMemo.style.border = "2px solid green";
       this.index = 0;
       this.selectText();
     }
@@ -283,11 +285,13 @@ export class CubeEventHandler {
       } else {
         // Get the current letter without
         let currentLetter = currentTxtList[this.index];
-  
+
         // Highlight the current letter
-        currentTxtList[this.index] = `<span class="currentLetter">${currentLetter}</span>`;
+        currentTxtList[
+          this.index
+        ] = `<span class="currentLetter">${currentLetter}</span>`;
         this.currentMemo.children[1].innerHTML = currentTxtList.join("");
-  
+
         // Check if the letter is in lowercase
         if (this.skipflag || currentLetter.toLowerCase() !== currentLetter) {
           this.index++;
@@ -298,11 +302,11 @@ export class CubeEventHandler {
       }
     }
   }
-  
 
   resetMemo() {
     this.currentMemo.children[1].innerHTML = this.currentTxt;
     this.currentTxt = null;
+    this.currentMemo.style.border = "";
     this.currentMemo = null;
     this.index = 0;
     this.skipflag = false;
