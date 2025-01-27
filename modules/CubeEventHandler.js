@@ -250,9 +250,6 @@ export class CubeEventHandler {
           break;
       }
       if (this.currentTxt != null) {
-        // let currentTxtList = this.currentTxt.match(/([a-zA-Z]')|[a-zA-Z]/g) || []
-        // if (currentTxtList[this.index] == currentTxtList[this.index].toUpperCase()) {
-        // }
         this.selectText();
       }
       this.onMouseUp();
@@ -268,7 +265,7 @@ export class CubeEventHandler {
       this.scrollOffset += deltaX;
       // todo: improve min and max scroll
       if (
-        this.scrollOffset < 108 &&
+        this.scrollOffset < 50 &&
         this.scrollOffset >= -1 * this.swiperWidth + 150
       ) {
         this.swiper.style.left = `${this.scrollOffset}px`;
