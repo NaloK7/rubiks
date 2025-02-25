@@ -5,19 +5,22 @@
   font-family: roboto;
   /* variable */
   --square-size: 100px;
-  --main-color: black;
+  /* --main-color: black; */
 }
 
 body {
   height: 100vh;
+  background-color: #A3E7EA;
 }
 /* BUTTON */
 
 #btnSection {
   position: absolute;
-  height: 52px;
+  height: fit-content;
   width: 100%;
-  border-bottom: 1px solid var(--main-color);
+  background-color: #fff;
+  border-bottom: 2px solid #C5C5C5;
+  box-shadow: 0 2px 10px 0 #d0d0d0;
 }
 .btnContainer {
   width: 450px;
@@ -27,12 +30,12 @@ body {
   padding: 10px 0px;
 }
 .btnContainer button {
-  padding: 5px 15px;
-  font-size: 1em;
-  font-weight: bold;
-  border: 1px solid grey;
+  /* padding: 5px 15px; */
+  height: 40px;
+  width: 80px;
+  border: 2px solid #C5C5C5;
   border-radius: 10px;
-  justify-self: center;
+  box-shadow: 1px 1px 6px 0px #ccc;
 }
 
 .resetCube {
@@ -52,7 +55,7 @@ body {
 #time {
   display: flex;
   justify-content: center;
-  padding: 10px 0px;
+  padding: 15px 0px;
   user-select: none;
 }
 
@@ -64,7 +67,7 @@ body {
   width: 100%;
   height: calc(var(--square-size) * 7);
   /* create perspective and preserve 3D  */
-  perspective: 1500px;
+  perspective: 800px;
   transform-style: preserve-3d;
   user-select: none;
   -webkit-user-select: none;
@@ -124,7 +127,7 @@ body {
   height: 100%;
   border-left: 1px solid black;
   flex-direction: column;
-  background-color: rgb(240, 239, 239);
+  background-color: rgb(255, 255, 255);
   overflow-y: scroll;
   overflow-x: hidden;
   /* overflow: hidden; */
@@ -141,7 +144,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 10px;
-  gap: 10px;
+  /* gap: 10px; */
   border-bottom: 1px solid black;
 }
 
@@ -168,6 +171,7 @@ body {
 .swiper {
   display: flex;
   padding-bottom: 20px;
+  padding-top: 10px;
   gap: 20px;
   position: relative;
   left: 0px;
@@ -190,7 +194,19 @@ body {
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
   border: 2px solid rgb(197, 197, 197);
+  cursor: pointer;
+  transform: translateY(0px);
 }
+.memo:hover {
+  transform: translateY(-10px);
+  background-color: #A3E7EA
+}
+.memo.current {
+  background-color: #A3E7EA;
+}
+
+
+
 .swiper img,
 p {
   pointer-events: none;

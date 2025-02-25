@@ -38,13 +38,17 @@ export class CubeEventHandler {
   }
   mouseDownOnMemo() {
     if (this.currentTxt != event.target.children[1].innerText) {
+      let memoList = document.querySelectorAll(".memo");
+      memoList.forEach((memo) => {
+        memo.classList.remove("current");
+      });
       if (this.currentMemo != null) {
         this.currentMemo.style.border = "";
         this.currentMemo.children[1].innerHTML = this.currentTxt;
       }
       this.currentTxt = event.target.children[1].innerText;
       this.currentMemo = event.target;
-      this.currentMemo.style.border = "2px solid green";
+      this.currentMemo.classList.add('current')
       this.index = 0;
       this.selectText();
     }
@@ -301,7 +305,7 @@ export class CubeEventHandler {
   resetMemo() {
     this.currentMemo.children[1].innerHTML = this.currentTxt;
     this.currentTxt = null;
-    this.currentMemo.style.border = "";
+    this.currentMemo.classList.remove('current');
     this.currentMemo = null;
     this.index = 0;
     this.skipflag = false;

@@ -26,6 +26,9 @@ window.addEventListener(
         if (confirm("remettre le cube a zero ?")) {
           myCube.generateCubeHTML();
           myCube.resetPos();
+          myCube.stopTimer();
+          myCube.elapsedTime = 0;
+          document.querySelector("#timer #time").innerHTML = "";
         }
       } else {
         myCube.generateCubeHTML();
